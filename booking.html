@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===== Primary SEO ===== -->
+    <title>Prenota — SAVE Tattoo Binasco (MI)</title>
+    <meta
+      name="description"
+      content="Prenota da SAVE Tattoo a Binasco (Milano): invia una richiesta per tatuaggio, piercing o dermopigmentazione. Ti ricontatta Save per confermare."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
+    <!-- TODO: replace with the real live domain -->
+    <link rel="canonical" href="https://www.savetattoo.it/booking.html" />
+    <meta name="theme-color" content="#f33283" />
+
+    <!-- ===== Open Graph (social sharing) ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SAVE Tattoo" />
+    <meta property="og:locale" content="it_IT" />
+    <meta
+      property="og:title"
+      content="Prenota — SAVE Tattoo Binasco (MI)"
+    />
+    <meta
+      property="og:description"
+      content="Prenota da SAVE Tattoo a Binasco (Milano): invia una richiesta per tatuaggio, piercing o dermopigmentazione. Ti ricontatta Save per confermare."
+    />
+    <!-- TODO: real domain + create a 1200x630 preview image -->
+    <meta property="og:url" content="https://www.savetattoo.it/booking.html" />
+    <meta
+      property="og:image"
+      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+    />
+
+    <!-- ===== Twitter card ===== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Prenota — SAVE Tattoo Binasco (MI)"
+    />
+    <meta
+      name="twitter:description"
+      content="Prenota da SAVE Tattoo a Binasco (Milano): invia una richiesta per tatuaggio, piercing o dermopigmentazione. Ti ricontatta Save per confermare."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+    />
+
+    <!-- ===== Favicon ===== -->
+    <!-- TODO: create favicon.svg (and a fallback .png) -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+
+    <!-- ===== Fonts preload (above-the-fold performance) ===== -->
+    <link
+      rel="preload"
+      href="assets/fonts/archivo/archivo-black-900.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/space-mono/space-mono-regular-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- ===== Styles ===== -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/booking.css" />
+
+    <!-- ===== Structured data: the person (schema.org) ===== -->
+    <!-- TODO: fill sameAs (social URLs) with Save's real data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Prenota — SAVE Tattoo",
+        "url": "https://www.savetattoo.it/booking.html",
+        "isPartOf": {
+          "@type": "TattooParlor",
+          "name": "SAVE Tattoo",
+          "url": "https://www.savetattoo.it/"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">
+        <a href="index.html" class="logo">
+          <span>Save</span>
+          <img src="assets/img/logo/logo.png" alt="" class="logo__mark" />
+          <span>Tattoo</span>
+        </a>
+        <p class="brand__meta">Binasco, MI</p>
+      </div>
+
+      <nav aria-label="Principale">
+        <ul class="nav__col">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">Su di me</a></li>
+        </ul>
+        <ul class="nav__col">
+          <li><a href="index.html#lavori">Lavori</a></li>
+          <li><a href="flash.html">Flash</a></li>
+          <li>
+            <button
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-drawer"
+              class="nav__faq"
+            >
+              FAQ
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="booking.html" class="btn-prenota">
+        <span class="btn-prenota__label">Prenota</span>
+        <span aria-hidden="true" class="btn-prenota__icon">↗</span>
+      </a>
+    </header>
+
+    <main class="booking-page">
+      <div class="booking-hero">
+        <h1>Prenota</h1>
+        <span class="booking-hero__arrow" aria-hidden="true">↗</span>
+      </div>
+      <p class="booking-hero__sub">
+        Raccontami cosa hai in mente. Tatuaggio, piercing o dermopigmentazione:
+        parto da qui per risponderti.
+      </p>
+
+      <p class="booking-notice">
+        <strong
+          >Non stai prenotando direttamente: stai inviando una richiesta.</strong
+        >
+        Ti ricontatto io per confermare tutto.
+      </p>
+
+      <form
+        class="booking-form"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+      >
+        <!-- TODO: access_key di Web3Forms (serve l'email di Save) -->
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+        <input
+          type="hidden"
+          name="subject"
+          value="Nuova richiesta dal sito SAVE Tattoo"
+        />
+        <!-- honeypot anti-spam (nascosto) -->
+        <input
+          type="checkbox"
+          name="botcheck"
+          style="display: none"
+          tabindex="-1"
+          aria-hidden="true"
+        />
+
+        <!-- STEP 1 — servizio -->
+        <fieldset class="step" id="step-1">
+          <legend class="step__legend">Cosa vuoi fare?</legend>
+          <div class="choice-group">
+            <label class="choice">
+              <input type="radio" name="servizio" value="Tatuaggio" required />
+              <span class="choice__label">Tatuaggio</span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="servizio" value="Piercing" />
+              <span class="choice__label">Piercing</span>
+            </label>
+            <label class="choice">
+              <input
+                type="radio"
+                name="servizio"
+                value="Dermopigmentazione"
+              />
+              <span class="choice__label">Dermopigmentazione</span>
+            </label>
+          </div>
+
+          <button type="button" class="btn-next">
+            Avanti <span aria-hidden="true">↗</span>
+          </button>
+        </fieldset>
+
+        <!-- STEP 2 (dettagli per servizio) e STEP 3 (data + dati) verranno aggiunti dopo -->
+      </form>
+    </main>
+
+    <footer>
+      <a href="booking.html" class="footer__cta">
+        <span class="footer__cta-label">Prenota</span>
+        <span aria-hidden="true" class="footer__cta-icon">↗</span>
+      </a>
+
+      <div class="footer__location">
+        <div class="footer__address">
+          <p class="footer__studio-name">SAVE Tattoo</p>
+          <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
+
+          <a
+            href="https://maps.google.com/?q=SAVE+Tattoo+Via+G.+Matteotti+24+Binasco"
+            target="_blank"
+            rel="noopener"
+            class="footer__maps-link"
+          >
+            <span>Mostra su Google Maps</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <iframe
+          class="footer__map"
+          src="https://maps.google.com/maps?q=45.3330245,9.1029713&z=17&output=embed"
+          title="Mappa dello studio SAVE Tattoo a Binasco (MI)"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+
+      <table>
+        <caption>
+          Orari di apertura
+        </caption>
+        <tbody>
+          <tr>
+            <td><strong>Lunedì – Sabato</strong></td>
+            <td>
+              <time datetime="11:00">11:00</time> –
+              <time datetime="19:00">19:00</time>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Domenica</strong></td>
+            <td><em>Chiuso</em></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="footer__hours-note">Si riceve solo su appuntamento.</p>
+
+      <div class="footer__bottom">
+        <nav class="footer__social" aria-label="Social">
+          <p class="footer__social-title">Seguimi</p>
+          <ul>
+            <li>
+              <a
+                href="https://www.instagram.com/saveria.sforza.tattoo"
+                target="_blank"
+                rel="noopener"
+                >Instagram <span aria-hidden="true">↗</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.tiktok.com/@save.tattoo2"
+                target="_blank"
+                rel="noopener"
+                >TikTok <span aria-hidden="true">↗</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <p class="footer__copy">© 2026 SAVE Tattoo</p>
+
+        <div class="footer__legal">
+          <p class="footer__vat">P.IVA 02889420184</p>
+          <p class="footer__policies">
+            <a href="privacy.html">Privacy Policy</a> ·
+            <a href="cookie.html">Cookie Policy</a>
+          </p>
+          <p class="footer__credit">
+            Design / Code —
+            <a href="https://gretanegri.vercel.app/" target="_blank" rel="noopener"
+              >Greta Negri</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+    <script src="js/booking.js" defer></script>
+  </body>
+</html>
