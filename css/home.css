@@ -1,0 +1,143 @@
+/* -------------------------------------------HERO------------------------------------------- */
+/* The hero is intentionally very tall: the empty central space is where the
+   3D medusa will live, animated on scroll. */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 2rem;
+  align-items: start;
+}
+
+.hero__title {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(5rem, 23vw, 24rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.hero__tagline,
+.hero__statement {
+  grid-column: 1;
+  max-width: 36ch;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.hero__tagline {
+  grid-row: 2;
+  margin-top: 2.5rem;
+}
+
+.hero__statement {
+  grid-row: 3;
+  margin-top: 0.75rem;
+}
+
+.hero__services {
+  grid-column: 2;
+  grid-row: 2 / 4;
+  justify-self: end;
+  margin-top: 2.5rem;
+  list-style: none;
+  padding: 0;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.hero__services a:hover {
+  color: var(--color-white);
+}
+
+/* Scroll indicator: stays in place; the % is updated by JS later. */
+.hero__scroll {
+  position: fixed;
+  right: 20px;
+  top: 45vh;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  z-index: 5;
+}
+
+/* -------------------------------------------SCATTERED PROFILE------------------------------------------- */
+/* Alternating left/right blocks with big vertical gaps (room for the medusa). */
+.hero-block {
+  max-width: 36ch;
+  margin-block: clamp(12rem, 32vh, 26rem);
+}
+
+.hero-block:nth-of-type(odd) {
+  margin-right: auto;
+  text-align: left;
+}
+
+.hero-block:nth-of-type(even) {
+  margin-left: auto;
+  text-align: right;
+}
+
+.hero-block__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+}
+
+.hero-block__text {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.1rem, 1.9vw, 1.6rem);
+  line-height: 1.3;
+}
+
+.hero-closer {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 11vw, 13rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 12vh;
+}
+
+/* -------------------------------------------MOBILE------------------------------------------- */
+@media (max-width: 700px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__services {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .hero-block {
+    max-width: none;
+    margin-block: 8rem;
+  }
+
+  .hero-block:nth-of-type(even) {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}
