@@ -187,17 +187,17 @@
     </main>
 
     <footer>
+      <!-- Big CTA band -->
       <a href="booking.html" class="footer__cta">
         <span class="footer__cta-label">Prenota</span>
         <span aria-hidden="true" class="footer__cta-icon">↗</span>
       </a>
 
+      <!-- Left: address only -->
       <div class="footer__info">
-        <div class="footer__location">
         <div class="footer__address">
           <p class="footer__studio-name">SAVE Tattoo</p>
           <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
-
           <a
             href="https://maps.google.com/?q=SAVE+Tattoo+Via+G.+Matteotti+24+Binasco"
             target="_blank"
@@ -209,27 +209,8 @@
           </a>
         </div>
       </div>
-        <table>
-        <caption>
-          Orari di apertura
-        </caption>
-        <tbody>
-          <tr>
-            <td><strong>Lunedì – Sabato</strong></td>
-            <td>
-              <time datetime="11:00">11:00</time> –
-              <time datetime="19:00">19:00</time>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>Domenica</strong></td>
-            <td><em>Chiuso</em></td>
-          </tr>
-        </tbody>
-      </table>
-        <p class="footer__hours-note">Si riceve solo su appuntamento.</p>
-      </div>
 
+      <!-- Map (fills the viewport) -->
       <a
         href="https://maps.google.com/?q=SAVE+Tattoo+Via+G.+Matteotti+24+Binasco"
         target="_blank"
@@ -243,9 +224,30 @@
         />
       </a>
 
+      <!-- Rich bottom section (below the fold) -->
       <div class="footer__bottom">
-        <nav class="footer__social" aria-label="Social">
-          <p class="footer__social-title">Seguimi</p>
+        <div class="footer__col">
+          <p class="footer__col-title">Orari di apertura</p>
+          <table>
+            <tbody>
+              <tr>
+                <td><strong>Lunedì – Sabato</strong></td>
+                <td>
+                  <time datetime="11:00">11:00</time> –
+                  <time datetime="19:00">19:00</time>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Domenica</strong></td>
+                <td><em>Chiuso</em></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="footer__hours-note">Si riceve solo su appuntamento.</p>
+        </div>
+
+        <nav class="footer__col" aria-label="Social">
+          <p class="footer__col-title">Seguimi</p>
           <ul>
             <li>
               <a
@@ -266,9 +268,34 @@
           </ul>
         </nav>
 
-        <p class="footer__copy">© 2026 SAVE Tattoo</p>
+        <div class="footer__col">
+          <p class="footer__col-title">Contatti</p>
+          <ul>
+            <!-- TODO: email reale di Save -->
+            <li><a href="mailto:info@savetattoo.it">info@savetattoo.it</a></li>
+            <li><a href="tel:+393396189130">339 618 9130</a></li>
+          </ul>
+        </div>
 
+        <nav class="footer__col" aria-label="Menu">
+          <p class="footer__col-title">Menu</p>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">Su di me</a></li>
+            <li><a href="index.html#lavori">Lavori</a></li>
+            <li><a href="flash.html">Flash</a></li>
+            <li><a href="booking.html">Prenota</a></li>
+          </ul>
+        </nav>
+
+        <a href="#top" class="footer__totop">
+          Torna su <span aria-hidden="true">↑</span>
+        </a>
+
+        <!-- Legal row -->
         <div class="footer__legal">
+          <p class="footer__copy">© 2026 SAVE Tattoo</p>
+          <!-- TODO: real VAT number -->
           <p class="footer__vat">P.IVA 02889420184</p>
           <p class="footer__policies">
             <a href="privacy.html">Privacy Policy</a> ·
