@@ -1,0 +1,220 @@
+/* -------------------------------------------ABOUT PAGE------------------------------------------- */
+/* about.css is only linked from about.html, so styling `main`/`body`/`header`/`footer` here is safe */
+
+body {
+  position: relative;
+}
+
+/* header is fixed and auto-hides on scroll down (JS adds .nav-hidden) */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  padding: 1rem 20px 1.5rem; /* 20px side gutter to match the content box */
+  transition: transform 0.4s ease;
+}
+
+header.nav-hidden {
+  transform: translateY(-100%);
+}
+
+main {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  align-items: start;
+  min-height: 100vh;
+}
+
+/* -------------------------------------------IMAGE: sticky, releases at the last fragment------------------------------------------- */
+/* .about__visual is the sticky container; JS sets its height to end at the last fragment */
+.about__visual {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 0;
+}
+
+/* portrait is a baked-in fuchsia duotone (from Figma): shown as-is, no filter.
+   sticky = stays still while scrolling, no jitter; breaks past the top/right pink border. */
+.about__portrait {
+  position: sticky;
+  top: -20px;
+  height: calc(100vh + 20px);
+  width: calc(100% + 20px); /* bleed 20px past the right edge → window edge */
+  margin: -20px 0 0; /* bleed over the top gutter at rest */
+  overflow: hidden;
+}
+
+.about__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 55% 28%;
+}
+
+/* the dark footer scrolls up OVER the released portrait at the end */
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------------------------------------------LEFT: narrative (scrolls, word-by-word)------------------------------------------- */
+.about__narrative {
+  grid-column: 1;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12rem, 48vh, 30rem);
+  padding-top: clamp(6rem, 22vh, 14rem);
+  padding-right: 2.5rem;
+  padding-bottom: 18vh;
+}
+
+.about__frag {
+  position: relative;
+  max-width: 42ch;
+  padding-left: 1.6rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* word-by-word entrance (JS wraps each word in .word and sets --d per word).
+   Hidden states live under .anim-ready so text stays visible without JS. */
+.anim-ready .about__frag .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  filter: blur(6px);
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+  transition-delay: 0ms;
+}
+
+.anim-ready .about__frag.is-visible .word {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: var(--d, 0ms); /* stagger only on the way in */
+}
+
+.about__frag::before {
+  content: "";
+  position: absolute;
+  top: 0.55em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--color-black);
+  border-radius: 50%;
+}
+
+/* -------------------------------------------RIGHT: the two phrases scroll over the sticky image------------------------------------------- */
+.about__media {
+  grid-column: 2;
+  grid-row: 1; /* same cell as the image; text sits on top */
+  position: relative;
+  z-index: 2;
+  padding-bottom: 18vh;
+}
+
+.about__media h1 {
+  position: relative;
+  margin-top: clamp(6rem, 13vh, 9rem);
+  margin-left: clamp(1.5rem, 4%, 3rem);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  color: var(--color-black);
+}
+
+.about__statement {
+  position: relative;
+  margin-top: clamp(28vh, 48vh, 55vh); /* JS re-aligns this to just after the 4th fragment */
+  margin-left: clamp(1.5rem, 4%, 3rem);
+  max-width: 10ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.05;
+  color: var(--color-black);
+}
+
+/* the two phrases focus in as they scroll into view (JS adds .is-visible) */
+.anim-ready .about__media h1,
+.anim-ready .about__statement {
+  opacity: 0;
+  transform: translateY(1rem);
+  filter: blur(8px);
+  transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+}
+
+.anim-ready .about__media h1.is-visible,
+.anim-ready .about__statement.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* -------------------------------------------ABOUT — mobile------------------------------------------- */
+@media (max-width: 800px) {
+  /* navbar back in normal flow on mobile */
+  header {
+    position: relative;
+    padding: 0.5rem 0 2rem;
+  }
+
+  header.nav-hidden {
+    transform: none;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* stacked order: title + tagline, then image, then the story */
+  .about__media {
+    order: -2;
+    padding-bottom: 0;
+  }
+
+  .about__visual {
+    order: -1;
+    height: auto !important; /* ignore the JS-set desktop height */
+  }
+
+  .about__narrative {
+    order: 0;
+    gap: clamp(2.5rem, 6vh, 4rem);
+    padding-top: clamp(2rem, 5vh, 3rem);
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .about__portrait {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+
+  .about__portrait img {
+    height: auto;
+    object-fit: fill;
+  }
+
+  .about__media h1 {
+    margin-top: 0;
+    margin-left: 0;
+  }
+
+  .about__statement {
+    position: static;
+    margin: 0.4rem 0 clamp(2rem, 5vh, 3rem) !important;
+    max-width: none;
+  }
+}

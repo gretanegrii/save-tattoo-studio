@@ -207,6 +207,7 @@ footer {
   gap: 1rem;
   margin-inline: -20px;
   padding: 0.75rem 20px;
+  border-top: 1px solid transparent; /* reserved: turns black on hover */
   border-bottom: 1px solid var(--color-fucsia); /* linea sotto PRENOTA */
   color: var(--color-fucsia);
   font-family: var(--font-display);
@@ -228,6 +229,7 @@ footer {
 .footer__cta:hover {
   background: var(--color-fucsia);
   color: var(--color-black);
+  border-top-color: var(--color-black); /* black line above when hovered */
 }
 
 .footer__cta:hover .footer__cta-icon {
