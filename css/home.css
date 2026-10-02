@@ -1,7 +1,4 @@
 /* -------------------------------------------HERO------------------------------------------- */
-/* The hero is intentionally very tall: the empty central space is where the
-   3D medusa will live, animated on scroll. */
-
 .hero {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -56,15 +53,11 @@
   line-height: 1.7;
 }
 
-.hero__services a:hover {
-  color: var(--color-white);
-}
-
 /* Scroll indicator: stays in place; the % is updated by JS later. */
 .hero__scroll {
   position: fixed;
   right: 20px;
-  top: 45vh;
+  bottom: 20px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
@@ -72,7 +65,6 @@
 }
 
 /* -------------------------------------------SCATTERED PROFILE------------------------------------------- */
-/* Alternating left/right blocks with big vertical gaps (room for the medusa). */
 .hero-block {
   max-width: 36ch;
   margin-block: clamp(12rem, 32vh, 26rem);
