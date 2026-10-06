@@ -1,12 +1,28 @@
 /* -------------------------------------------HERO------------------------------------------- */
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   column-gap: 2rem;
   align-items: start;
 }
 
+/* 3D medusa on top of the SAVE title */
+.hero__model {
+  position: absolute;
+  top: 0; /* anchored high so the whole model stays within the hero, never spilling below the fold */
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 900px);
+  height: min(88vh, 900px);
+  z-index: 2; /* in front of the title */
+  pointer-events: none; /* never blocks scroll or clicks */
+  --poster-color: transparent;
+}
+
 .hero__title {
+  position: relative;
+  z-index: 1; /* text in front of the medusa */
   grid-column: 1 / -1;
   font-family: var(--font-display);
   font-weight: 900;

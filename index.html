@@ -170,6 +170,20 @@
     <main>
       <!-------------------------------------------HERO------------------------------------------->
       <section class="hero">
+        <!-- 3D medusa behind the SAVE title (decorative, auto-rotating) -->
+        <model-viewer
+          class="hero__model"
+          src="assets/models/medusa-web.glb"
+          orientation="0deg 210deg 0deg"
+          camera-orbit="0deg 90deg auto"
+          interaction-prompt="none"
+          disable-zoom
+          shadow-intensity="0"
+          exposure="0.95"
+          ar="false"
+          loading="eager"
+          aria-hidden="true"
+        ></model-viewer>
         <h1 class="hero__title">Save</h1>
         <p class="hero__tagline">Studio tattoo · dal 2011 · Saveria Sforza</p>
         <p class="hero__statement">
@@ -341,6 +355,24 @@
     </footer>
 
     <script src="js/main.js" defer></script>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3/dist/model-viewer.min.js"
+    ></script>
+    <!-- Tint the hero medusa to the page fuchsia (tone-on-tone) -->
+    <script>
+      (function () {
+        const hm = document.querySelector(".hero__model");
+        if (!hm) return;
+        hm.addEventListener("load", function () {
+          for (const m of hm.model.materials) {
+            m.pbrMetallicRoughness.setBaseColorFactor([0.95, 0.196, 0.514, 1]);
+            m.pbrMetallicRoughness.setMetallicFactor(0);
+            m.pbrMetallicRoughness.setRoughnessFactor(0.72);
+          }
+        });
+      })();
+    </script>
     <script src="js/hero.js" defer></script>
   </body>
 </html>
