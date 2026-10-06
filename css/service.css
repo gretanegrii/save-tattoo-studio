@@ -1,9 +1,9 @@
 /* -------------------------------------------SERVICE PAGES------------------------------------------- */
-/* shared by tattoo / piercing / dermopigmentation. Light (paper) background, black text.
-   To switch the background: change --color-white below to var(--paper) or var(--color-fucsia). */
+/* shared by tattoo / piercing / dermopigmentation. Black background, white text,
+   fuchsia only on the aftercare link. */
 body {
-  background: var(--color-white);
-  color: var(--color-black);
+  background: var(--color-black);
+  color: var(--color-white);
 }
 
 /* -------------------------------------------BACK LINK + INTRO------------------------------------------- */
@@ -38,7 +38,7 @@ main h1 {
 /* -------------------------------------------CATEGORY SELECTOR (tattoo page)------------------------------------------- */
 .gallery {
   margin-top: clamp(1.5rem, 4vh, 3rem);
-  border-top: 1px solid var(--color-black); /* full-width line under the intro */
+  border-top: 1px solid var(--color-white); /* full-width line under the intro */
 }
 
 .gallery__row {
@@ -115,7 +115,7 @@ main h1 {
 }
 
 .service__aftercare a:hover {
-  color: var(--color-black);
+  color: var(--color-white);
 }
 
 .service__note {

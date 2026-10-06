@@ -115,7 +115,7 @@ a {
 header {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 5rem; /* same gap between nav columns and the Prenota CTA */
   padding: 0.5rem 0 2rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -135,14 +135,15 @@ header {
   font-weight: 700;
 }
 
-.logo__mark {
-  height: 1.3em;
+.logo__img {
+  display: block;
+  height: 2rem;
   width: auto;
 }
 
 header nav {
   display: flex;
-  gap: 2.5rem;
+  gap: 5rem;
   font-weight: 700;
 }
 
