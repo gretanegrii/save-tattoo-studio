@@ -239,3 +239,24 @@ main h1 {
     width: 100%;
   }
 }
+
+/* -------------------------------------------DARK-PAGE HEADER OVERRIDES------------------------------------------- */
+/* On the black service pages the nav text is already white, so hover goes to
+   fuchsia; the PRENOTA button is white (invisible if black) and turns fuchsia
+   on hover. Keep the smooth fade from base.css. */
+.nav__col a:hover,
+.nav__faq:hover {
+  color: var(--color-fucsia);
+}
+
+.btn-prenota__label,
+.btn-prenota__icon {
+  background: var(--color-white);
+  color: var(--color-black);
+}
+
+.btn-prenota:hover .btn-prenota__label,
+.btn-prenota:hover .btn-prenota__icon {
+  background: var(--color-fucsia);
+  color: var(--color-black);
+}
