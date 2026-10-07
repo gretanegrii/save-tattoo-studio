@@ -218,6 +218,7 @@ header nav {
 }
 
 .btn-prenota {
+  --cta-h: 1.75rem; /* shared box height (fixed, so the arrow can grow freely) */
   display: inline-flex;
   align-items: center;
   gap: 0.2em;
@@ -230,7 +231,7 @@ header nav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.4em; /* both boxes the same height */
+  height: var(--cta-h); /* both boxes the same height */
   background: var(--color-black);
   color: var(--paper);
   transition:
@@ -243,7 +244,9 @@ header nav {
 }
 
 .btn-prenota__icon {
-  width: 2.4em;
+  width: var(--cta-h); /* square */
+  font-size: 1rem; /* bigger arrow — at least as tall as the PRENOTA text */
+  line-height: 1; /* centre the arrow glyph in the box */
 }
 
 .btn-prenota:hover .btn-prenota__label,
