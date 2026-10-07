@@ -282,6 +282,10 @@ footer {
   font-weight: 900;
   text-transform: uppercase;
   line-height: 1;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
 }
 
 .footer__cta-label {
@@ -298,6 +302,7 @@ footer {
   padding-left: 1.5rem;
   font-size: clamp(2rem, 5vw, 4rem);
   border-left: 1px solid var(--color-fucsia); /* full-height divider: touches both lines */
+  transition: border-color 0.4s ease;
 }
 
 .footer__cta:hover {
