@@ -1,4 +1,509 @@
+/* -------------------------------------------BOOKING (fuchsia page, multi-step)-------------------------------------------
+   One fuchsia page, three screens driven by js/booking.js:
+   1) servizio  2) domande del servizio scelto  3) quando + dati
+   The hero (titolo + intro + riga) resta fisso; cambia solo il blocco sotto. */
+
+body {
+  background: var(--color-fucsia);
+  color: var(--color-black);
+}
+
 /* clear the fixed header (base.css) */
 main {
   padding-top: 6rem;
+}
+
+.booking-page {
+  padding-bottom: 4rem;
+}
+
+/* -------------------------------------------HERO------------------------------------------- */
+.booking-hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.booking-hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(4rem, 17vw, 13rem);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.booking-hero__arrow {
+  flex: none;
+  margin-top: 0.1em;
+  font-size: clamp(3rem, 11vw, 9rem);
+  line-height: 0.8;
+}
+
+.booking-hero__sub {
+  max-width: 34ch;
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  line-height: 1.2;
+}
+
+.booking-rule {
+  border: 0;
+  border-top: 1px solid var(--color-black);
+  margin: 1.75rem 0 0;
+}
+
+.booking-notice {
+  margin: 1.75rem 0 0;
+  max-width: 70ch;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.booking-notice strong {
+  display: block;
+}
+
+/* -------------------------------------------STEPS (one visible at a time)------------------------------------------- */
+.step {
+  display: none;
+  margin-top: 3.5rem;
+  border: 0;
+  padding: 0;
+  min-width: 0; /* let fieldset shrink so chip rows wrap instead of overflowing */
+}
+
+.step.is-active {
+  display: block;
+}
+
+/* section headings: "QUANDO?", "I TUOI DATI" */
+.step__title {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2.6vw, 1.6rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.step__title:not(:first-child) {
+  margin-top: 3rem;
+}
+
+/* big step-1 legend "COSA VUOI FARE?" */
+.step__legend {
+  padding: 0;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* small field labels "DOVE LO VUOI?" */
+.field-group {
+  margin: 0 0 2.5rem;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------SERVICE BOXES (step 1)------------------------------------------- */
+.choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.choice {
+  position: relative;
+  cursor: pointer;
+}
+
+.choice input,
+.chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: clamp(9rem, 22vw, 15rem);
+  padding: 1.6em 1.25em;
+  border: 1px solid var(--color-black);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.choice:hover .choice__label {
+  background: rgba(10, 10, 10, 0.08);
+}
+
+.choice input:checked + .choice__label {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+.choice input:focus-visible + .choice__label {
+  outline: 2px solid var(--color-black);
+  outline-offset: 3px;
+}
+
+/* -------------------------------------------CHIPS (steps 2 & 3)------------------------------------------- */
+.choice-group--chips {
+  gap: 0.6rem;
+}
+
+.chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.chip > span {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75em 1.1em;
+  border: 1px solid var(--color-black);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.chip:hover > span {
+  background: rgba(10, 10, 10, 0.08);
+}
+
+.chip input:checked + span {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+.chip input:focus-visible + span {
+  outline: 2px solid var(--color-black);
+  outline-offset: 3px;
+}
+
+/* grouped chips (piercing: "Orecchio", "Naso"...) */
+.chip-group {
+  margin-bottom: 1.5rem;
+}
+
+.chip-group__label {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* -------------------------------------------TEXT FIELDS------------------------------------------- */
+.field {
+  margin-bottom: 2rem;
+}
+
+.field textarea,
+.fields-grid input {
+  width: 100%;
+  padding: 0.8em 0.9em;
+  border: 1px solid var(--color-black);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  border-radius: 0;
+}
+
+.field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.field textarea:focus,
+.fields-grid input:focus {
+  outline: 2px solid var(--color-black);
+  outline-offset: -1px;
+}
+
+/* file picker */
+.field input[type="file"] {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.field input[type="file"]::file-selector-button {
+  margin-right: 0.9rem;
+  padding: 0.6em 1em;
+  border: 1px solid var(--color-black);
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.field input[type="file"]::file-selector-button:hover {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+/* -------------------------------------------DATI GRID------------------------------------------- */
+.fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.fields-grid .field {
+  margin: 0;
+}
+
+.req {
+  color: var(--color-black);
+}
+
+/* -------------------------------------------CONSENT CHECKBOXES------------------------------------------- */
+.consent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.9rem;
+  align-items: start;
+  max-width: 60ch;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.consent input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin: 0.1rem 0 0;
+  border: 1px solid var(--color-black);
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+}
+
+.consent input::before {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  transform: scale(0);
+  transition: transform 0.12s ease;
+  background: var(--color-black);
+}
+
+.consent input:checked::before {
+  transform: scale(1);
+}
+
+.consent input:focus-visible {
+  outline: 2px solid var(--color-black);
+  outline-offset: 2px;
+}
+
+.consent a {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* -------------------------------------------NOTES / WARNINGS------------------------------------------- */
+.form-note {
+  margin: 1.5rem 0 0;
+  max-width: 70ch;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.form-warning {
+  margin: -1rem 0 2rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--color-black);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.form-warning__title {
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.form-warning__text {
+  margin: 0;
+}
+
+.form-error {
+  margin: 1.5rem 0 0;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--color-black);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.form-error a {
+  text-decoration: underline;
+}
+
+/* -------------------------------------------STEP NAV (Indietro / Avanti / Invia)------------------------------------------- */
+.step-1 .btn-next,
+#step-1 .btn-next {
+  margin-top: 1rem;
+}
+
+.step__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.btn-next,
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.9em 1.5em;
+  background: var(--color-black);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-black);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn-next:hover,
+.btn-submit:hover {
+  background: var(--color-fucsia);
+  color: var(--color-black);
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.9em 1.3em;
+  background: transparent;
+  color: var(--color-black);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-black);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.btn-back:hover {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+/* confirmation message after submit */
+.booking-done {
+  margin-top: 3.5rem;
+  max-width: 40ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  line-height: 1.1;
+}
+
+.booking-done span {
+  display: block;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+/* -------------------------------------------MOBILE------------------------------------------- */
+@media (max-width: 640px) {
+  .fields-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice__label {
+    min-width: 100%;
+  }
+
+  .choice {
+    flex: 1 1 100%;
+  }
+
+  .step__nav {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .btn-next,
+  .btn-submit,
+  .btn-back {
+    justify-content: center;
+  }
 }

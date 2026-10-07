@@ -20,10 +20,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SAVE Tattoo" />
     <meta property="og:locale" content="it_IT" />
-    <meta
-      property="og:title"
-      content="Prenota — SAVE Tattoo Binasco (MI)"
-    />
+    <meta property="og:title" content="Prenota — SAVE Tattoo Binasco (MI)" />
     <meta
       property="og:description"
       content="Prenota da SAVE Tattoo a Binasco (Milano): invia una richiesta per tatuaggio, piercing o dermopigmentazione. Ti ricontatta Save per confermare."
@@ -37,10 +34,7 @@
 
     <!-- ===== Twitter card ===== -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Prenota — SAVE Tattoo Binasco (MI)"
-    />
+    <meta name="twitter:title" content="Prenota — SAVE Tattoo Binasco (MI)" />
     <meta
       name="twitter:description"
       content="Prenota da SAVE Tattoo a Binasco (Milano): invia una richiesta per tatuaggio, piercing o dermopigmentazione. Ti ricontatta Save per confermare."
@@ -96,9 +90,15 @@
     <header>
       <div class="brand">
         <a href="index.html" class="logo">
-          <img src="assets/img/logo/logo.png" alt="SAVE Tattoo" class="logo__img" />
+          <img
+            src="assets/img/logo/logo.png"
+            alt="SAVE Tattoo"
+            class="logo__img"
+          />
         </a>
-        <p class="brand__meta">Binasco, MI</p>
+        <p class="brand__meta">
+          <span class="dot" aria-hidden="true"></span>Binasco, MI
+        </p>
       </div>
 
       <nav aria-label="Principale">
@@ -138,32 +138,38 @@
         parto da qui per risponderti.
       </p>
 
-      <p class="booking-notice">
-        <strong
-          >Non stai prenotando direttamente: stai inviando una richiesta.</strong
-        >
-        Ti ricontatto io per confermare tutto.
-      </p>
+      <hr class="booking-rule" />
 
       <form
         class="booking-form"
-        action="https://api.web3forms.com/submit"
+        action="https://formsubmit.co/ajax/gretanegrii@gmail.com"
         method="POST"
       >
-        <!-- TODO: access_key di Web3Forms (serve l'email di Save) -->
-        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY" />
+        <!-- Invio email via FormSubmit (nessuna chiave da registrare).
+             Al PRIMISSIMO invio arriva una mail di attivazione all'indirizzo
+             qui sopra: va aperta una volta sola, poi le richieste arrivano.
+             TODO: sostituire con l'email di Save quando il sito va online. -->
         <input
           type="hidden"
-          name="subject"
+          name="_subject"
           value="Nuova richiesta dal sito SAVE Tattoo"
+        />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <!-- risposta automatica al cliente: va all'email che scrive nel form -->
+        <input
+          type="hidden"
+          name="_autoresponse"
+          value="Ciao! Ho ricevuto la tua richiesta su SAVE Tattoo. Ti ricontatto io il prima possibile per confermare tutto e trovare insieme una data. A presto — Save ♥"
         />
         <!-- honeypot anti-spam (nascosto) -->
         <input
-          type="checkbox"
-          name="botcheck"
+          type="text"
+          name="_honey"
           style="display: none"
           tabindex="-1"
           aria-hidden="true"
+          autocomplete="off"
         />
 
         <!-- STEP 1 — servizio -->
@@ -179,11 +185,7 @@
               <span class="choice__label">Piercing</span>
             </label>
             <label class="choice">
-              <input
-                type="radio"
-                name="servizio"
-                value="Dermopigmentazione"
-              />
+              <input type="radio" name="servizio" value="Dermopigmentazione" />
               <span class="choice__label">Dermopigmentazione</span>
             </label>
           </div>
@@ -198,51 +200,161 @@
           <fieldset class="field-group">
             <legend class="field-label">Dove lo vuoi?</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Testa" /><span>Testa</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Orecchie" /><span>Orecchie</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Collo" /><span>Collo</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Spalla" /><span>Spalla</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Braccio" /><span>Braccio</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Petto" /><span>Petto</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Costato" /><span>Costato</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Pancia" /><span>Pancia</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Schiena" /><span>Schiena</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Coscia" /><span>Coscia</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Ginocchio" /><span>Ginocchio</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Polpaccio" /><span>Polpaccio</span></label>
-            <label class="chip"><input type="radio" name="tattoo_zona" value="Caviglia/Piede" /><span>Caviglia/Piede</span></label>
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Testa" /><span
+                  >Testa</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Orecchie" /><span
+                  >Orecchie</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Collo" /><span
+                  >Collo</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Spalla" /><span
+                  >Spalla</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Braccio" /><span
+                  >Braccio</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Petto" /><span
+                  >Petto</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Costato" /><span
+                  >Costato</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Pancia" /><span
+                  >Pancia</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Schiena" /><span
+                  >Schiena</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_zona" value="Coscia" /><span
+                  >Coscia</span
+                ></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_zona"
+                  value="Ginocchio"
+                /><span>Ginocchio</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_zona"
+                  value="Polpaccio"
+                /><span>Polpaccio</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_zona"
+                  value="Caviglia/Piede"
+                /><span>Caviglia/Piede</span></label
+              >
             </div>
           </fieldset>
 
           <fieldset class="field-group">
             <legend class="field-label">Che dimensione?</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="tattoo_dimensione" value="Piccolo (meno di 5 cm)" /><span>Piccolo (meno di 5 cm)</span></label>
-            <label class="chip"><input type="radio" name="tattoo_dimensione" value="Medio (5–15 cm)" /><span>Medio (5–15 cm)</span></label>
-            <label class="chip"><input type="radio" name="tattoo_dimensione" value="Grande (15–25 cm)" /><span>Grande (15–25 cm)</span></label>
-            <label class="chip"><input type="radio" name="tattoo_dimensione" value="Molto grande" /><span>Molto grande</span></label>
-            <label class="chip"><input type="radio" name="tattoo_dimensione" value="Non so ancora" /><span>Non so ancora</span></label>
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Piccolo (meno di 5 cm)"
+                /><span>Piccolo (meno di 5 cm)</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Medio (6–10 cm)"
+                /><span>Medio (6–10 cm)</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Grande (10cm in su)"
+                /><span>Grande (10cm in su)</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Molto grande"
+                /><span>Molto grande</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Non so ancora"
+                /><span>Non so ancora</span></label
+              >
             </div>
           </fieldset>
 
           <fieldset class="field-group">
             <legend class="field-label">Che colori?</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="tattoo_colori" value="Nero e sfumature" /><span>Nero e sfumature</span></label>
-            <label class="chip"><input type="radio" name="tattoo_colori" value="A colori" /><span>A colori</span></label>
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_colori"
+                  value="Nero e sfumature"
+                /><span>Nero e sfumature</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="tattoo_colori"
+                  value="A colori"
+                /><span>A colori</span></label
+              >
             </div>
           </fieldset>
 
           <fieldset class="field-group">
             <legend class="field-label">È una copertura?</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="tattoo_copertura" value="Sì" /><span>Sì</span></label>
-            <label class="chip"><input type="radio" name="tattoo_copertura" value="No" /><span>No</span></label>
+              <label class="chip"
+                ><input type="radio" name="tattoo_copertura" value="Sì" /><span
+                  >Sì</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="tattoo_copertura" value="No" /><span
+                  >No</span
+                ></label
+              >
             </div>
           </fieldset>
 
           <div class="field">
-            <label class="field-label" for="tattoo_idea">Descrivi la tua idea</label>
+            <label class="field-label" for="tattoo_idea"
+              >Descrivi la tua idea</label
+            >
             <textarea id="tattoo_idea" name="tattoo_idea" rows="5"></textarea>
           </div>
 
@@ -275,42 +387,164 @@
             <div class="chip-group">
               <p class="chip-group__label">Orecchio</p>
               <div class="choice-group choice-group--chips">
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Lobo" /><span>Lobo</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Helix" /><span>Helix</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Trago" /><span>Trago</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Rook" /><span>Rook</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Conch" /><span>Conch</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Daith" /><span>Daith</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Industrial" /><span>Industrial</span></label>
+                <label class="chip"
+                  ><input type="radio" name="piercing_tipo" value="Lobo" /><span
+                    >Lobo</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Helix"
+                  /><span>Helix</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Trago"
+                  /><span>Trago</span></label
+                >
+                <label class="chip"
+                  ><input type="radio" name="piercing_tipo" value="Rook" /><span
+                    >Rook</span
+                  ></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Conch"
+                  /><span>Conch</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Daith"
+                  /><span>Daith</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Industrial"
+                  /><span>Industrial</span></label
+                >
               </div>
             </div>
             <div class="chip-group">
               <p class="chip-group__label">Naso</p>
               <div class="choice-group choice-group--chips">
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Nostril" /><span>Nostril</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Septum" /><span>Septum</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Bridge" /><span>Bridge</span></label>
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Nostril"
+                  /><span>Nostril</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Septum"
+                  /><span>Septum</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Bridge"
+                  /><span>Bridge</span></label
+                >
               </div>
             </div>
             <div class="chip-group">
               <p class="chip-group__label">Viso</p>
               <div class="choice-group choice-group--chips">
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Medusa" /><span>Medusa</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Monroe" /><span>Monroe</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Labret" /><span>Labret</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Eyebrow" /><span>Eyebrow</span></label>
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Medusa"
+                  /><span>Medusa</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Monroe"
+                  /><span>Monroe</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Labret"
+                  /><span>Labret</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Eyebrow"
+                  /><span>Eyebrow</span></label
+                >
               </div>
             </div>
             <div class="chip-group">
               <p class="chip-group__label">Altri</p>
               <div class="choice-group choice-group--chips">
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Ombelico" /><span>Ombelico</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Capezzolo" /><span>Capezzolo</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Lingua" /><span>Lingua</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Smile" /><span>Smile</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Intimi" /><span>Intimi</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Microdermal" /><span>Microdermal</span></label>
-                <label class="chip"><input type="radio" name="piercing_tipo" value="Rimozione microdermal" /><span>Rimozione microdermal</span></label>
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Ombelico"
+                  /><span>Ombelico</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Capezzolo"
+                  /><span>Capezzolo</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Lingua"
+                  /><span>Lingua</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Smile"
+                  /><span>Smile</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Intimi"
+                  /><span>Intimi</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Microdermal"
+                  /><span>Microdermal</span></label
+                >
+                <label class="chip"
+                  ><input
+                    type="radio"
+                    name="piercing_tipo"
+                    value="Rimozione microdermal"
+                  /><span>Rimozione microdermal</span></label
+                >
               </div>
             </div>
           </fieldset>
@@ -327,9 +561,27 @@
           <fieldset class="field-group">
             <legend class="field-label">Stato della foratura</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="piercing_stato" value="Prima foratura" /><span>Prima foratura</span></label>
-            <label class="chip"><input type="radio" name="piercing_stato" value="Cambio gioiello" /><span>Cambio gioiello</span></label>
-            <label class="chip"><input type="radio" name="piercing_stato" value="Ripristino foro" /><span>Ripristino foro</span></label>
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="piercing_stato"
+                  value="Prima foratura"
+                /><span>Prima foratura</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="piercing_stato"
+                  value="Cambio gioiello"
+                /><span>Cambio gioiello</span></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="piercing_stato"
+                  value="Ripristino foro"
+                /><span>Ripristino foro</span></label
+              >
             </div>
           </fieldset>
 
@@ -348,25 +600,312 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMOPIGMENTAZIONE -->
+        <!-- STEP 2 — DERMOPIGMENTAZIONE · scelta zona -->
         <div class="step" id="step-dermo" data-service="Dermopigmentazione">
           <fieldset class="field-group">
-            <legend class="field-label">Su cosa?</legend>
-            <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="dermo_tipo" value="Sopracciglia" /><span>Sopracciglia</span></label>
-            <label class="chip"><input type="radio" name="dermo_tipo" value="Labbra" /><span>Labbra</span></label>
-            <label class="chip"><input type="radio" name="dermo_tipo" value="Eyeliner" /><span>Eyeliner</span></label>
-            <label class="chip"><input type="radio" name="dermo_tipo" value="Altro" /><span>Altro</span></label>
+            <legend class="field-label">
+              Su cosa vuoi fare la dermopigmentazione?
+            </legend>
+            <div class="choice-group">
+              <label class="choice">
+                <input type="radio" name="dermo_zona" value="Sopracciglia" />
+                <span class="choice__label">Sopracciglia</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dermo_zona" value="Labbra" />
+                <span class="choice__label">Labbra</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dermo_zona" value="Eyeliner" />
+                <span class="choice__label">Eyeliner</span>
+              </label>
+              <label class="choice">
+                <input type="radio" name="dermo_zona" value="Lentiggini" />
+                <span class="choice__label">Lentiggini</span>
+              </label>
             </div>
           </fieldset>
+
+          <div class="step__nav">
+            <button type="button" class="btn-back">
+              <span aria-hidden="true">←</span> Indietro
+            </button>
+            <button type="button" class="btn-next">
+              Avanti <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2 — DERMO · Sopracciglia -->
+        <div class="step" id="step-dermo-sopracciglia">
+          <p class="step__title">Sopracciglia</p>
 
           <fieldset class="field-group">
             <legend class="field-label">Prima volta o ritocco?</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="dermo_fase" value="Prima volta" /><span>Prima volta</span></label>
-            <label class="chip"><input type="radio" name="dermo_fase" value="Ritocco" /><span>Ritocco</span></label>
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="dermo_fase"
+                  value="Prima volta"
+                /><span>Prima volta</span></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_fase" value="Ritocco" /><span
+                  >Ritocco</span
+                ></label
+              >
             </div>
           </fieldset>
+
+          <fieldset class="field-group">
+            <legend class="field-label">
+              È un cover-up? (vecchio trucco permanente)
+            </legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="Sì" /><span
+                  >Sì</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="No" /><span
+                  >No</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="dermo_idea_sopracciglia"
+              >Descrivi la tua idea</label
+            >
+            <textarea
+              id="dermo_idea_sopracciglia"
+              name="dermo_idea"
+              rows="5"
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dermo_file_sopracciglia">
+              Carica una foto delle tue sopracciglia da vicino e una della tua
+              idea (JPG, PNG, PDF)
+            </label>
+            <input
+              type="file"
+              id="dermo_file_sopracciglia"
+              name="dermo_file"
+              accept="image/jpeg,image/png,application/pdf"
+              multiple
+            />
+          </div>
+
+          <div class="step__nav">
+            <button type="button" class="btn-back">
+              <span aria-hidden="true">←</span> Indietro
+            </button>
+            <button type="button" class="btn-next">
+              Avanti <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2 — DERMO · Labbra -->
+        <div class="step" id="step-dermo-labbra">
+          <p class="step__title">Labbra</p>
+
+          <fieldset class="field-group">
+            <legend class="field-label">Prima volta o ritocco?</legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="dermo_fase"
+                  value="Prima volta"
+                /><span>Prima volta</span></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_fase" value="Ritocco" /><span
+                  >Ritocco</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <fieldset class="field-group">
+            <legend class="field-label">
+              È un cover-up? (vecchio trucco permanente)
+            </legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="Sì" /><span
+                  >Sì</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="No" /><span
+                  >No</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="dermo_idea_labbra"
+              >Descrivi la tua idea</label
+            >
+            <textarea
+              id="dermo_idea_labbra"
+              name="dermo_idea"
+              rows="5"
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dermo_file_labbra">
+              Carica una foto delle tue labbra da vicino e una della tua idea
+              (JPG, PNG, PDF)
+            </label>
+            <input
+              type="file"
+              id="dermo_file_labbra"
+              name="dermo_file"
+              accept="image/jpeg,image/png,application/pdf"
+              multiple
+            />
+          </div>
+
+          <div class="step__nav">
+            <button type="button" class="btn-back">
+              <span aria-hidden="true">←</span> Indietro
+            </button>
+            <button type="button" class="btn-next">
+              Avanti <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2 — DERMO · Eyeliner -->
+        <div class="step" id="step-dermo-eyeliner">
+          <p class="step__title">Eyeliner</p>
+
+          <fieldset class="field-group">
+            <legend class="field-label">Prima volta o ritocco?</legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="dermo_fase"
+                  value="Prima volta"
+                /><span>Prima volta</span></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_fase" value="Ritocco" /><span
+                  >Ritocco</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <fieldset class="field-group">
+            <legend class="field-label">
+              È un cover-up? (vecchio trucco permanente)
+            </legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="Sì" /><span
+                  >Sì</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_coverup" value="No" /><span
+                  >No</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="dermo_idea_eyeliner"
+              >Descrivi la tua idea</label
+            >
+            <textarea
+              id="dermo_idea_eyeliner"
+              name="dermo_idea"
+              rows="5"
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dermo_file_eyeliner">
+              Carica una foto dei tuoi occhi da vicino e una della tua idea
+              (JPG, PNG, PDF)
+            </label>
+            <input
+              type="file"
+              id="dermo_file_eyeliner"
+              name="dermo_file"
+              accept="image/jpeg,image/png,application/pdf"
+              multiple
+            />
+          </div>
+
+          <div class="step__nav">
+            <button type="button" class="btn-back">
+              <span aria-hidden="true">←</span> Indietro
+            </button>
+            <button type="button" class="btn-next">
+              Avanti <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2 — DERMO · Lentiggini -->
+        <div class="step" id="step-dermo-lentiggini">
+          <p class="step__title">Lentiggini</p>
+
+          <fieldset class="field-group">
+            <legend class="field-label">Prima volta o ritocco?</legend>
+            <div class="choice-group choice-group--chips">
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="dermo_fase"
+                  value="Prima volta"
+                /><span>Prima volta</span></label
+              >
+              <label class="chip"
+                ><input type="radio" name="dermo_fase" value="Ritocco" /><span
+                  >Ritocco</span
+                ></label
+              >
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field-label" for="dermo_idea_lentiggini"
+              >Descrivi la tua idea</label
+            >
+            <textarea
+              id="dermo_idea_lentiggini"
+              name="dermo_idea"
+              rows="5"
+            ></textarea>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="dermo_file_lentiggini">
+              Carica una foto della tua idea (JPG, PNG, PDF)
+            </label>
+            <input
+              type="file"
+              id="dermo_file_lentiggini"
+              name="dermo_file"
+              accept="image/jpeg,image/png,application/pdf"
+              multiple
+            />
+          </div>
 
           <div class="step__nav">
             <button type="button" class="btn-back">
@@ -384,48 +923,90 @@
           <fieldset class="field-group">
             <legend class="field-label">Giorni preferiti</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="giorni" value="Infrasettimanale" /><span>Infrasettimanale</span></label>
-            <label class="chip"><input type="radio" name="giorni" value="Weekend" /><span>Weekend</span></label>
-            <label class="chip"><input type="radio" name="giorni" value="Qualsiasi giorno" /><span>Qualsiasi giorno</span></label>
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="giorni"
+                  value="Infrasettimanale"
+                /><span>Infrasettimanale</span></label
+              >
+              <label class="chip"
+                ><input type="radio" name="giorni" value="Weekend" /><span
+                  >Weekend</span
+                ></label
+              >
+              <label class="chip"
+                ><input
+                  type="radio"
+                  name="giorni"
+                  value="Qualsiasi giorno"
+                /><span>Qualsiasi giorno</span></label
+              >
             </div>
           </fieldset>
 
           <fieldset class="field-group">
             <legend class="field-label">Fascia oraria</legend>
             <div class="choice-group choice-group--chips">
-            <label class="chip"><input type="radio" name="fascia" value="Mattina" /><span>Mattina</span></label>
-            <label class="chip"><input type="radio" name="fascia" value="Pomeriggio" /><span>Pomeriggio</span></label>
-            <label class="chip"><input type="radio" name="fascia" value="Sera" /><span>Sera</span></label>
+              <label class="chip"
+                ><input type="radio" name="fascia" value="Mattina" /><span
+                  >Mattina</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="fascia" value="Pomeriggio" /><span
+                  >Pomeriggio</span
+                ></label
+              >
+              <label class="chip"
+                ><input type="radio" name="fascia" value="Sera" /><span
+                  >Sera</span
+                ></label
+              >
             </div>
           </fieldset>
 
           <p class="step__title">I tuoi dati</p>
           <div class="fields-grid">
             <div class="field">
-              <label class="field-label" for="nome">Nome <span class="req">*</span></label>
+              <label class="field-label" for="nome"
+                >Nome <span class="req">*</span></label
+              >
               <input type="text" id="nome" name="nome" required />
             </div>
             <div class="field">
-              <label class="field-label" for="cognome">Cognome <span class="req">*</span></label>
+              <label class="field-label" for="cognome"
+                >Cognome <span class="req">*</span></label
+              >
               <input type="text" id="cognome" name="cognome" required />
             </div>
             <div class="field">
-              <label class="field-label" for="telefono">Telefono <span class="req">*</span></label>
+              <label class="field-label" for="telefono"
+                >Telefono <span class="req">*</span></label
+              >
               <input type="tel" id="telefono" name="telefono" required />
             </div>
             <div class="field">
-              <label class="field-label" for="email">Email <span class="req">*</span></label>
+              <label class="field-label" for="email"
+                >Email <span class="req">*</span></label
+              >
               <input type="email" id="email" name="email" required />
             </div>
           </div>
 
           <label class="consent">
             <input type="checkbox" name="maggiorenne" value="sì" required />
-            <span>Confermo di essere maggiorenne o, se minorenne, di essere accompagnato/a da un genitore.</span>
+            <span
+              >Confermo di essere maggiorenne o, se minorenne, di essere
+              accompagnato/a da un genitore.</span
+            >
           </label>
           <label class="consent">
             <input type="checkbox" name="privacy" value="sì" required />
-            <span>Ho letto e accetto la <a href="privacy.html">Privacy Policy</a>.</span>
+            <span
+              >Ho letto e accetto la
+              <a href="privacy.html">Privacy Policy</a>.</span
+            >
           </label>
 
           <p class="form-note">
@@ -566,7 +1147,10 @@
         <div class="footer__credit">
           <p>Design / Code</p>
           <p>
-            <a href="https://gretanegri.vercel.app/" target="_blank" rel="noopener"
+            <a
+              href="https://gretanegri.vercel.app/"
+              target="_blank"
+              rel="noopener"
               >Greta Negri</a
             >
           </p>
@@ -574,6 +1158,7 @@
       </div>
     </footer>
 
+    <script src="js/vendor/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/booking.js" defer></script>
   </body>
