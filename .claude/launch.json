@@ -1,12 +1,6 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "save-tattoo",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8010"],
-      "port": 8010,
-      "autoPort": false
-    }
+    { "name": "save", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8040"], "port": 8040 }
   ]
 }

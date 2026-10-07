@@ -94,6 +94,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Lenis smooth scroll (js/main.js) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important; /* no double smoothing with the native CSS */
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;

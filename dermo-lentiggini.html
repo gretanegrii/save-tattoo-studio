@@ -5,28 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ===== Primary SEO ===== -->
-    <title>Dermopigmentazione Lentiggini — SAVE Tattoo Binasco (MI)</title>
+    <title>Lentiggini — Dermopigmentazione | SAVE Tattoo</title>
     <meta
       name="description"
-      content="Galleria dermopigmentazione lentiggini di SAVE Tattoo a Binasco (Milano)."
+      content="Dermopigmentazione a Binasco (Milano): trucco semipermanente professionale. Guarda i lavori e prenota la tua richiesta."
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
     <!-- TODO: replace with the real live domain -->
-    <link rel="canonical" href="https://www.savetattoo.it/dermo-lentiggini.html" />
+    <link
+      rel="canonical"
+      href="https://www.savetattoo.it/dermopigmentation.html"
+    />
     <meta name="theme-color" content="#f33283" />
 
     <!-- ===== Open Graph (social sharing) ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SAVE Tattoo" />
     <meta property="og:locale" content="it_IT" />
-    <meta property="og:title" content="Dermopigmentazione Lentiggini — SAVE Tattoo Binasco (MI)" />
+    <meta
+      property="og:title"
+      content="Dermopigmentazione a Binasco (MI) — SAVE Tattoo"
+    />
     <meta
       property="og:description"
-      content="Galleria dermopigmentazione lentiggini di SAVE Tattoo a Binasco (Milano)."
+      content="Dermopigmentazione a Binasco (Milano): trucco semipermanente professionale. Guarda i lavori."
     />
     <!-- TODO: real domain + create a 1200x630 preview image -->
-    <meta property="og:url" content="https://www.savetattoo.it/dermo-lentiggini.html" />
+    <meta
+      property="og:url"
+      content="https://www.savetattoo.it/dermopigmentation.html"
+    />
     <meta
       property="og:image"
       content="https://www.savetattoo.it/assets/img/og-image.jpg"
@@ -34,10 +43,13 @@
 
     <!-- ===== Twitter card ===== -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Dermopigmentazione Lentiggini — SAVE Tattoo Binasco (MI)" />
+    <meta
+      name="twitter:title"
+      content="Dermopigmentazione a Binasco (MI) — SAVE Tattoo"
+    />
     <meta
       name="twitter:description"
-      content="Galleria dermopigmentazione lentiggini di SAVE Tattoo a Binasco (Milano)."
+      content="Dermopigmentazione a Binasco (Milano): trucco semipermanente professionale."
     />
     <meta
       name="twitter:image"
@@ -69,14 +81,19 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/service.css" />
 
-    <!-- ===== Structured data: image gallery (schema.org) ===== -->
+    <!-- ===== Structured data: the service (schema.org) ===== -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ImageGallery",
-        "name": "Dermopigmentazione Lentiggini — SAVE Tattoo",
-        "about": "Dermopigmentazione",
-        "isPartOf": {
+        "@type": "Service",
+        "serviceType": "Dermopigmentazione",
+        "name": "Dermopigmentazione",
+        "description": "Trucco semipermanente professionale: sopracciglia, labbra e altre zone.",
+        "areaServed": {
+          "@type": "City",
+          "name": "Binasco"
+        },
+        "provider": {
           "@type": "TattooParlor",
           "name": "SAVE Tattoo",
           "url": "https://www.savetattoo.it/"
@@ -91,7 +108,9 @@
         <a href="index.html" class="logo">
           <img src="assets/img/logo/logo-white.png" alt="SAVE Tattoo" class="logo__img" />
         </a>
-        <p class="brand__meta">Binasco, MI</p>
+        <p class="brand__meta">
+          <span class="dot dot--fucsia" aria-hidden="true"></span>Binasco, MI
+        </p>
       </div>
 
       <nav aria-label="Principale">
@@ -122,22 +141,21 @@
     </header>
 
     <main>
-      <!-- Back link: torna alla pagina tattoo -->
       <a href="dermopigmentation.html" class="back-link">
         <span aria-hidden="true">←</span> Dermopigmentazione
       </a>
 
       <h1>Lentiggini</h1>
+      <hr class="service__rule" />
 
-      <!-- Full grid: one <li> per photo -->
-      <ul class="grid">
-        <li class="grid__item">
-          <a href="assets/img/dermo/lentiggini/full/01.jpg">
-            <img src="assets/img/dermo/lentiggini/thumb/01.jpg" alt="Dermopigmentazione lentiggini" loading="lazy" />
-          </a>
-        </li>
-        <!-- ...ripeti i <li> per ogni foto... -->
-      </ul>
+      <section class="tattoo-gallery">
+        <ul class="tattoo-gallery__grid js-gallery" id="zone-grid">
+          <li class="tattoo-gallery__item"><img src="assets/img/dermo/lentiggini/01.webp" alt="Dermopigmentazione lentiggini" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/dermo/lentiggini/02.webp" alt="Dermopigmentazione lentiggini" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/dermo/lentiggini/03.webp" alt="Dermopigmentazione lentiggini" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/dermo/lentiggini/04.webp" alt="Dermopigmentazione lentiggini" loading="lazy" /></li>
+        </ul>
+      </section>
     </main>
 
     <footer>
@@ -269,6 +287,7 @@
       </div>
     </footer>
 
+    <script src="js/vendor/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/gallery.js" defer></script>
   </body>

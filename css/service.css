@@ -33,6 +33,11 @@ main h1 {
   text-transform: uppercase;
 }
 
+/* long single-word titles (e.g. Dermopigmentazione) scale down to fit on one line */
+main h1.h1--long {
+  font-size: clamp(1.6rem, 7.3vw, 5.4rem);
+}
+
 .service__intro {
   max-width: 80ch;
   margin-top: 0.75rem;
@@ -178,7 +183,7 @@ main h1 {
 }
 
 .tattoo-gallery__item {
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 4; /* vertical tiles */
   background: var(--color-grey);
   overflow: hidden;
 }
@@ -188,6 +193,12 @@ main h1 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.tattoo-gallery__item:hover img {
+  opacity: 0.8; /* subtle dim on hover */
 }
 
 .tattoo-gallery__item.is-hidden {
@@ -259,4 +270,208 @@ main h1 {
 .btn-prenota:hover .btn-prenota__icon {
   background: var(--color-fucsia);
   color: var(--color-black);
+}
+
+/* -------------------------------------------PIERCING ZONES------------------------------------------- */
+.zone {
+  margin-top: clamp(3rem, 8vh, 6rem);
+}
+
+/* title (left) + photo strip (right, bleeds off the screen edge) */
+.zone__top {
+  display: grid;
+  grid-template-columns: clamp(7rem, 18vw, 16rem) minmax(0, 1fr);
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.zone__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 3.2vw, 2.8rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  white-space: nowrap; /* fits within its column, never overlaps the strip */
+  color: var(--color-white);
+  transition: opacity 0.3s ease;
+}
+
+/* hovering a section dims the OTHER section titles (text only, not the photos) */
+main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
+  opacity: 0.3;
+}
+
+.zone__strip {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0 -20px 0 0; /* reach the screen edge on the right */
+  padding: 0;
+  list-style: none;
+  overflow: hidden; /* clip → the last photo stays "tranciata" on the right */
+}
+
+.zone__thumb {
+  flex: 0 0 auto;
+  width: clamp(8rem, 14vw, 13rem);
+  aspect-ratio: 3 / 4;
+  background: var(--color-grey);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.zone__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.zone__thumb:hover img {
+  opacity: 0.8;
+}
+
+/* prices + aftercare, aligned under the strip */
+.zone__info {
+  margin-top: 1.5rem;
+  margin-left: calc(clamp(7rem, 18vw, 16rem) + clamp(1.5rem, 4vw, 3rem));
+}
+
+.price-list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  gap: 0.4rem clamp(1.5rem, 4vw, 4rem);
+  margin: 0 0 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.price-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.price-list dt {
+  font-weight: 700; /* piercing name — Space Mono bold */
+}
+
+.price-list dd {
+  margin: 0;
+  font-weight: 400; /* price — Space Mono regular */
+  white-space: nowrap;
+}
+
+.price-note {
+  display: block;
+  font-size: 0.72em;
+  text-transform: none;
+  opacity: 0.7;
+}
+
+/* keep the aftercare link close under its own prices (not centred in the gap) */
+.zone__info .service__aftercare {
+  margin: 0.75rem 0 0;
+}
+
+@media (max-width: 700px) {
+  .zone__top {
+    grid-template-columns: 1fr;
+    row-gap: 1rem;
+  }
+  .zone__info {
+    margin-left: 0;
+  }
+  .price-list {
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* -------------------------------------------LIGHTBOX (click to zoom)------------------------------------------- */
+/* Full-screen viewer, Martina-style: click the left/right half to browse,
+   Esc / × / click outside to close (built by js/gallery.js). */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 10, 0.95);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  user-select: none;
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  z-index: 2;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--color-white);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.lightbox__arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 0 1rem;
+  color: var(--color-white);
+  font-size: 3rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.25s ease;
+}
+
+.lightbox__arrow--left {
+  left: 0.5rem;
+}
+
+.lightbox__arrow--right {
+  right: 0.5rem;
+}
+
+.lightbox__close:hover,
+.lightbox__arrow:hover {
+  color: var(--color-fucsia);
+}
+
+.lightbox__counter {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-white);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 700px) {
+  .lightbox__arrow {
+    display: none; /* on mobile, tap the halves to browse */
+  }
 }

@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ===== Primary SEO ===== -->
-    <title>Piercing Viso — SAVE Tattoo Binasco (MI)</title>
+    <title>Viso — Piercing | SAVE Tattoo</title>
     <meta
       name="description"
-      content="Galleria dei piercing viso di SAVE Tattoo a Binasco (Milano)."
+      content="Piercing a Binasco (Milano): orecchie, naso, viso, microdermal e altri. Guarda le foto, i prezzi e come prendertene cura. Prenota la tua richiesta."
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
     <!-- TODO: replace with the real live domain -->
-    <link rel="canonical" href="https://www.savetattoo.it/piercing-viso.html" />
+    <link rel="canonical" href="https://www.savetattoo.it/piercing.html" />
     <meta name="theme-color" content="#f33283" />
 
     <!-- ===== Open Graph (social sharing) ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="SAVE Tattoo" />
     <meta property="og:locale" content="it_IT" />
-    <meta property="og:title" content="Piercing Viso — SAVE Tattoo Binasco (MI)" />
+    <meta property="og:title" content="Piercing a Binasco (MI) — SAVE Tattoo" />
     <meta
       property="og:description"
-      content="Galleria dei piercing viso di SAVE Tattoo a Binasco (Milano)."
+      content="Piercing a Binasco (Milano): orecchie, naso, viso, microdermal e altri. Foto, prezzi e cura."
     />
     <!-- TODO: real domain + create a 1200x630 preview image -->
-    <meta property="og:url" content="https://www.savetattoo.it/piercing-viso.html" />
+    <meta property="og:url" content="https://www.savetattoo.it/piercing.html" />
     <meta
       property="og:image"
       content="https://www.savetattoo.it/assets/img/og-image.jpg"
@@ -34,10 +34,13 @@
 
     <!-- ===== Twitter card ===== -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Piercing Viso — SAVE Tattoo Binasco (MI)" />
+    <meta
+      name="twitter:title"
+      content="Piercing a Binasco (MI) — SAVE Tattoo"
+    />
     <meta
       name="twitter:description"
-      content="Galleria dei piercing viso di SAVE Tattoo a Binasco (Milano)."
+      content="Piercing a Binasco (Milano): orecchie, naso, viso, microdermal e altri. Foto, prezzi e cura."
     />
     <meta
       name="twitter:image"
@@ -69,14 +72,19 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/service.css" />
 
-    <!-- ===== Structured data: image gallery (schema.org) ===== -->
+    <!-- ===== Structured data: the service (schema.org) ===== -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ImageGallery",
-        "name": "Piercing Viso — SAVE Tattoo",
-        "about": "Piercing",
-        "isPartOf": {
+        "@type": "Service",
+        "serviceType": "Piercing",
+        "name": "Piercing",
+        "description": "Piercing su orecchie, naso, viso, microdermal e altre zone, con cura e materiali professionali.",
+        "areaServed": {
+          "@type": "City",
+          "name": "Binasco"
+        },
+        "provider": {
           "@type": "TattooParlor",
           "name": "SAVE Tattoo",
           "url": "https://www.savetattoo.it/"
@@ -89,9 +97,15 @@
     <header>
       <div class="brand">
         <a href="index.html" class="logo">
-          <img src="assets/img/logo/logo-white.png" alt="SAVE Tattoo" class="logo__img" />
+          <img
+            src="assets/img/logo/logo-white.png"
+            alt="SAVE Tattoo"
+            class="logo__img"
+          />
         </a>
-        <p class="brand__meta">Binasco, MI</p>
+        <p class="brand__meta">
+          <span class="dot dot--fucsia" aria-hidden="true"></span>Binasco, MI
+        </p>
       </div>
 
       <nav aria-label="Principale">
@@ -122,22 +136,31 @@
     </header>
 
     <main>
-      <!-- Back link: torna alla pagina tattoo -->
       <a href="piercing.html" class="back-link">
         <span aria-hidden="true">←</span> Piercing
       </a>
 
       <h1>Viso</h1>
+      <hr class="service__rule" />
 
-      <!-- Full grid: one <li> per photo -->
-      <ul class="grid">
-        <li class="grid__item">
-          <a href="assets/img/piercing/viso/full/01.jpg">
-            <img src="assets/img/piercing/viso/thumb/01.jpg" alt="Piercing viso" loading="lazy" />
-          </a>
-        </li>
-        <!-- ...ripeti i <li> per ogni foto... -->
-      </ul>
+      <section class="tattoo-gallery">
+        <ul class="tattoo-gallery__grid js-gallery" id="zone-grid">
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/01.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/02.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/03.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/04.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/05.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/06.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/07.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/08.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/09.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/10.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/11.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/12.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/13.webp" alt="Piercing viso" loading="lazy" /></li>
+          <li class="tattoo-gallery__item"><img src="assets/img/piercing/viso/14.webp" alt="Piercing viso" loading="lazy" /></li>
+        </ul>
+      </section>
     </main>
 
     <footer>
@@ -261,7 +284,10 @@
         <div class="footer__credit">
           <p>Design / Code</p>
           <p>
-            <a href="https://gretanegri.vercel.app/" target="_blank" rel="noopener"
+            <a
+              href="https://gretanegri.vercel.app/"
+              target="_blank"
+              rel="noopener"
               >Greta Negri</a
             >
           </p>
@@ -269,6 +295,7 @@
       </div>
     </footer>
 
+    <script src="js/vendor/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/gallery.js" defer></script>
   </body>
