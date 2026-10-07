@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/flash-booking.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="brand">
+        <a href="index.html" class="logo">
+          <img
+            src="assets/img/logo/logo.png"
+            alt="SAVE Tattoo"
+            class="logo__img"
+          />
+        </a>
+        <p class="brand__meta">
+          <span class="dot dot--fucsia" aria-hidden="true"></span>Binasco, MI
+        </p>
+      </div>
+
+      <nav aria-label="Principale">
+        <ul class="nav__col">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">Su di me</a></li>
+        </ul>
+        <ul class="nav__col">
+          <li><a href="index.html#lavori">Lavori</a></li>
+          <li><a href="flash.html" aria-current="page">Flash</a></li>
+          <li>
+            <button
+              type="button"
+              aria-expanded="false"
+              aria-controls="faq-drawer"
+              class="nav__faq"
+            >
+              FAQ
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <a href="booking.html" class="btn-prenota">
+        <span class="btn-prenota__label">Prenota</span>
+        <span aria-hidden="true" class="btn-prenota__icon">↗</span>
+      </a>
+    </header>
+    <main>
+      <!-- Back link -->
+      <a href="flash.html" class="back-link">
+        <span aria-hidden="true">←</span> Flash
+      </a>
+
+      <div class="flash-booking">
+        <!-- left: the flash image (filled by js/flash-booking.js from ?flash=NN) -->
+        <div class="flash-booking__media">
+          <img id="flash-image" src="" alt="Disegno flash" />
+        </div>
+
+        <!-- right: status, name, size picker, request button -->
+        <div class="flash-booking__details">
+          <p class="brand__meta flash-booking__status">
+            <span class="dot dot--fucsia" aria-hidden="true"></span
+            ><span id="flash-status">Disponibile</span>
+          </p>
+
+          <h1 id="flash-name">Nome flash</h1>
+          <hr class="service__rule" />
+
+          <fieldset class="field-group">
+            <legend class="field-label">Misure disponibili</legend>
+            <!-- TODO: sostituire "— €" con i prezzi fissi per misura -->
+            <div class="choice-group choice-group--chips">
+              <label class="chip">
+                <input type="radio" name="tattoo_dimensione" value="Piccolo (meno di 5 cm)" />
+                <span class="chip__box"><span class="chip__name">Piccolo (meno di 5 cm)</span><span class="chip__price">— €</span></span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="tattoo_dimensione" value="Medio (6–10 cm)" />
+                <span class="chip__box"><span class="chip__name">Medio (6–10 cm)</span><span class="chip__price">— €</span></span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="tattoo_dimensione" value="Grande (10 cm in su)" />
+                <span class="chip__box"><span class="chip__name">Grande (10 cm in su)</span><span class="chip__price">— €</span></span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="tattoo_dimensione" value="Molto grande" />
+                <span class="chip__box"><span class="chip__name">Molto grande</span><span class="chip__price">— €</span></span>
+              </label>
+              <label class="chip">
+                <input type="radio" name="tattoo_dimensione" value="Non so ancora" />
+                <span class="chip__box"><span class="chip__name">Non so ancora</span><span class="chip__price">— €</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <p class="flash-booking__note">
+            Non prenoti direttamente: invii una richiesta e ti rispondo io.
+          </p>
+
+          <button type="button" id="flash-cta" class="btn-submit">
+            Prenota questo flash <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Booking modal (opened by "Prenota questo flash") -->
+    <div class="modal" id="booking-modal" hidden>
+      <div
+        class="modal__box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div class="modal__head">
+          <span id="modal-title">Prenota questo flash</span>
+          <button type="button" class="modal__close" aria-label="Chiudi">×</button>
+        </div>
+
+        <form class="booking-form" id="booking-form">
+          <input type="hidden" name="flash" id="form-flash" value="" />
+          <input type="hidden" name="misura" id="form-misura" value="" />
+
+          <div class="field-row">
+            <label class="field">
+              <span>Nome*</span>
+              <input type="text" name="nome" required />
+            </label>
+            <label class="field">
+              <span>Cognome*</span>
+              <input type="text" name="cognome" required />
+            </label>
+          </div>
+
+          <div class="field-row">
+            <label class="field">
+              <span>Telefono*</span>
+              <input type="tel" name="telefono" required />
+            </label>
+            <label class="field">
+              <span>Email*</span>
+              <input type="email" name="email" required />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Messaggio</span>
+            <textarea
+              name="messaggio"
+              rows="3"
+              placeholder="Vuoi far sapere qualcos'altro all'artista?"
+            ></textarea>
+          </label>
+
+          <label class="check">
+            <input type="checkbox" required />
+            <span
+              >Confermo di essere maggiorenne o, se minorenne, di essere
+              accompagnato/a da un genitore.</span
+            >
+          </label>
+
+          <label class="check">
+            <input type="checkbox" required />
+            <span
+              >Ho letto e accetto la <a href="privacy.html">Privacy Policy</a>.</span
+            >
+          </label>
+
+          <p class="booking-form__download">
+            <a href="assets/pdf/consenso-informato.pdf" target="_blank" rel="noopener"
+              >Scarica il consenso informato</a
+            >
+          </p>
+
+          <p class="booking-form__note">
+            Non paghi ora. L'acconto per bloccare l'appuntamento te lo chiedo
+            quando ti ricontatto.
+          </p>
+
+          <button type="submit" class="btn-submit">
+            Invia richiesta <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/vendor/lenis.min.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/flash-booking.js" defer></script>
+  </body>
+</html>
