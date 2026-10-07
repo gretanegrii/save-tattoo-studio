@@ -1,20 +1,4 @@
-/* -------------------------------------------HEADER (auto-hide)------------------------------------------- */
-/* home.css is linked only from index.html, so styling header/main here is safe.
-   The header is fixed and slides away on scroll down (JS toggles .nav-hidden). */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  padding: 0.5rem 20px 1.5rem; /* 20px side gutter to match the content box */
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-header.nav-hidden {
-  transform: translateY(-100%);
-}
-
+/* Header auto-hide (fixed + .nav-hidden) now lives in base.css for every page. */
 /* clear the fixed header so the hero starts just below it */
 main {
   padding-top: 6rem;
@@ -60,6 +44,7 @@ main {
 .hero__title {
   position: relative;
   z-index: 1; /* text in front of the medusa */
+  pointer-events: none; /* decorative: let clicks reach the service links behind its box */
   grid-column: 1 / -1;
   grid-row: 1;
   font-family: var(--font-display);

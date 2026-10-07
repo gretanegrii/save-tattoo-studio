@@ -34,29 +34,4 @@
     });
   }
 
-  /* 3) Navbar auto-hide: slides away on scroll down, reappears on scroll up.
-     The gradual motion comes from the CSS `transition: transform` on header. */
-  const header = document.querySelector("header");
-  if (header) {
-    let lastY = window.scrollY;
-    let navTick = false;
-    function updateNav() {
-      const y = window.scrollY;
-      if (y > lastY && y > 120) header.classList.add("nav-hidden");
-      else if (y < lastY) header.classList.remove("nav-hidden");
-      lastY = y;
-    }
-    window.addEventListener(
-      "scroll",
-      function () {
-        if (navTick) return;
-        navTick = true;
-        requestAnimationFrame(function () {
-          updateNav();
-          navTick = false;
-        });
-      },
-      { passive: true }
-    );
-  }
 })();

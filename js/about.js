@@ -92,29 +92,7 @@
     visual.style.height = Math.max(0, lastBottom - visualTop) + "px";
   }
 
-  /* ---------- navbar auto-hide ---------- */
-  let lastScroll = window.scrollY;
-  function updateNav() {
-    if (!header || mobile()) {
-      if (header) header.classList.remove("nav-hidden");
-      return;
-    }
-    const y = window.scrollY;
-    if (y > lastScroll && y > 120) header.classList.add("nav-hidden");
-    else if (y < lastScroll) header.classList.remove("nav-hidden");
-    lastScroll = y;
-  }
-
-  /* the sticky image is native (no jitter); scroll only drives the navbar */
-  let ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      updateNav();
-      ticking = false;
-    });
-  }
+  /* navbar auto-hide is handled globally by js/main.js */
   function onResize() {
     alignStatement();
     setVisualHeight();
@@ -122,7 +100,6 @@
 
   alignStatement();
   setVisualHeight();
-  window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onResize);
   /* recompute once fonts/images settle (they can shift measured positions) */
   window.addEventListener("load", onResize);

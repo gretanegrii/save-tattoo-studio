@@ -1,0 +1,4 @@
+/* clear the fixed header (base.css) */
+main {
+  padding-top: 6rem;
+}

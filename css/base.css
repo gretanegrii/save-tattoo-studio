@@ -114,15 +114,27 @@ a {
 }
 
 /* -------------------------------------------NAVBAR------------------------------------------- */
+/* Fixed header that slides away on scroll down and eases back on scroll up
+   (js/main.js toggles .nav-hidden). The gradual motion is this transition. */
 header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
   display: flex;
   align-items: flex-start;
   gap: 10rem;
-  padding: 0.5rem 0 2rem;
+  padding: 0.5rem 20px 1.5rem; /* 20px side gutter to match the content box */
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+header.nav-hidden {
+  transform: translateY(-100%);
 }
 
 .brand {
@@ -143,7 +155,6 @@ header {
   width: auto;
 }
 
-/* Status dot: a small circle with a pulsing halo (same as the portfolio) */
 .dot {
   display: inline-block;
   width: 0.4em;
@@ -153,6 +164,12 @@ header {
   margin-right: 0.4em;
   vertical-align: middle;
   animation: pulse 2s ease-out infinite;
+}
+
+/* fuchsia variant for the dark (service) pages */
+.dot--fucsia {
+  --dot-color: var(--color-fucsia);
+  --dot-halo: rgba(243, 50, 131, 0.5);
 }
 
 @keyframes pulse {
@@ -244,7 +261,7 @@ footer {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   display: grid;
-  grid-template-columns: auto 1fr; /* sinistra = contenuto, mappa = resto */
+  grid-template-columns: auto 1fr;
   column-gap: 3rem;
   row-gap: 2rem;
 }
@@ -258,7 +275,7 @@ footer {
   gap: 1rem;
   margin-inline: -20px;
   padding: 0.75rem 20px;
-  border-top: 1px solid transparent; /* reserved: turns black on hover */
+  border-top: 1px solid transparent;
   border-bottom: 1px solid var(--color-fucsia); /* linea sotto PRENOTA */
   color: var(--color-fucsia);
   font-family: var(--font-display);
