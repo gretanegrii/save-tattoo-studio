@@ -56,19 +56,6 @@ main {
   margin: 1.75rem 0 0;
 }
 
-.booking-notice {
-  margin: 1.75rem 0 0;
-  max-width: 70ch;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-.booking-notice strong {
-  display: block;
-}
-
 /* -------------------------------------------STEPS (one visible at a time)------------------------------------------- */
 .step {
   display: none;
