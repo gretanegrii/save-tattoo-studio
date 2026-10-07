@@ -127,7 +127,6 @@
           "https://www.instagram.com/saveria.sforza.tattoo",
           "https://www.tiktok.com/@save.tattoo2"
         ]
-      }
     </script>
   </head>
 
@@ -135,9 +134,15 @@
     <header>
       <div class="brand">
         <a href="index.html" class="logo">
-          <img src="assets/img/logo/logo.png" alt="SAVE Tattoo" class="logo__img" />
+          <img
+            src="assets/img/logo/logo.png"
+            alt="SAVE Tattoo"
+            class="logo__img"
+          />
         </a>
-        <p class="brand__meta">Binasco, MI</p>
+        <p class="brand__meta">
+          <span class="dot" aria-hidden="true"></span>Binasco, MI
+        </p>
       </div>
 
       <nav aria-label="Principale">
@@ -170,20 +175,25 @@
     <main>
       <!-------------------------------------------HERO------------------------------------------->
       <section class="hero">
-        <!-- 3D medusa behind the SAVE title (decorative, auto-rotating) -->
-        <model-viewer
-          class="hero__model"
-          src="assets/models/medusa-web.glb"
-          orientation="0deg 210deg 0deg"
-          camera-orbit="0deg 90deg auto"
-          interaction-prompt="none"
-          disable-zoom
-          shadow-intensity="0"
-          exposure="0.95"
-          ar="false"
-          loading="eager"
-          aria-hidden="true"
-        ></model-viewer>
+        <!-- 3D medusa — fixed stage clips it to the viewport so it can bleed off the edges when big -->
+        <div class="hero__stage" aria-hidden="true">
+          <model-viewer
+            class="hero__model"
+            src="assets/models/medusa-web.glb"
+            orientation="0deg 210deg 0deg"
+            camera-orbit="0deg 90deg auto"
+            field-of-view="18deg"
+            interaction-prompt="none"
+            disable-zoom
+            shadow-intensity="0"
+            environment-image="assets/img/env/studio.png"
+            tone-mapping="aces"
+            exposure="1.0"
+            ar="false"
+            loading="eager"
+            aria-hidden="true"
+          ></model-viewer>
+        </div>
         <h1 class="hero__title">Save</h1>
         <p class="hero__tagline">Studio tattoo · dal 2011 · Saveria Sforza</p>
         <p class="hero__statement">
@@ -346,7 +356,10 @@
         <div class="footer__credit">
           <p>Design / Code</p>
           <p>
-            <a href="https://gretanegri.vercel.app/" target="_blank" rel="noopener"
+            <a
+              href="https://gretanegri.vercel.app/"
+              target="_blank"
+              rel="noopener"
               >Greta Negri</a
             >
           </p>
@@ -366,13 +379,15 @@
         if (!hm) return;
         hm.addEventListener("load", function () {
           for (const m of hm.model.materials) {
-            m.pbrMetallicRoughness.setBaseColorFactor([0.95, 0.196, 0.514, 1]);
+            // deep polished graphite marble, lit by the soft directional studio environment map
+            m.pbrMetallicRoughness.setBaseColorFactor([0.055, 0.055, 0.065, 1]);
             m.pbrMetallicRoughness.setMetallicFactor(0);
-            m.pbrMetallicRoughness.setRoughnessFactor(0.72);
+            m.pbrMetallicRoughness.setRoughnessFactor(0.16);
           }
         });
       })();
     </script>
     <script src="js/hero.js" defer></script>
+    <script src="js/hero-model.js" defer></script>
   </body>
 </html>

@@ -1,3 +1,25 @@
+/* -------------------------------------------HEADER (auto-hide)------------------------------------------- */
+/* home.css is linked only from index.html, so styling header/main here is safe.
+   The header is fixed and slides away on scroll down (JS toggles .nav-hidden). */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  padding: 0.5rem 20px 1.5rem; /* 20px side gutter to match the content box */
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+header.nav-hidden {
+  transform: translateY(-100%);
+}
+
+/* clear the fixed header so the hero starts just below it */
+main {
+  padding-top: 6rem;
+}
+
 /* -------------------------------------------HERO------------------------------------------- */
 .hero {
   position: relative;
@@ -7,16 +29,31 @@
   align-items: start;
 }
 
-/* 3D medusa on top of the SAVE title */
+/* Fixed full-viewport stage: clips the medusa to the screen so it can grow
+   past the edges without ever creating a horizontal scrollbar. */
+.hero__stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 3D medusa — moved/scaled/rotated by scroll (see js/hero-model.js) */
 .hero__model {
   position: absolute;
-  top: 0; /* anchored high so the whole model stays within the hero, never spilling below the fold */
+  top: 7rem; /* sits just below the header, where it rested before it went fixed */
   left: 50%;
-  transform: translateX(-50%);
   width: min(100vw, 900px);
   height: min(88vh, 900px);
+  /* --mx/--my translate it, --ms scales it, --mo fades it: all driven by JS */
+  transform: translateX(-50%) translate(var(--mx, 0px), var(--my, 0px))
+    scale(var(--ms, 1));
+  transform-origin: center center;
+  opacity: var(--mo, 1);
   z-index: 2; /* in front of the title */
   pointer-events: none; /* never blocks scroll or clicks */
+  will-change: transform, opacity;
   --poster-color: transparent;
 }
 
@@ -24,9 +61,14 @@
   position: relative;
   z-index: 1; /* text in front of the medusa */
   grid-column: 1 / -1;
+  grid-row: 1;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(5rem, 23vw, 24rem);
+  font-size: clamp(
+    5rem,
+    34vw,
+    56rem
+  ); /* fills the page edge-to-edge (34vw ≈ word width of "SAVE") */
   line-height: 0.82;
   letter-spacing: -0.02em;
   text-align: center;
@@ -69,6 +111,10 @@
   line-height: 1.7;
 }
 
+.hero__services a:hover {
+  font-weight: 700;
+}
+
 /* Scroll indicator: stays in place; the % is updated by JS later. */
 .hero__scroll {
   position: fixed;
@@ -83,7 +129,15 @@
 /* -------------------------------------------SCATTERED PROFILE------------------------------------------- */
 .hero-block {
   max-width: 36ch;
-  margin-block: clamp(12rem, 32vh, 26rem);
+  /* wide, sparse spacing so the page is long and the medusa has room to travel */
+  margin-block: clamp(28rem, 78vh, 60rem);
+  position: relative;
+  z-index: 1; /* text above the medusa where they ever meet */
+}
+
+/* push the first block well below the hero */
+.hero-block:first-of-type {
+  margin-top: clamp(34rem, 90vh, 70rem);
 }
 
 .hero-block:nth-of-type(odd) {
@@ -119,7 +173,9 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   text-align: center;
-  margin-top: 12vh;
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(30rem, 80vh, 60rem);
 }
 
 /* -------------------------------------------MOBILE------------------------------------------- */

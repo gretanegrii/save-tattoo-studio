@@ -5,6 +5,8 @@
   --paper: #f5f0e6;
   --color-white: #ffffff;
   --color-grey: #8a857b;
+  --dot-color: var(--color-black);
+  --dot-halo: rgba(10, 10, 10, 0.4);
   --font-display: "Archivo", system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
 }
@@ -111,11 +113,11 @@ a {
   text-decoration: none;
 }
 
-/* -------------------------------------------SITE HEADER------------------------------------------- */
+/* -------------------------------------------NAVBAR------------------------------------------- */
 header {
   display: flex;
   align-items: flex-start;
-  gap: 5rem; /* same gap between nav columns and the Prenota CTA */
+  gap: 10rem;
   padding: 0.5rem 0 2rem;
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -141,9 +143,33 @@ header {
   width: auto;
 }
 
+/* Status dot: a small circle with a pulsing halo (same as the portfolio) */
+.dot {
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: var(--dot-color);
+  margin-right: 0.4em;
+  vertical-align: middle;
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--dot-halo);
+  }
+  60% {
+    box-shadow: 0 0 0 0.7em transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 header nav {
   display: flex;
-  gap: 5rem;
+  gap: 10rem;
   font-weight: 700;
 }
 
@@ -151,6 +177,11 @@ header nav {
   display: flex;
   flex-direction: column;
   gap: 0.35em;
+}
+
+.nav__col a,
+.nav__faq {
+  transition: color 0.25s ease;
 }
 
 .nav__col a:hover,
@@ -172,15 +203,34 @@ header nav {
 .btn-prenota {
   display: inline-flex;
   align-items: center;
-  gap: 0.6em;
-  background: var(--color-black);
-  color: var(--paper);
-  padding: 0.45em 0.7em;
+  gap: 0.2em;
   font-weight: 700;
   white-space: nowrap;
 }
 
-.btn-prenota:hover {
+.btn-prenota__label,
+.btn-prenota__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.4em; /* both boxes the same height */
+  background: var(--color-black);
+  color: var(--paper);
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+.btn-prenota__label {
+  padding-inline: 0.9em;
+}
+
+.btn-prenota__icon {
+  width: 2.4em;
+}
+
+.btn-prenota:hover .btn-prenota__label,
+.btn-prenota:hover .btn-prenota__icon {
   background: var(--color-white);
   color: var(--color-black);
 }
