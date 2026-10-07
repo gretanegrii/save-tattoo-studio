@@ -14,6 +14,9 @@
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
+
+  // esposto per far bloccare lo scroll di fondo quando si apre la FAQ (js/faq.js)
+  window.__lenis = lenis;
 })();
 
 /* Navbar auto-hide (all pages).

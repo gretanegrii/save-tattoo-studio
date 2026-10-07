@@ -549,3 +549,176 @@ footer a:hover {
     gap: 0.5rem;
   }
 }
+
+/* -------------------------------------------FAQ DRAWER (slides in from the right)------------------------------------------- */
+/* Pannello scuro che entra da destra e occupa metà pagina.
+   Costruito e gestito da js/faq.js; presente su tutte le pagine. */
+.faq {
+  position: fixed;
+  inset: 0;
+  z-index: 20; /* sopra l'header (z-index 4) */
+  pointer-events: none; /* non blocca la pagina quando è chiuso */
+}
+
+.faq.is-open {
+  pointer-events: auto;
+}
+
+/* metà sinistra: chiude al click, senza oscurare (come nel mockup) */
+.faq__backdrop {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+
+.faq__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  overflow-y: auto;
+  padding: 1.5rem 20px 4rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  transform: translateX(100%); /* fuori schermo a destra */
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  -webkit-overflow-scrolling: touch;
+}
+
+.faq.is-open .faq__panel {
+  transform: none; /* entra */
+}
+
+/* testata: FAQ + chiudi, restano fissi mentre si scorre */
+.faq__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  background: var(--color-black);
+}
+
+.faq__title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.faq__close {
+  flex: none;
+  padding: 0 0.15em;
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.faq__close:hover {
+  color: var(--color-fucsia);
+}
+
+/* sezioni e voci */
+.faq__section-title {
+  margin: 2.5rem 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fucsia);
+}
+
+.faq__section:first-child .faq__section-title {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.faq__item + .faq__item {
+  margin-top: 1.75rem;
+}
+
+.faq__q {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.faq__a {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.faq__a p {
+  margin: 0 0 0.6rem;
+}
+
+.faq__a p:last-child {
+  margin-bottom: 0;
+}
+
+.faq__a ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.faq__a li {
+  margin-bottom: 0.6rem;
+}
+
+.faq__a li:last-child {
+  margin-bottom: 0;
+}
+
+.faq__a strong {
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.faq__a a {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+.faq__a a:hover {
+  color: var(--color-fucsia);
+}
+
+.faq__dl {
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* blocca lo scroll di fondo quando la FAQ è aperta (fallback senza Lenis) */
+html.faq-open,
+html.faq-open body {
+  overflow: hidden;
+}
+
+/* mobile: il pannello prende tutta la larghezza */
+@media (max-width: 700px) {
+  .faq__panel {
+    width: 100%;
+  }
+}
+
+/* stacco del pannello FAQ dallo sfondo (utile sulle pagine scure) */
+.faq__panel {
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
+}
