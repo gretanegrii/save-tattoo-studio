@@ -270,12 +270,12 @@ footer {
   grid-column: 1 / -1;
   grid-row: 1;
   display: flex;
-  align-items: center;
+  align-items: stretch; /* children fill the band height so the divider reaches both lines */
   justify-content: space-between;
   gap: 1rem;
   margin-inline: -20px;
-  padding: 0.75rem 20px;
-  border-top: 1px solid transparent;
+  padding: 0 20px; /* vertical padding moved onto the label (see below) */
+  border-top: 1px solid var(--color-fucsia); /* linea sopra PRENOTA */
   border-bottom: 1px solid var(--color-fucsia); /* linea sotto PRENOTA */
   color: var(--color-fucsia);
   font-family: var(--font-display);
@@ -285,13 +285,19 @@ footer {
 }
 
 .footer__cta-label {
+  display: flex;
+  align-items: center;
+  padding-block: 0.75rem; /* gives the band its height */
   font-size: clamp(2.5rem, 8vw, 6rem);
 }
 
 .footer__cta-icon {
-  font-size: clamp(2rem, 5vw, 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding-left: 1.5rem;
-  border-left: 1px solid var(--color-fucsia);
+  font-size: clamp(2rem, 5vw, 4rem);
+  border-left: 1px solid var(--color-fucsia); /* full-height divider: touches both lines */
 }
 
 .footer__cta:hover {

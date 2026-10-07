@@ -140,68 +140,68 @@
       <!-------------------------------------------INTRO------------------------------------------->
       <h1>Tatuaggi</h1>
       <p class="service__intro">
-        Ogni tatuaggio parte dalla tua idea. Nessuno stile fisso: lo costruiamo
-        insieme
+        Ogni tatuaggio parte dalla tua idea: nessuno stile fisso, lo costruiamo
+        insieme. È un progetto su misura — il preventivo te lo do dopo la tua
+        richiesta.
       </p>
 
-      <!-------------------------------------------GALLERY------------------------------------------->
-      <section class="gallery">
-        <!-- TUTTI: vertical (portrait) thumbnails -->
-        <a href="tattoo-tutti.html" class="gallery__row">
-          <h2 class="gallery__title">Tutti</h2>
-          <ul class="gallery__preview">
-            <!-- TODO: thumbnail images (portrait) -->
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <span class="gallery__row-cta" aria-hidden="true">↗</span>
-        </a>
+      <hr class="service__rule" />
 
-        <!-- PRIMA/DOPO: horizontal thumbnails (each will be split before|after) -->
-        <a href="tattoo-prima-dopo.html" class="gallery__row">
-          <h2 class="gallery__title">Prima / Dopo</h2>
-          <ul class="gallery__preview gallery__preview--wide">
-            <!-- TODO: horizontal thumbnails (split before|after) -->
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <span class="gallery__row-cta" aria-hidden="true">↗</span>
-        </a>
+      <!-------------------------------------------INFO (pre-gallery)------------------------------------------->
+      <div class="service__info">
+        <p class="service__aftercare">
+          <a
+            href="assets/pdf/tattoo-aftercare.pdf"
+            target="_blank"
+            rel="noopener"
+          >
+            Prenditi cura del tuo tatuaggio <span aria-hidden="true">↓</span>
+          </a>
+        </p>
+      </div>
 
-        <!-- COPERTURE: horizontal thumbnails (each will be split before|after) -->
-        <a href="tattoo-coperture.html" class="gallery__row">
-          <h2 class="gallery__title">Coperture</h2>
-          <ul class="gallery__preview gallery__preview--wide">
-            <!-- TODO: horizontal thumbnails (split before|after) -->
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-          <span class="gallery__row-cta" aria-hidden="true">↗</span>
-        </a>
+      <!-------------------------------------------GALLERY (all photos)------------------------------------------->
+      <!-- TODO: replace the placeholder <li>s with real tattoo photos.
+           First 12 show on load; "Carica di più" reveals 8 more at a time. -->
+      <section class="tattoo-gallery" aria-label="Galleria tatuaggi">
+        <ul class="tattoo-gallery__grid" id="tattoo-grid">
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+          <li class="tattoo-gallery__item is-hidden"></li>
+        </ul>
+        <button type="button" class="load-more" id="load-more">
+          Carica di più
+        </button>
       </section>
-
-      <!-------------------------------------------AFTERCARE------------------------------------------->
-      <p class="service__aftercare">
-        <a
-          href="assets/pdf/tattoo-aftercare.pdf"
-          target="_blank"
-          rel="noopener"
-        >
-          Prenditi cura del tuo tatuaggio <span aria-hidden="true">↓</span>
-        </a>
-      </p>
-
-      <p class="service__note">
-        Ogni tatuaggio è un progetto su misura: il preventivo te lo do dopo la
-        tua richiesta.
-      </p>
     </main>
 
     <footer>
