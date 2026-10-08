@@ -1,3 +1,10 @@
+/* in flash.css → footer color carta */
+footer {
+  --footer-bg: var(--paper);
+  --footer-fg: var(--color-black);
+  --footer-accent: var(--color-black);
+}
+
 /* -------------------------------------------SERVICE PAGES------------------------------------------- */
 body {
   background: var(--paper);
@@ -6,6 +13,7 @@ body {
 
 main {
   padding-top: 6rem;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
 }
 
 /* -------------------------------------------BACK LINK + INTRO------------------------------------------- */

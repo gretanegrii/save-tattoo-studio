@@ -6,6 +6,7 @@ body {
 
 main {
   padding-top: 6rem;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
 }
 
 /* -------------------------------------------PAPER-PAGE HEADER OVERRIDES------------------------------------------- */
@@ -48,13 +49,14 @@ main {
 /* -------------------------------------------LAYOUT: image | details------------------------------------------- */
 .flash-booking {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* immagine più contenuta (non troppo alta): colonna sinistra limitata */
+  grid-template-columns: minmax(0, 36rem) 1fr;
   gap: clamp(2rem, 5vw, 5rem);
   align-items: start;
 }
 
 .flash-booking__media {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 3 / 4;
   background: #fff;
   overflow: hidden;
 }
@@ -190,6 +192,25 @@ main {
   color: var(--color-black);
 }
 
+/* CTA disattivata finché non si sceglie una misura */
+.btn-submit:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-submit:disabled:hover {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+/* nota prezzo: ben chiara (non attenuata come l'altra) */
+.flash-booking__note--price {
+  margin-top: 0;
+  opacity: 1;
+  font-weight: 700;
+  color: var(--color-fucsia);
+}
+
 /* -------------------------------------------MOBILE------------------------------------------- */
 @media (max-width: 800px) {
   .flash-booking {
@@ -197,31 +218,31 @@ main {
   }
 }
 
-/* -------------------------------------------BOOKING MODAL------------------------------------------- */
-.modal {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background: rgba(10, 10, 10, 0.5);
+/* -------------------------------------------REQUEST FORM (pannello inline)------------------------------------------- */
+/* Si apre sotto al bottone "Prenota questo flash", scorrendo dall'alto verso
+   il basso (niente overlay). L'animazione di altezza usa grid-template-rows. */
+.flash-reveal {
+  display: grid;
+  grid-template-rows: 0fr; /* collassato */
+  transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.modal[hidden] {
-  display: none;
+.flash-reveal.is-open {
+  grid-template-rows: 1fr; /* aperto */
 }
 
-.modal__box {
-  width: min(680px, 100%);
-  max-height: 90vh;
-  overflow-y: auto;
+.flash-reveal__inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.flash-reveal__box {
+  margin-top: 1.25rem;
   background: var(--paper);
   border: 1px solid var(--color-black);
 }
 
-.modal__head {
+.flash-reveal__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -233,7 +254,7 @@ main {
   text-transform: uppercase;
 }
 
-.modal__close {
+.flash-reveal__close {
   padding: 0 0.3em;
   background: none;
   border: 0;
@@ -244,8 +265,19 @@ main {
   transition: color 0.2s ease;
 }
 
-.modal__close:hover {
+.flash-reveal__close:hover {
   color: var(--color-fucsia);
+}
+
+/* Giorni preferiti: chip in riga (non a colonna come le misure) */
+.choice-group--when {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.choice-group--when .chip__box {
+  justify-content: center;
 }
 
 /* -------------------------------------------FORM------------------------------------------- */

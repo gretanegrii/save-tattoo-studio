@@ -6,6 +6,7 @@
     <title></title>
 
     <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/flash.css" />
     <link rel="stylesheet" href="css/flash-booking.css" />
   </head>
 
@@ -77,24 +78,59 @@
             <!-- TODO: sostituire "— €" con i prezzi fissi per misura -->
             <div class="choice-group choice-group--chips">
               <label class="chip">
-                <input type="radio" name="tattoo_dimensione" value="Piccolo (meno di 5 cm)" />
-                <span class="chip__box"><span class="chip__name">Piccolo (meno di 5 cm)</span><span class="chip__price">— €</span></span>
+                <input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Piccolo (meno di 5 cm)"
+                />
+                <span class="chip__box"
+                  ><span class="chip__name">Piccolo (meno di 5 cm)</span
+                  ><span class="chip__price">— €</span></span
+                >
               </label>
               <label class="chip">
-                <input type="radio" name="tattoo_dimensione" value="Medio (6–10 cm)" />
-                <span class="chip__box"><span class="chip__name">Medio (6–10 cm)</span><span class="chip__price">— €</span></span>
+                <input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Medio (6–10 cm)"
+                />
+                <span class="chip__box"
+                  ><span class="chip__name">Medio (6–10 cm)</span
+                  ><span class="chip__price">— €</span></span
+                >
               </label>
               <label class="chip">
-                <input type="radio" name="tattoo_dimensione" value="Grande (10 cm in su)" />
-                <span class="chip__box"><span class="chip__name">Grande (10 cm in su)</span><span class="chip__price">— €</span></span>
+                <input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Grande (10 cm in su)"
+                />
+                <span class="chip__box"
+                  ><span class="chip__name">Grande (10 cm in su)</span
+                  ><span class="chip__price">— €</span></span
+                >
               </label>
               <label class="chip">
-                <input type="radio" name="tattoo_dimensione" value="Molto grande" />
-                <span class="chip__box"><span class="chip__name">Molto grande</span><span class="chip__price">— €</span></span>
+                <input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Molto grande"
+                />
+                <span class="chip__box"
+                  ><span class="chip__name">Molto grande</span
+                  ><span class="chip__price">— €</span></span
+                >
               </label>
               <label class="chip">
-                <input type="radio" name="tattoo_dimensione" value="Non so ancora" />
-                <span class="chip__box"><span class="chip__name">Non so ancora</span><span class="chip__price">— €</span></span>
+                <input
+                  type="radio"
+                  name="tattoo_dimensione"
+                  value="Non so ancora"
+                />
+                <span class="chip__box"
+                  ><span class="chip__name">Non so ancora</span
+                  ><span class="chip__price">— €</span></span
+                >
               </label>
             </div>
           </fieldset>
@@ -102,94 +138,334 @@
           <p class="flash-booking__note">
             Non prenoti direttamente: invii una richiesta e ti rispondo io.
           </p>
+          <p class="flash-booking__note flash-booking__note--price">
+            Il prezzo può variare in base alla zona scelta.
+          </p>
 
-          <button type="button" id="flash-cta" class="btn-submit">
+          <button
+            type="button"
+            id="flash-cta"
+            class="btn-submit"
+            aria-expanded="false"
+            aria-controls="booking-reveal"
+            disabled
+          >
             Prenota questo flash <span aria-hidden="true">↗</span>
           </button>
+
+          <!-- Request form: si apre in linea, sotto al bottone (niente modale) -->
+          <section class="flash-reveal" id="booking-reveal" aria-hidden="true">
+            <div class="flash-reveal__inner">
+              <div class="flash-reveal__box">
+                <div class="flash-reveal__head">
+                  <span>Prenota questo flash</span>
+                  <button
+                    type="button"
+                    class="flash-reveal__close"
+                    aria-label="Chiudi"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <form
+                  class="booking-form"
+                  id="booking-form"
+                  action="https://formsubmit.co/ajax/gretanegrii@gmail.com"
+                  method="POST"
+                >
+                  <input type="hidden" name="flash" id="form-flash" value="" />
+                  <input type="hidden" name="misura" id="form-misura" value="" />
+                  <!-- FormSubmit: invio email (al 1° invio serve l'attivazione).
+                       TODO: sostituire con l'email di Save prima del live. -->
+                  <input
+                    type="hidden"
+                    name="_subject"
+                    value="Nuova richiesta FLASH dal sito SAVE Tattoo"
+                  />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input
+                    type="hidden"
+                    name="_autoresponse"
+                    value="Ciao! Ho ricevuto la tua richiesta per il flash su SAVE Tattoo. Ti ricontatto io il prima possibile per confermare tutto. A presto — Save ♥"
+                  />
+                  <input
+                    type="text"
+                    name="_honey"
+                    style="display: none"
+                    tabindex="-1"
+                    aria-hidden="true"
+                    autocomplete="off"
+                  />
+
+                  <fieldset class="field-group form-when">
+                    <legend class="field-label">Giorni preferiti</legend>
+                    <div class="choice-group choice-group--when">
+                      <label class="chip">
+                        <input
+                          type="radio"
+                          name="giorni"
+                          value="Infrasettimanale"
+                        />
+                        <span class="chip__box"
+                          ><span class="chip__name">Infrasettimanale</span></span
+                        >
+                      </label>
+                      <label class="chip">
+                        <input type="radio" name="giorni" value="Weekend" />
+                        <span class="chip__box"
+                          ><span class="chip__name">Weekend</span></span
+                        >
+                      </label>
+                      <label class="chip">
+                        <input
+                          type="radio"
+                          name="giorni"
+                          value="Qualsiasi giorno"
+                        />
+                        <span class="chip__box"
+                          ><span class="chip__name">Qualsiasi giorno</span></span
+                        >
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="field-group form-when">
+                    <legend class="field-label">Fascia oraria</legend>
+                    <div class="choice-group choice-group--when">
+                      <label class="chip">
+                        <input type="radio" name="fascia" value="Mattina" />
+                        <span class="chip__box"
+                          ><span class="chip__name">Mattina</span></span
+                        >
+                      </label>
+                      <label class="chip">
+                        <input type="radio" name="fascia" value="Pomeriggio" />
+                        <span class="chip__box"
+                          ><span class="chip__name">Pomeriggio</span></span
+                        >
+                      </label>
+                      <label class="chip">
+                        <input type="radio" name="fascia" value="Sera" />
+                        <span class="chip__box"
+                          ><span class="chip__name">Sera</span></span
+                        >
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <div class="field-row">
+                    <label class="field">
+                      <span>Nome*</span>
+                      <input type="text" name="nome" required />
+                    </label>
+                    <label class="field">
+                      <span>Cognome*</span>
+                      <input type="text" name="cognome" required />
+                    </label>
+                  </div>
+
+                  <div class="field-row">
+                    <label class="field">
+                      <span>Telefono*</span>
+                      <input type="tel" name="telefono" required />
+                    </label>
+                    <label class="field">
+                      <span>Email*</span>
+                      <input type="email" name="email" required />
+                    </label>
+                  </div>
+
+                  <label class="field">
+                    <span>Messaggio</span>
+                    <textarea
+                      name="messaggio"
+                      rows="3"
+                      placeholder="Vuoi far sapere qualcos'altro all'artista?"
+                    ></textarea>
+                  </label>
+
+                  <label class="check">
+                    <input type="checkbox" required />
+                    <span
+                      >Confermo di essere maggiorenne o, se minorenne, di essere
+                      accompagnato/a da un genitore.</span
+                    >
+                  </label>
+
+                  <label class="check">
+                    <input type="checkbox" required />
+                    <span
+                      >Ho letto e accetto la
+                      <a href="privacy.html">Privacy Policy</a>.</span
+                    >
+                  </label>
+
+                  <p class="booking-form__download">
+                    Scarica il consenso informato:
+                    <a
+                      href="assets/pdf/consenso-tattoo-minorenni.pdf"
+                      target="_blank"
+                      rel="noopener"
+                      >minorenni</a
+                    >
+                    ·
+                    <a
+                      href="assets/pdf/consenso-tattoo-maggiorenni.pdf"
+                      target="_blank"
+                      rel="noopener"
+                      >maggiorenni</a
+                    >
+                  </p>
+
+                  <p class="booking-form__note">
+                    Non paghi ora. L'acconto per bloccare l'appuntamento te lo
+                    chiedo quando ti ricontatto.
+                  </p>
+
+                  <button type="submit" class="btn-submit">
+                    Invia richiesta <span aria-hidden="true">↗</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </main>
 
-    <!-- Booking modal (opened by "Prenota questo flash") -->
-    <div class="modal" id="booking-modal" hidden>
-      <div
-        class="modal__box"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modal-title"
+    <footer>
+      <!-- Big CTA band -->
+      <a href="booking.html" class="footer__cta">
+        <span class="footer__cta-label">Prenota</span>
+        <span aria-hidden="true" class="footer__cta-icon">↗</span>
+      </a>
+
+      <!-- Left: address only -->
+      <div class="footer__info">
+        <div class="footer__address">
+          <p class="footer__studio-name">SAVE Tattoo</p>
+          <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
+          <a
+            href="https://maps.google.com/?q=SAVE+Tattoo+Via+G.+Matteotti+24+Binasco"
+            target="_blank"
+            rel="noopener"
+            class="footer__maps-link"
+          >
+            <span>Mostra su Google Maps</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Map (fills the viewport) -->
+      <a
+        href="https://maps.google.com/?q=SAVE+Tattoo+Via+G.+Matteotti+24+Binasco"
+        target="_blank"
+        rel="noopener"
+        class="footer__map"
       >
-        <div class="modal__head">
-          <span id="modal-title">Prenota questo flash</span>
-          <button type="button" class="modal__close" aria-label="Chiudi">×</button>
+        <img
+          src="assets/img/map-studio.webp"
+          alt="Mappa dello studio SAVE Tattoo a Binasco (MI)"
+          loading="lazy"
+        />
+      </a>
+
+      <!-- Back to top: sits under the address, beside the columns -->
+      <a href="#top" class="footer__totop">
+        Torna su <span aria-hidden="true">↑</span>
+      </a>
+
+      <!-- Columns (below the map) -->
+      <div class="footer__bottom">
+        <div class="footer__col">
+          <p class="footer__col-title">Orari di apertura</p>
+          <table>
+            <tbody>
+              <tr>
+                <td><strong>Lunedì – Sabato</strong></td>
+                <td>
+                  <time datetime="11:00">11:00</time> –
+                  <time datetime="19:00">19:00</time>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Domenica</strong></td>
+                <td><em>Chiuso</em></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="footer__hours-note">Si riceve solo su appuntamento.</p>
         </div>
 
-        <form class="booking-form" id="booking-form">
-          <input type="hidden" name="flash" id="form-flash" value="" />
-          <input type="hidden" name="misura" id="form-misura" value="" />
+        <nav class="footer__col" aria-label="Social">
+          <p class="footer__col-title">Seguimi</p>
+          <ul>
+            <li>
+              <a
+                href="https://www.instagram.com/saveria.sforza.tattoo"
+                target="_blank"
+                rel="noopener"
+                >Instagram <span aria-hidden="true">↗</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.tiktok.com/@save.tattoo2"
+                target="_blank"
+                rel="noopener"
+                >TikTok <span aria-hidden="true">↗</span></a
+              >
+            </li>
+          </ul>
+        </nav>
 
-          <div class="field-row">
-            <label class="field">
-              <span>Nome*</span>
-              <input type="text" name="nome" required />
-            </label>
-            <label class="field">
-              <span>Cognome*</span>
-              <input type="text" name="cognome" required />
-            </label>
-          </div>
+        <div class="footer__col">
+          <p class="footer__col-title">Contatti</p>
+          <ul>
+            <!-- TODO: email reale di Save -->
+            <li><a href="mailto:info@savetattoo.it">info@savetattoo.it</a></li>
+            <li><a href="tel:+393396189130">339 618 9130</a></li>
+          </ul>
+        </div>
 
-          <div class="field-row">
-            <label class="field">
-              <span>Telefono*</span>
-              <input type="tel" name="telefono" required />
-            </label>
-            <label class="field">
-              <span>Email*</span>
-              <input type="email" name="email" required />
-            </label>
-          </div>
-
-          <label class="field">
-            <span>Messaggio</span>
-            <textarea
-              name="messaggio"
-              rows="3"
-              placeholder="Vuoi far sapere qualcos'altro all'artista?"
-            ></textarea>
-          </label>
-
-          <label class="check">
-            <input type="checkbox" required />
-            <span
-              >Confermo di essere maggiorenne o, se minorenne, di essere
-              accompagnato/a da un genitore.</span
-            >
-          </label>
-
-          <label class="check">
-            <input type="checkbox" required />
-            <span
-              >Ho letto e accetto la <a href="privacy.html">Privacy Policy</a>.</span
-            >
-          </label>
-
-          <p class="booking-form__download">
-            <a href="assets/pdf/consenso-informato.pdf" target="_blank" rel="noopener"
-              >Scarica il consenso informato</a
-            >
-          </p>
-
-          <p class="booking-form__note">
-            Non paghi ora. L'acconto per bloccare l'appuntamento te lo chiedo
-            quando ti ricontatto.
-          </p>
-
-          <button type="submit" class="btn-submit">
-            Invia richiesta <span aria-hidden="true">↗</span>
-          </button>
-        </form>
+        <nav class="footer__col" aria-label="Menu">
+          <p class="footer__col-title">Menu</p>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">Su di me</a></li>
+            <li><a href="index.html#lavori">Lavori</a></li>
+            <li><a href="flash.html">Flash</a></li>
+            <li><a href="booking.html">Prenota</a></li>
+          </ul>
+        </nav>
       </div>
-    </div>
+
+      <!-- Legal row -->
+      <div class="footer__legal">
+        <div class="footer__copy">
+          <p><span class="footer__copy-mark">©</span> 2026 SAVE Tattoo</p>
+          <p>P.IVA 02889420184</p>
+        </div>
+        <div class="footer__policies">
+          <p><a href="privacy.html">Privacy Policy</a></p>
+          <p><a href="cookie.html">Cookie Policy</a></p>
+        </div>
+        <div class="footer__credit">
+          <p>Design / Code</p>
+          <p>
+            <a
+              href="https://gretanegri.vercel.app/"
+              target="_blank"
+              rel="noopener"
+              >Greta Negri</a
+            >
+          </p>
+        </div>
+      </div>
+    </footer>
 
     <script src="js/vendor/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
