@@ -8,6 +8,7 @@ body {
    To move the back-link nearer the logo, lower .back-link's top margin — not this. */
 main {
   padding-top: 6rem;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
 }
 
 /* -------------------------------------------BACK LINK + INTRO------------------------------------------- */
@@ -39,7 +40,7 @@ main h1.h1--long {
 }
 
 .service__intro {
-  max-width: 80ch;
+  max-width: 60ch;
   font-family: var(--font-display);
   margin-top: 0.75rem;
   font-size: 1.05rem;
@@ -115,7 +116,7 @@ main h1.h1--long {
 .service__aftercare {
   margin: clamp(2.5rem, 6vh, 4.5rem) 0 1rem;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
@@ -475,4 +476,22 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
   .lightbox__arrow {
     display: none; /* on mobile, tap the halves to browse */
   }
+}
+
+/* -------------------------------------------GALLERY PLACEHOLDER (foto in arrivo)------------------------------------------- */
+.tattoo-gallery__item--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+.tattoo-gallery__item--placeholder span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  opacity: 0.4;
 }
