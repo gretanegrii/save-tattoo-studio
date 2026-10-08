@@ -7,10 +7,11 @@
   const PDF = "assets/pdf/";
 
   function dl(label, file) {
+    // link PDF tra parentesi quadre (niente emoji)
     return (
-      '<a href="' + PDF + file + '" target="_blank" rel="noopener">' +
+      '[<a href="' + PDF + file + '" target="_blank" rel="noopener">' +
       label +
-      "</a>"
+      "</a>]"
     );
   }
 
@@ -25,19 +26,19 @@
             "<p>In conformità con la normativa (Legge 23 Luglio 2021 n. 13):</p>" +
             "<ul>" +
             "<li><strong>Tatuaggi:</strong> l'età minima è 16 anni. Dai 16 ai 17 anni è obbligatorio il consenso scritto di un genitore/tutore legale e un documento d'identità valido. Sotto i 16 anni non è consentito eseguirli.<br>" +
-            '<span class="faq__dl">👉 ' +
+            '<span class="faq__dl">' +
             dl("Consenso Tattoo Minorenni", "consenso-tattoo-minorenni.pdf") +
             " · " +
             dl("Consenso Tattoo Maggiorenni", "consenso-tattoo-maggiorenni.pdf") +
             "</span></li>" +
             "<li><strong>Piercing:</strong> l'età minima è 14 anni (con consenso e documenti dei genitori/tutori legali). Sotto i 14 anni è vietato, fatta eccezione per il lobo dell'orecchio.<br>" +
-            '<span class="faq__dl">👉 ' +
+            '<span class="faq__dl">' +
             dl("Consenso Piercing Minorenni", "consenso-piercing-minorenni.pdf") +
             " · " +
             dl("Consenso Piercing Maggiorenni", "consenso-piercing-maggiorenni.pdf") +
             "</span></li>" +
             "<li><strong>Dermopigmentazione (PMU):</strong> " +
-            '<span class="faq__dl">👉 ' +
+            '<span class="faq__dl">' +
             dl("Consenso PMU", "consenso-pmu.pdf") +
             "</span></li>" +
             "<li>Per i <strong>maggiorenni</strong> è sempre sufficiente mostrare un documento d'identità in corso di validità e compilare il rispettivo modulo di consenso.</li>" +
@@ -152,12 +153,12 @@
           q: "Come devo prendermi cura del tatuaggio / piercing / PMU?",
           a:
             "<p>Ti daremo tutte le indicazioni dettagliate a voce a fine seduta. Inoltre puoi scaricare direttamente le nostre guide ufficiali:</p>" +
-            '<p class="faq__dl">👉 ' +
-            dl("Guida Aftercare Tattoo", "aftercare-tattoo.pdf") +
+            '<p class="faq__dl">' +
+            dl("Guida Aftercare Tattoo", "tattoo-aftercare.pdf") +
             " · " +
-            dl("Guida Aftercare Piercing", "aftercare-piercing.pdf") +
+            dl("Guida Aftercare Piercing", "piercing-aftercare.pdf") +
             " · " +
-            dl("Guida Aftercare Dermopigmentazione", "aftercare-dermopigmentazione.pdf") +
+            dl("Guida Aftercare Dermopigmentazione", "pmu-aftercare.pdf") +
             "</p>",
         },
       ],
@@ -207,6 +208,13 @@
     "</div>" +
     "</aside>";
   document.body.appendChild(root);
+
+  // indice per lo stagger d'entrata del contenuto (il CSS usa --i)
+  root
+    .querySelectorAll(".faq__section-title, .faq__item")
+    .forEach(function (el, i) {
+      el.style.setProperty("--i", i);
+    });
 
   const panel = root.querySelector(".faq__panel");
   const closeBtn = root.querySelector(".faq__close");

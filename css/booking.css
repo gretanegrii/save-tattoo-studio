@@ -1,3 +1,9 @@
+footer {
+  --footer-bg: var(--color-fucsia);
+  --footer-fg: var(--color-black);
+  --footer-accent: var(--color-black);
+}
+
 /* -------------------------------------------BOOKING (fuchsia page, multi-step)-------------------------------------------
    One fuchsia page, three screens driven by js/booking.js:
    1) servizio  2) domande del servizio scelto  3) quando + dati
@@ -11,10 +17,7 @@ body {
 /* clear the fixed header (base.css) */
 main {
   padding-top: 6rem;
-}
-
-.booking-page {
-  padding-bottom: 4rem;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
 }
 
 /* -------------------------------------------HERO------------------------------------------- */

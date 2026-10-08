@@ -1,3 +1,9 @@
+footer {
+  --footer-bg: var(--color-fucsia);
+  --footer-fg: var(--color-black);
+  --footer-accent: var(--color-black);
+}
+
 /* -------------------------------------------ABOUT PAGE------------------------------------------- */
 /* about.css is only linked from about.html, so styling `main`/`body`/`header`/`footer` here is safe */
 
@@ -11,6 +17,7 @@ main {
   grid-template-columns: 34% 66%;
   align-items: start;
   min-height: 100vh;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
 }
 
 /* -------------------------------------------IMAGE: sticky, releases at the last fragment------------------------------------------- */
@@ -74,7 +81,10 @@ footer {
   opacity: 0;
   transform: translateY(0.5em);
   filter: blur(6px);
-  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
   transition-delay: 0ms;
 }
 
@@ -118,7 +128,11 @@ footer {
 
 .about__statement {
   position: relative;
-  margin-top: clamp(28vh, 48vh, 55vh); /* JS re-aligns this to just after the 4th fragment */
+  margin-top: clamp(
+    28vh,
+    48vh,
+    55vh
+  ); /* JS re-aligns this to just after the 4th fragment */
   margin-left: clamp(1.5rem, 4%, 3rem);
   max-width: 10ch;
   font-family: var(--font-display);
@@ -134,7 +148,10 @@ footer {
   opacity: 0;
   transform: translateY(1rem);
   filter: blur(8px);
-  transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    filter 0.8s ease;
 }
 
 .anim-ready .about__media h1.is-visible,
