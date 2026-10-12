@@ -152,7 +152,7 @@
         {
           q: "Come devo prendermi cura del tatuaggio / piercing / PMU?",
           a:
-            "<p>Ti daremo tutte le indicazioni dettagliate a voce a fine seduta. Inoltre puoi scaricare direttamente le nostre guide ufficiali:</p>" +
+            "<p>Ti daremo tutte le indicazioni dettagliate a voce a fine seduta. Inoltre puoi scaricare direttamente le nostre guide ufficiali visitando le relative pagine dedicate::</p>" +
             '<p class="faq__dl">' +
             dl("Guida Aftercare Tattoo", "tattoo-aftercare.pdf") +
             " · " +

@@ -129,6 +129,7 @@
     </header>
 
     <main>
+      <!-------------------------------------------BOOKING HERO------------------------------------------->
       <div class="booking-hero">
         <h1>Prenota</h1>
         <span class="booking-hero__arrow" aria-hidden="true">↗</span>
@@ -140,15 +141,12 @@
 
       <hr class="booking-rule" />
 
+      <!-------------------------------------------FORM ADDRESS------------------------------------------->
       <form
         class="booking-form"
         action="https://formsubmit.co/ajax/gretanegrii@gmail.com"
         method="POST"
       >
-        <!-- Invio email via FormSubmit (nessuna chiave da registrare).
-             Al PRIMISSIMO invio arriva una mail di attivazione all'indirizzo
-             qui sopra: va aperta una volta sola, poi le richieste arrivano.
-             TODO: sostituire con l'email di Save quando il sito va online. -->
         <input
           type="hidden"
           name="_subject"
@@ -156,7 +154,8 @@
         />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
-        <!-- risposta automatica al cliente: va all'email che scrive nel form -->
+
+        <!-------------------------------------------AUTOMATED RESPONSE------------------------------------------->
         <input
           type="hidden"
           name="_autoresponse"
@@ -172,7 +171,7 @@
           autocomplete="off"
         />
 
-        <!-- STEP 1 — servizio -->
+        <!-------------------------------------------STEP 1 - SERVICE------------------------------------------->
         <fieldset class="step" id="step-1">
           <legend class="step__legend">Cosa vuoi fare?</legend>
           <div class="choice-group">
@@ -195,7 +194,7 @@
           </button>
         </fieldset>
 
-        <!-- STEP 2 — TATUAGGIO -->
+        <!-------------------------------------------STEP 2 - TATTOO------------------------------------------->
         <div class="step" id="step-tattoo" data-service="Tatuaggio">
           <fieldset class="field-group">
             <legend class="field-label">Dove lo vuoi?</legend>
@@ -380,7 +379,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — PIERCING -->
+        <!-------------------------------------------STEP 2 - PIERCING------------------------------------------->
         <div class="step" id="step-piercing" data-service="Piercing">
           <fieldset class="field-group">
             <legend class="field-label">Che piercing vuoi?</legend>
@@ -600,7 +599,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMOPIGMENTAZIONE · scelta zona -->
+        <!-------------------------------------------STEP 2 - PMU------------------------------------------->
         <div class="step" id="step-dermo" data-service="Dermopigmentazione">
           <fieldset class="field-group">
             <legend class="field-label">
@@ -636,7 +635,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMO · Sopracciglia -->
+        <!-------------------------------------------STEP 2 - EYEBROWS PMU------------------------------------------->
         <div class="step" id="step-dermo-sopracciglia">
           <p class="step__title">Sopracciglia</p>
 
@@ -660,7 +659,7 @@
 
           <fieldset class="field-group">
             <legend class="field-label">
-              È un cover-up? (vecchio trucco permanente)
+              È un lavoro eseguito da me in precedenza?
             </legend>
             <div class="choice-group choice-group--chips">
               <label class="chip"
@@ -670,7 +669,7 @@
               >
               <label class="chip"
                 ><input type="radio" name="dermo_coverup" value="No" /><span
-                  >No</span
+                  >No, eseguito altrove</span
                 ></label
               >
             </div>
@@ -711,7 +710,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMO · Labbra -->
+        <!-------------------------------------------STEP 2 - LIPS PMU------------------------------------------->
         <div class="step" id="step-dermo-labbra">
           <p class="step__title">Labbra</p>
 
@@ -786,7 +785,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMO · Eyeliner -->
+        <!-------------------------------------------STEP 2 - EYELINER PMU------------------------------------------->
         <div class="step" id="step-dermo-eyeliner">
           <p class="step__title">Eyeliner</p>
 
@@ -861,7 +860,7 @@
           </div>
         </div>
 
-        <!-- STEP 2 — DERMO · Lentiggini -->
+        <!-------------------------------------------STEP 2 - FRECKLES PMU------------------------------------------->
         <div class="step" id="step-dermo-lentiggini">
           <p class="step__title">Lentiggini</p>
 
@@ -917,7 +916,7 @@
           </div>
         </div>
 
-        <!-- STEP 3 — QUANDO + DATI (comune a tutti i servizi) -->
+        <!-------------------------------------------STEP 3 - DATA------------------------------------------->
         <div class="step" id="step-dati">
           <p class="step__title">Quando?</p>
           <fieldset class="field-group">
