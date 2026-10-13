@@ -280,28 +280,56 @@ main h1.h1--long {
   margin-top: clamp(3rem, 8vh, 6rem);
 }
 
-/* title (left) + photo strip (right, bleeds off the screen edge) */
-.zone__top {
+/* title (left, right-aligned) + photo strip (right, bleeds off the screen edge).
+   The title's baseline sits on the bottom edge of the photos.
+   The strip starts at ~34% of the screen, as in the Figma design. */
+.zone {
+  --zone-gap: clamp(1rem, 1.8vw, 2rem);
+  --zone-col: calc(34.4vw - 20px - var(--zone-gap));
+}
+
+/* The whole section is one grid: [title | strip] on the first row,
+   ["Vedi tutti" | prices] on the second. The photo link (.zone__top) uses
+   display: contents so its title and strip join the grid. */
+.zone {
   display: grid;
-  grid-template-columns: clamp(7rem, 18vw, 16rem) minmax(0, 1fr);
-  column-gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: center;
+  grid-template-columns: var(--zone-col) minmax(0, 1fr);
+  column-gap: var(--zone-gap);
+}
+
+.zone__top {
+  display: contents;
+}
+
+/* left column: title + round arrow on ONE line, right-aligned against the photos.
+   The title's baseline and the bottom of the arrow both sit on the photos' bottom edge. */
+.zone {
+  --zone-fs: clamp(1.6rem, 4.4vw, 4.6rem);
+}
+
+.zone__head {
+  align-self: end;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  margin-bottom: calc(var(--zone-fs) * -0.143); /* baseline onto the photos' bottom edge */
+  transition: opacity 0.3s ease;
 }
 
 .zone__title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(1.5rem, 3.2vw, 2.8rem);
+  font-size: var(--zone-fs);
   line-height: 0.95;
   text-transform: uppercase;
-  white-space: nowrap; /* fits within its column, never overlaps the strip */
+  white-space: nowrap;
   color: var(--color-white);
-  transition: opacity 0.3s ease;
 }
 
-/* hovering a section dims the OTHER section titles (text only, not the photos) */
-main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
+/* hovering a section dims the OTHER section headings (text only, not the photos) */
+main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   opacity: 0.3;
 }
 
@@ -337,15 +365,40 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
 
 /* prices + aftercare, aligned under the strip */
 .zone__info {
+  grid-column: 2;
   margin-top: 1.5rem;
-  margin-left: calc(clamp(7rem, 18vw, 16rem) + clamp(1.5rem, 4vw, 3rem));
+  min-width: 0;
+}
+
+/* round arrow under the title: says "this opens the zone page" (outline like the lightbox arrows) */
+.zone__go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: clamp(1.9rem, 3vw, 2.75rem);
+  height: clamp(1.9rem, 3vw, 2.75rem);
+  margin-bottom: calc(var(--zone-fs) * 0.143); /* cancels the head's drop: arrow bottom = photos' bottom */
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: var(--color-white);
+  transition:
+    color 0.4s ease,
+    transform 0.4s ease;
+}
+
+.zone__top:hover .zone__go {
+  color: var(--color-fucsia);
+  transform: scale(1.08);
 }
 
 .price-list {
   display: grid;
   grid-auto-flow: column;
   grid-template-rows: repeat(3, auto);
-  gap: 0.4rem clamp(1.5rem, 4vw, 4rem);
+  grid-auto-columns: clamp(10rem, 14vw, 14rem); /* same width as a photo, as in the design */
+  justify-content: start;
+  gap: 0.4rem clamp(1.5rem, 5.2vw, 5rem);
   margin: 0 0 1.25rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -371,7 +424,8 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
 
 .price-note {
   display: block;
-  font-size: 0.72em;
+  font-size: 1em; /* same size as the piercing name */
+  font-weight: 400;
   text-transform: none;
   opacity: 0.7;
 }
@@ -382,12 +436,19 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
 }
 
 @media (max-width: 700px) {
-  .zone__top {
+  .zone {
     grid-template-columns: 1fr;
     row-gap: 1rem;
   }
+  .zone__head {
+    justify-content: flex-start;
+    margin-bottom: 0;
+  }
+  .zone__go {
+    margin-bottom: 0;
+  }
   .zone__info {
-    margin-left: 0;
+    grid-column: 1;
   }
   .price-list {
     grid-auto-flow: row;
