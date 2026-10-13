@@ -124,6 +124,7 @@ main h1.h1--long {
 .service__aftercare a {
   color: var(--color-fucsia);
   text-decoration: underline;
+  transition: color 0.7s ease;
 }
 
 .service__aftercare a:hover {
@@ -406,17 +407,50 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
   align-items: center;
   justify-content: center;
   background: rgba(10, 10, 10, 0.95);
+  /* closed by default: invisible + not clickable. Fades in/out calmly. */
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.45s ease,
+    visibility 0s linear 0.45s; /* hide only after the fade-out ends */
 }
 
-.lightbox[hidden] {
-  display: none;
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.45s ease,
+    visibility 0s;
 }
 
 .lightbox__img {
-  max-width: 90vw;
+  max-width: calc(100vw - 10rem); /* leave room for the arrows */
   max-height: 90vh;
   object-fit: contain;
   user-select: none;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 0.5s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lightbox.is-open .lightbox__img {
+  opacity: 1;
+  transform: none;
+}
+
+/* switching photo: quick calm cross-fade */
+.lightbox.is-open .lightbox__img.is-swapping {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox__img {
+    transition: none;
+  }
 }
 
 .lightbox__close {
@@ -439,25 +473,35 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
-  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid currentColor; /* white outline, transparent inside */
+  border-radius: 50%;
   color: var(--color-white);
-  font-size: 3rem;
-  line-height: 1;
   cursor: pointer;
   user-select: none;
-  transition: color 0.25s ease;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.lightbox__arrow:hover {
+  color: var(--color-fucsia);
+  transform: translateY(-50%) scale(1.08);
 }
 
 .lightbox__arrow--left {
-  left: 0.5rem;
+  left: 1.5rem;
 }
 
 .lightbox__arrow--right {
-  right: 0.5rem;
+  right: 1.5rem;
 }
 
-.lightbox__close:hover,
-.lightbox__arrow:hover {
+.lightbox__close:hover {
   color: var(--color-fucsia);
 }
 
@@ -527,4 +571,68 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__title {
   .tattoo-gallery__grid--wide {
     column-count: 1;
   }
+}
+
+/* -------------------------------------------GALLERIA TATUAGGI (masonry, niente tagli)------------------------------------------- */
+/* Fallback senza JS: colonne CSS. Con JS (js/masonry.js) le foto sono posizionate
+   una per una nella colonna più bassa, nell'ordine del DOM. */
+.tattoo-gallery__grid--masonry {
+  --cols: 5;
+  --gap: 0.75; /* rem */
+  display: block;
+  column-count: var(--cols);
+  column-gap: calc(var(--gap) * 1rem);
+}
+
+.tattoo-gallery__grid--masonry .tattoo-gallery__item {
+  aspect-ratio: auto;
+  overflow: hidden;
+  background: var(--color-grey);
+  break-inside: avoid;
+  margin-bottom: calc(var(--gap) * 1rem);
+}
+
+.tattoo-gallery__grid--masonry .tattoo-gallery__item img {
+  height: auto; /* altezza naturale → nessun ritaglio */
+}
+
+.tattoo-gallery__grid--masonry.is-masonry {
+  position: relative;
+  column-count: auto;
+}
+
+.tattoo-gallery__grid--masonry.is-masonry .tattoo-gallery__item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  break-inside: auto;
+}
+
+.tattoo-gallery__grid--masonry.is-masonry .tattoo-gallery__item img {
+  height: 100%;
+  object-fit: cover; /* il box ha già la forma della foto */
+}
+
+@media (max-width: 1000px) {
+  .tattoo-gallery__grid--masonry {
+    --cols: 3;
+  }
+}
+
+@media (max-width: 560px) {
+  .tattoo-gallery__grid--masonry {
+    --cols: 2;
+  }
+}
+
+/* contatore "635 lavori" a destra del link aftercare */
+.service__count {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  opacity: 0.55;
 }

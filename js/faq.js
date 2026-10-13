@@ -2,7 +2,7 @@
    Il contenuto è qui sotto (FAQ_DATA): testi facili da modificare.
    Il pannello viene creato una volta e funziona su tutte le pagine
    (ogni pagina ha il bottone .nav__faq nella navbar).
-   NB: i PDF linkati (consensi / aftercare) sono segnaposto in assets/pdf/. */
+   NB: i PDF dei consensi sono in assets/pdf/; gli aftercare si scaricano dalle pagine servizio. */
 (function () {
   const PDF = "assets/pdf/";
 
@@ -13,6 +13,11 @@
       label +
       "</a>]"
     );
+  }
+
+  function page(label, href) {
+    // link a una pagina del sito (stesso stile del link PDF)
+    return '[<a href="' + href + '">' + label + "</a>]";
   }
 
   const FAQ_DATA = [
@@ -27,19 +32,19 @@
             "<ul>" +
             "<li><strong>Tatuaggi:</strong> l'età minima è 16 anni. Dai 16 ai 17 anni è obbligatorio il consenso scritto di un genitore/tutore legale e un documento d'identità valido. Sotto i 16 anni non è consentito eseguirli.<br>" +
             '<span class="faq__dl">' +
-            dl("Consenso Tattoo Minorenni", "consenso-tattoo-minorenni.pdf") +
+            dl("Consenso Tattoo Minorenni", "informed-consent/minor-tattoo-consent.pdf") +
             " · " +
-            dl("Consenso Tattoo Maggiorenni", "consenso-tattoo-maggiorenni.pdf") +
+            dl("Consenso Tattoo Maggiorenni", "informed-consent/adult-tattoo-consent.pdf") +
             "</span></li>" +
             "<li><strong>Piercing:</strong> l'età minima è 14 anni (con consenso e documenti dei genitori/tutori legali). Sotto i 14 anni è vietato, fatta eccezione per il lobo dell'orecchio.<br>" +
             '<span class="faq__dl">' +
-            dl("Consenso Piercing Minorenni", "consenso-piercing-minorenni.pdf") +
+            dl("Consenso Piercing Minorenni", "informed-consent/minor-piercing-consent.pdf") +
             " · " +
-            dl("Consenso Piercing Maggiorenni", "consenso-piercing-maggiorenni.pdf") +
+            dl("Consenso Piercing Maggiorenni", "informed-consent/adult-piercing-consent.pdf") +
             "</span></li>" +
             "<li><strong>Dermopigmentazione (PMU):</strong> " +
             '<span class="faq__dl">' +
-            dl("Consenso PMU", "consenso-pmu.pdf") +
+            dl("Consenso PMU", "informed-consent/pmu-consent.pdf") +
             "</span></li>" +
             "<li>Per i <strong>maggiorenni</strong> è sempre sufficiente mostrare un documento d'identità in corso di validità e compilare il rispettivo modulo di consenso.</li>" +
             "</ul>",
@@ -152,13 +157,13 @@
         {
           q: "Come devo prendermi cura del tatuaggio / piercing / PMU?",
           a:
-            "<p>Ti daremo tutte le indicazioni dettagliate a voce a fine seduta. Inoltre puoi scaricare direttamente le nostre guide ufficiali visitando le relative pagine dedicate::</p>" +
+            "<p>Ti daremo tutte le indicazioni dettagliate a voce a fine seduta. Inoltre puoi scaricare direttamente le nostre guide ufficiali visitando le relative pagine dedicate:</p>" +
             '<p class="faq__dl">' +
-            dl("Guida Aftercare Tattoo", "tattoo-aftercare.pdf") +
+            page("Tattoo", "tattoo.html") +
             " · " +
-            dl("Guida Aftercare Piercing", "piercing-aftercare.pdf") +
+            page("Piercing", "piercing.html") +
             " · " +
-            dl("Guida Aftercare Dermopigmentazione", "pmu-aftercare.pdf") +
+            page("Dermopigmentazione", "dermopigmentation.html") +
             "</p>",
         },
       ],

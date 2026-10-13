@@ -1,0 +1,124 @@
+/* -------------------------------------------LEGAL PAGES (privacy + cookie) — paper page------------------------------------------- */
+footer {
+  --footer-bg: var(--paper);
+  --footer-fg: var(--color-black);
+  --footer-accent: var(--color-black);
+}
+
+body {
+  background: var(--paper);
+  color: var(--color-black);
+}
+
+main {
+  padding-top: 6rem;
+  padding-bottom: clamp(10rem, 35vh, 28rem);
+}
+
+/* header on paper: hover goes fuchsia (white would vanish) */
+.nav__col a:hover,
+.nav__faq:hover {
+  color: var(--color-fucsia);
+}
+
+.btn-prenota__label,
+.btn-prenota__icon {
+  background: var(--color-black);
+  color: var(--paper);
+}
+
+.btn-prenota:hover .btn-prenota__label,
+.btn-prenota:hover .btn-prenota__icon {
+  background: var(--color-fucsia);
+  color: var(--color-black);
+}
+
+/* -------------------------------------------BACK LINK + TITLE------------------------------------------- */
+.back-link {
+  display: inline-block;
+  margin: 0.25rem 0 2rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+
+.back-link:hover {
+  color: var(--color-fucsia);
+}
+
+main h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 9vw, 7rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.legal__updated {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.legal__rule {
+  border: 0;
+  border-top: 1px solid var(--color-black);
+  margin: clamp(1.5rem, 4vh, 3rem) 0 0;
+}
+
+/* -------------------------------------------TEXT------------------------------------------- */
+/* left column = section title, right column = text (stacks on mobile) */
+.legal__section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1rem clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(1.5rem, 4vh, 2.5rem) 0;
+  border-bottom: 1px solid rgba(10, 10, 10, 0.2);
+}
+
+.legal__section h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.legal__body {
+  max-width: 70ch;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.legal__body > * + * {
+  margin-top: 0.9rem;
+}
+
+.legal__body ul {
+  padding-left: 1.2rem;
+  list-style: square;
+}
+
+.legal__body li + li {
+  margin-top: 0.35rem;
+}
+
+.legal__body a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 0.25s ease;
+}
+
+.legal__body a:hover {
+  color: var(--color-fucsia);
+}
+
+@media (max-width: 800px) {
+  .legal__section {
+    grid-template-columns: 1fr;
+  }
+}

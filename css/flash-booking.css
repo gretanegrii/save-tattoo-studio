@@ -345,14 +345,6 @@ main {
   accent-color: var(--color-fucsia);
 }
 
-.booking-form__download a {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-decoration: underline;
-}
-
 .booking-form__note {
   margin: 0;
   font-weight: 700;
