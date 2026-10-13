@@ -435,7 +435,118 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   margin: 0.75rem 0 0;
 }
 
+/* dermopigmentazione: titles are longer (Sopracciglia, Lentiggini) → a bit smaller so
+   title + arrow still fit in the left column */
+.zone--dermo {
+  --zone-fs: clamp(1.5rem, 3.9vw, 4rem);
+}
+
+.zone--dermo.zone--long {
+  --zone-fs: clamp(1.3rem, 3vw, 3.1rem);
+}
+
+/* one price on its own line: "400 €  Con eventuale primo ritocco compreso" */
+.price-line {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.price-line strong {
+  margin-right: 1rem;
+  font-weight: 700;
+}
+
+/* price list laid out in a row (long labels, 2-3 items) */
+.price-list--inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem clamp(2rem, 5vw, 5rem);
+}
+
+.price-list--inline > div {
+  gap: 1rem;
+}
+
+/* rows with aligned columns: label | price | note */
+.price-table {
+  display: grid;
+  grid-template-columns: max-content max-content minmax(0, 1fr);
+  column-gap: 1.25rem;
+  row-gap: 0.8rem;
+  margin: 0 0 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.price-table > div {
+  display: contents; /* dt, dd, dd become the grid cells */
+}
+
+.price-table dt {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.price-table dd {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.price-table__note {
+  white-space: normal;
+}
+
+/* two groups side by side: "lavori miei" (title + sub-prices) | "lavori altrui".
+   The second group starts at ~32% of the screen, as in the design. */
+.price-groups {
+  display: grid;
+  grid-template-columns: minmax(0, 32vw) auto;
+  align-items: start;
+  margin: 0 0 1.25rem;
+}
+
+.price-group__title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* label and price on one line, price right after the label (no wide gap) */
+.price-list--stack {
+  display: grid;
+  grid-template-rows: none;
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.price-list--stack > div {
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.price-groups .price-list {
+  margin: 0;
+}
+
 @media (max-width: 700px) {
+  .price-groups {
+    grid-template-columns: 1fr;
+    row-gap: 0.4rem;
+  }
+  .price-table {
+    grid-template-columns: 1fr auto;
+  }
+  .price-table__note {
+    grid-column: 1 / -1;
+  }
   .zone {
     grid-template-columns: 1fr;
     row-gap: 1rem;
