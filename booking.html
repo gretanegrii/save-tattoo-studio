@@ -188,10 +188,6 @@
               <span class="choice__label">Dermopigmentazione</span>
             </label>
           </div>
-
-          <button type="button" class="btn-next">
-            Avanti <span aria-hidden="true">↗</span>
-          </button>
         </fieldset>
 
         <!-------------------------------------------STEP 2 - TATTOO------------------------------------------->
@@ -549,12 +545,33 @@
           </fieldset>
 
           <!-- Avviso età minima: mostrato da JS in base al piercing scelto (NON bloccante).
-               TODO: età minime da confermare con Save. -->
-          <div class="form-warning" id="piercing-warning" role="status" hidden>
-            <p class="form-warning__title">
-              Attenzione <span aria-hidden="true">⚠</span>
-            </p>
-            <p class="form-warning__text"></p>
+               Le età stanno in js/booking.js (ageInfo). -->
+          <div class="form-warning" id="piercing-warning" role="status">
+            <div class="form-warning__inner">
+              <div class="form-warning__box">
+                <div class="form-warning__head">
+                  <p class="form-warning__title">Attenzione</p>
+                  <svg
+                    class="form-warning__icon"
+                    viewBox="0 0 48 44"
+                    width="40"
+                    height="37"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M24 3.5c1 0 1.9.5 2.4 1.4l19 33c1 1.7-.2 3.8-2.2 3.8H4.8c-2 0-3.2-2.1-2.2-3.8l19-33c.5-.9 1.4-1.4 2.4-1.4z"
+                      fill="#ffcc00"
+                    />
+                    <path
+                      d="M22 15h4l-.6 14h-2.8L22 15z"
+                      fill="#0a0a0a"
+                    />
+                    <circle cx="24" cy="34" r="2.1" fill="#0a0a0a" />
+                  </svg>
+                </div>
+                <p class="form-warning__text"></p>
+              </div>
+            </div>
           </div>
 
           <fieldset class="field-group">
@@ -628,9 +645,6 @@
           <div class="step__nav">
             <button type="button" class="btn-back">
               <span aria-hidden="true">←</span> Indietro
-            </button>
-            <button type="button" class="btn-next">
-              Avanti <span aria-hidden="true">↗</span>
             </button>
           </div>
         </div>

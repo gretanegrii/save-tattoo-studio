@@ -44,11 +44,76 @@
     }
   }
 
+  // profondità di ogni schermata: serve a capire se si va avanti (entra da destra) o indietro (da sinistra)
+  const depth = new Map([[step1, 0], [stepDati, 3]]);
+  Object.values(branch).forEach((el) => depth.set(el, 1));
+  Object.values(dermoPanels).forEach((el) => depth.set(el, 2));
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const SLIDE_MS = 800;
+  const SLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+  // la schermata nuova scorre dentro da destra verso sinistra, quella vecchia esce verso sinistra
+  // (tornando indietro: al contrario)
   function show(step) {
     if (!step) return;
-    steps.forEach((s) => s.classList.toggle("is-active", s === step));
+    const out = steps.find((s) => s.classList.contains("is-active"));
+    if (out === step) return;
+    const dir = out && (depth.get(step) || 0) < (depth.get(out) || 0) ? -1 : 1;
+
+    if (out && !reduceMotion.matches) {
+      const top = out.offsetTop;
+      out.classList.remove("is-active");
+      out.classList.add("is-leaving");
+      out.style.top = top + "px";
+      const leave = out.animate(
+        [
+          { transform: "translateX(0)", opacity: 1 },
+          { transform: "translateX(" + -dir * 40 + "%)", opacity: 0 },
+        ],
+        { duration: SLIDE_MS * 0.7, easing: SLIDE_EASE, fill: "forwards" }
+      );
+      leave.onfinish = function () {
+        leave.cancel();
+        out.classList.remove("is-leaving");
+        out.style.top = "";
+      };
+    } else if (out) {
+      out.classList.remove("is-active");
+    }
+
+    step.classList.add("is-active");
+    if (out && !reduceMotion.matches) {
+      step.animate(
+        [
+          { transform: "translateX(" + dir * 100 + "%)" },
+          { transform: "translateX(0)" },
+        ],
+        { duration: SLIDE_MS, easing: SLIDE_EASE }
+      );
+    }
     if (notice) notice.hidden = step !== step1; // avviso solo nella schermata 1
     scrollTop();
+  }
+
+  // schermate con UNA sola domanda: scegli e si va avanti da sole (niente tasto Avanti).
+  // Solo col mouse/tocco: con la tastiera si sceglie con le frecce e si conferma con Invio.
+  function autoAdvance(radios, go) {
+    let byPointer = false;
+    radios.forEach(function (r) {
+      r.addEventListener("pointerdown", () => (byPointer = true));
+      r.closest("label").addEventListener("pointerdown", () => (byPointer = true));
+      r.addEventListener("keydown", function (e) {
+        byPointer = false;
+        if (e.key === "Enter") {
+          e.preventDefault();
+          go();
+        }
+      });
+      r.addEventListener("click", function () {
+        if (byPointer) setTimeout(go, 300); // il tempo di vedere la scelta
+      });
+    });
   }
 
   function nudge(name) {
@@ -56,15 +121,11 @@
     if (r && r.reportValidity) r.reportValidity();
   }
 
-  // --- step 1: Avanti -> ramo del servizio ---
-  const toBranch = step1.querySelector(".btn-next");
-  if (toBranch) {
-    toBranch.addEventListener("click", function () {
-      const svc = service();
-      if (!svc) return nudge("servizio");
-      show(branch[svc]);
-    });
-  }
+  // --- step 1: scegli il servizio -> si passa da solo al ramo ---
+  autoAdvance(Array.from(step1.querySelectorAll('input[name="servizio"]')), function () {
+    const svc = service();
+    if (svc) show(branch[svc]);
+  });
 
   // --- step 2 Tatuaggio / Piercing: Indietro -> step 1, Avanti -> dati ---
   [branch.Tatuaggio, branch.Piercing].forEach(function (step) {
@@ -75,17 +136,16 @@
     if (next) next.addEventListener("click", () => show(stepDati));
   });
 
-  // --- dermo · scelta zona: Indietro -> step 1, Avanti -> sotto-pannello ---
+  // --- dermo · scelta zona: Indietro -> step 1; scegli la zona -> si passa da sola al sotto-pannello ---
   const dermoBack = branch.Dermopigmentazione.querySelector(".btn-back");
-  const dermoNext = branch.Dermopigmentazione.querySelector(".btn-next");
   if (dermoBack) dermoBack.addEventListener("click", () => show(step1));
-  if (dermoNext) {
-    dermoNext.addEventListener("click", function () {
+  autoAdvance(
+    Array.from(branch.Dermopigmentazione.querySelectorAll('input[name="dermo_zona"]')),
+    function () {
       const panel = dermoPanel();
-      if (!panel) return nudge("dermo_zona");
-      show(panel);
-    });
-  }
+      if (panel) show(panel);
+    }
+  );
 
   // --- dermo · sotto-pannelli: Indietro -> scelta zona, Avanti -> dati ---
   Object.values(dermoPanels).forEach(function (panel) {
@@ -111,21 +171,60 @@
   }
 
   // --- piercing: avviso età minima (non bloccante) in base alla scelta ---
-  // TODO: età minime reali da confermare con Save.
-  const minAge = { Septum: 16, Lingua: 18, Capezzolo: 18, Intimi: 18, Smile: 16 };
+  // [soggetto della frase, età minima, verbo]. Rimozione microdermal: nessun avviso.
+  const ageInfo = {
+    Helix: ["L'helix", 14],
+    Trago: ["Il trago", 14],
+    Rook: ["Il rook", 14],
+    Conch: ["Il conch", 14],
+    Daith: ["Il daith", 14],
+    Industrial: ["L'industrial", 14],
+    Nostril: ["Il nostril", 14],
+    Septum: ["Il septum", 16],
+    Bridge: ["Il bridge", 16],
+    Medusa: ["La medusa", 16],
+    Monroe: ["Il monroe", 16],
+    Labret: ["Il labret", 16],
+    Eyebrow: ["L'eyebrow", 16],
+    Ombelico: ["L'ombelico", 14],
+    Capezzolo: ["Il capezzolo", 16],
+    Lingua: ["La lingua", 16],
+    Smile: ["Lo smile", 16],
+    Intimi: ["I piercing intimi", 18, "si fanno"],
+    Microdermal: ["Il microdermal", 18],
+  };
+
+  function warningText(type) {
+    if (type === "Lobo")
+      return "Il lobo si fa anche sotto i 14 anni, con il consenso di un genitore.";
+    const info = ageInfo[type];
+    if (!info) return "";
+    const verb = info[2] || "si fa";
+    return info[1] >= 18
+      ? info[0] + " " + verb + " solo dai 18 anni."
+      : info[0] + " " + verb + " dai " + info[1] + " anni — se sei più giovane, ne parliamo insieme.";
+  }
+
+  // Quanto resta visibile l'avviso, in millisecondi. 0 = resta finché il piercing è selezionato.
+  const WARNING_AUTOHIDE_MS = 5000;
+  let warnTimer;
+
   const warnBox = document.getElementById("piercing-warning");
   if (warnBox) {
     const warnText = warnBox.querySelector(".form-warning__text");
     form.querySelectorAll('input[name="piercing_tipo"]').forEach(function (r) {
       r.addEventListener("change", function () {
-        const age = minAge[r.value];
-        if (age) {
-          warnText.textContent =
-            "Per il piercing “" + r.value + "” l'età minima è " + age +
-            " anni. Scrivimi se hai dubbi.";
-          warnBox.hidden = false;
+        const text = warningText(r.value);
+        clearTimeout(warnTimer);
+        if (text) {
+          warnText.textContent = text;
+          warnBox.classList.add("is-open");
+          if (WARNING_AUTOHIDE_MS > 0)
+            warnTimer = setTimeout(function () {
+              warnBox.classList.remove("is-open");
+            }, WARNING_AUTOHIDE_MS);
         } else {
-          warnBox.hidden = true;
+          warnBox.classList.remove("is-open"); // keeps the old text while it fades out
         }
       });
     });
