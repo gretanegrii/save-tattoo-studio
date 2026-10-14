@@ -1,6 +1,11 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "save", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8040"], "port": 8040 }
+    {
+      "name": "save-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8912"],
+      "port": 8912
+    }
   ]
 }

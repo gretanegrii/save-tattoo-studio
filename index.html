@@ -76,7 +76,6 @@
     <!-- ===== Styles ===== -->
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/parete.css" />
 
     <!-- ===== Structured data: local business (schema.org) ===== -->
     <!-- TODO: fill address, phone, hours, social URLs, geo with Save's real data -->
@@ -173,6 +172,12 @@
       </a>
     </header>
 
+    <!-- soft light + shadow behind the hero medusa (moved by js/hero-model.js) -->
+    <div class="hero__glow" aria-hidden="true">
+      <div class="hero__light"></div>
+      <div class="hero__shadow"></div>
+    </div>
+
     <main>
       <!-------------------------------------------HERO------------------------------------------->
       <section class="hero">
@@ -187,9 +192,9 @@
             interaction-prompt="none"
             disable-zoom
             shadow-intensity="0"
-            environment-image="assets/img/env/studio.png"
+            environment-image="assets/img/env/studio.hdr"
             tone-mapping="aces"
-            exposure="1.0"
+            exposure="1.5"
             ar="false"
             loading="eager"
             aria-hidden="true"
@@ -236,126 +241,199 @@
       <p class="hero-closer">Anarchica da sempre</p>
 
       <!-------------------------------------------WORKS SECTION------------------------------------------->
-      <section class="parete" id="lavori" aria-label="Lavori">
-        <div class="wall">
-          <img
-            class="wall__bg"
-            src="assets/img/parete/sfondo.png"
-            alt="Parete dei lavori — SAVE Tattoo"
-          />
-          <!-- quadri: salon-hang (muro pieno incastrato) -->
-          <div class="piece" style="left: 0%; top: 0%; width: 12.75%">
-            <img src="assets/img/parete/piece-01.png" alt="Lavoro" />
+      <section class="lavori" id="lavori" aria-label="Lavori">
+        <!-- piccoli quadri attorno (posizioni in % della parete 1440 × 1024) -->
+        <div class="lavori__pieces">
+          <div class="lavori__piece" style="left: 0.694%; top: 0.977%; width: 9.866%">
+            <img src="assets/img/lavori/pieces/12.webp" alt="" width="537" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 13.55%; top: 0%; width: 12.03%">
-            <img src="assets/img/parete/piece-02.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 10.977%; top: 0.977%; width: 10.105%">
+            <img src="assets/img/lavori/pieces/27.webp" alt="" width="550" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 0%; top: 22.93%; width: 12.77%">
-            <img src="assets/img/parete/piece-03.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 21.499%; top: 0.977%; width: 10.013%">
+            <img src="assets/img/lavori/pieces/21.webp" alt="" width="545" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 13.58%; top: 22.93%; width: 12.01%">
-            <img src="assets/img/parete/piece-06.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 31.929%; top: 0.977%; width: 4.784%">
+            <img src="assets/img/lavori/pieces/14.webp" alt="" width="587" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 0%; top: 45.03%; width: 16.36%">
-            <img src="assets/img/parete/piece-16.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 37.130%; top: 0.977%; width: 17.083%">
+            <img src="assets/img/lavori/pieces/04.webp" alt="" width="700" height="527" loading="lazy" />
           </div>
-          <div class="piece" style="left: 17.16%; top: 45.03%; width: 8.42%">
-            <img src="assets/img/parete/piece-17.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 54.629%; top: 0.977%; width: 10.344%">
+            <img src="assets/img/lavori/pieces/06.webp" alt="" width="563" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 0%; top: 74.69%; width: 12.69%">
-            <img src="assets/img/parete/piece-21.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 65.390%; top: 0.977%; width: 3.033%">
+            <img src="assets/img/lavori/pieces/17.webp" alt="" width="259" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 13.5%; top: 74.69%; width: 12.09%">
-            <img src="assets/img/parete/piece-22.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 68.840%; top: 0.977%; width: 9.756%">
+            <img src="assets/img/lavori/pieces/11.webp" alt="" width="531" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 74.41%; top: 0%; width: 12.66%">
-            <img src="assets/img/parete/piece-09.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 79.012%; top: 0.977%; width: 3.115%">
+            <img src="assets/img/lavori/pieces/02.webp" alt="" width="526" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 87.88%; top: 0%; width: 12.12%">
-            <img src="assets/img/parete/piece-10.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 82.544%; top: 0.977%; width: 5.058%">
+            <img src="assets/img/lavori/pieces/01.webp" alt="" width="569" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 74.41%; top: 26.67%; width: 12.63%">
-            <img src="assets/img/parete/piece-11.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 88.019%; top: 0.977%; width: 3.414%">
+            <img src="assets/img/lavori/pieces/02.webp" alt="" width="526" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 87.86%; top: 26.67%; width: 12.14%">
-            <img src="assets/img/parete/piece-12.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 91.849%; top: 0.977%; width: 2.318%">
+            <img src="assets/img/lavori/pieces/29.webp" alt="" width="533" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 74.41%; top: 50%; width: 13.64%">
-            <img src="assets/img/parete/piece-24.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 94.584%; top: 0.977%; width: 4.722%">
+            <img src="assets/img/lavori/pieces/08.webp" alt="" width="544" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 88.86%; top: 50%; width: 11.14%">
-            <img src="assets/img/parete/piece-25.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 91.849%; top: 5.844%; width: 2.318%">
+            <img src="assets/img/lavori/pieces/15.webp" alt="" width="597" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 74.41%; top: 74.63%; width: 12.14%">
-            <img src="assets/img/parete/piece-26.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 31.929%; top: 9.586%; width: 4.784%">
+            <img src="assets/img/lavori/pieces/10.webp" alt="" width="497" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 87.36%; top: 74.63%; width: 12.64%">
-            <img src="assets/img/parete/piece-29.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 79.012%; top: 7.393%; width: 3.115%">
+            <img src="assets/img/lavori/pieces/24.webp" alt="" width="562" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 29.08%; top: 0%; width: 22.08%">
-            <img src="assets/img/parete/piece-13.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 82.544%; top: 10.312%; width: 5.058%">
+            <img src="assets/img/lavori/pieces/03.webp" alt="" width="569" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 51.97%; top: 0%; width: 9.59%">
-            <img src="assets/img/parete/piece-04.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 88.019%; top: 7.951%; width: 3.414%">
+            <img src="assets/img/lavori/pieces/14.webp" alt="" width="587" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 62.37%; top: 0%; width: 8.55%">
-            <img src="assets/img/parete/piece-07.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 91.849%; top: 10.252%; width: 2.318%">
+            <img src="assets/img/lavori/pieces/17.webp" alt="" width="259" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 29.08%; top: 11.65%; width: 14.53%">
-            <img src="assets/img/parete/piece-19.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 94.584%; top: 10.107%; width: 4.722%">
+            <img src="assets/img/lavori/pieces/26.webp" alt="" width="519" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 44.42%; top: 11.65%; width: 12.85%">
-            <img src="assets/img/parete/piece-18.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 65.390%; top: 13.091%; width: 3.033%">
+            <img src="assets/img/lavori/pieces/09.webp" alt="" width="500" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 58.07%; top: 11.65%; width: 12.85%">
-            <img src="assets/img/parete/piece-23.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 79.012%; top: 13.435%; width: 3.115%">
+            <img src="assets/img/lavori/pieces/21.webp" alt="" width="545" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 27.91%; top: 60.3%; width: 11.23%">
-            <img src="assets/img/parete/piece-15.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 88.019%; top: 14.262%; width: 3.414%">
+            <img src="assets/img/lavori/pieces/28.webp" alt="" width="700" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 39.95%; top: 60.3%; width: 11.23%">
-            <img src="assets/img/parete/piece-28.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 0.765%; top: 19.648%; width: 10.536%">
+            <img src="assets/img/lavori/pieces/05.webp" alt="" width="592" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 51.98%; top: 60.3%; width: 9.7%">
-            <img src="assets/img/parete/piece-05.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 88.643%; top: 19.648%; width: 4.858%">
+            <img src="assets/img/lavori/pieces/09.webp" alt="" width="500" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 62.49%; top: 60.3%; width: 9.6%">
-            <img src="assets/img/parete/piece-08.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 93.918%; top: 19.648%; width: 5.373%">
+            <img src="assets/img/lavori/pieces/16.webp" alt="" width="553" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 27.95%; top: 77.22%; width: 13.94%">
-            <img src="assets/img/parete/piece-27.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 88.643%; top: 29.798%; width: 5.965%">
+            <img src="assets/img/lavori/pieces/07.webp" alt="" width="700" height="603" loading="lazy" />
           </div>
-          <div class="piece" style="left: 42.7%; top: 77.22%; width: 13.9%">
-            <img src="assets/img/parete/piece-20.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 95.025%; top: 29.798%; width: 4.265%">
+            <img src="assets/img/lavori/pieces/20.webp" alt="" width="581" height="700" loading="lazy" />
           </div>
-          <div class="piece" style="left: 57.4%; top: 77.22%; width: 14.64%">
-            <img src="assets/img/parete/piece-14.png" alt="Lavoro" />
+          <div class="lavori__piece" style="left: 0.762%; top: 37.753%; width: 6.798%">
+            <img src="assets/img/lavori/pieces/04.webp" alt="" width="700" height="527" loading="lazy" />
           </div>
-
-          <!-------------------------------------------3 FRAMES------------------------------------------->
+          <div class="lavori__piece" style="left: 7.977%; top: 37.753%; width: 3.327%">
+            <img src="assets/img/lavori/pieces/25.webp" alt="" width="455" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 88.644%; top: 37.610%; width: 10.646%">
+            <img src="assets/img/lavori/pieces/15.webp" alt="" width="597" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 0.765%; top: 45.536%; width: 10.536%">
+            <img src="assets/img/lavori/pieces/23.webp" alt="" width="684" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 88.643%; top: 55.750%; width: 4.577%">
+            <img src="assets/img/lavori/pieces/25.webp" alt="" width="455" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 93.637%; top: 55.750%; width: 5.653%">
+            <img src="assets/img/lavori/pieces/24.webp" alt="" width="562" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 0.765%; top: 61.284%; width: 10.536%">
+            <img src="assets/img/lavori/pieces/20.webp" alt="" width="581" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 88.644%; top: 66.238%; width: 10.646%">
+            <img src="assets/img/lavori/pieces/07.webp" alt="" width="700" height="603" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 0.694%; top: 79.721%; width: 5.161%">
+            <img src="assets/img/lavori/pieces/29.webp" alt="" width="533" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 6.272%; top: 79.721%; width: 5.820%">
+            <img src="assets/img/lavori/pieces/08.webp" alt="" width="544" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 12.509%; top: 79.721%; width: 11.040%">
+            <img src="assets/img/lavori/pieces/06.webp" alt="" width="563" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 23.965%; top: 79.721%; width: 11.158%">
+            <img src="assets/img/lavori/pieces/03.webp" alt="" width="569" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 35.540%; top: 79.721%; width: 3.498%">
+            <img src="assets/img/lavori/pieces/22.webp" alt="" width="515" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 39.454%; top: 79.721%; width: 10.412%">
+            <img src="assets/img/lavori/pieces/11.webp" alt="" width="531" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 50.283%; top: 79.721%; width: 10.785%">
+            <img src="assets/img/lavori/pieces/27.webp" alt="" width="550" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 61.485%; top: 79.721%; width: 11.158%">
+            <img src="assets/img/lavori/pieces/01.webp" alt="" width="569" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 73.059%; top: 79.721%; width: 10.177%">
+            <img src="assets/img/lavori/pieces/26.webp" alt="" width="519" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 83.653%; top: 79.721%; width: 5.137%">
+            <img src="assets/img/lavori/pieces/05.webp" alt="" width="592" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 89.207%; top: 79.721%; width: 10.099%">
+            <img src="assets/img/lavori/pieces/22.webp" alt="" width="515" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 0.694%; top: 89.837%; width: 5.161%">
+            <img src="assets/img/lavori/pieces/16.webp" alt="" width="553" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 35.540%; top: 86.992%; width: 3.498%">
+            <img src="assets/img/lavori/pieces/12.webp" alt="" width="537" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 83.653%; top: 88.849%; width: 5.137%">
+            <img src="assets/img/lavori/pieces/10.webp" alt="" width="497" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 6.272%; top: 90.839%; width: 5.820%">
+            <img src="assets/img/lavori/pieces/28.webp" alt="" width="700" height="700" loading="lazy" />
+          </div>
+          <div class="lavori__piece" style="left: 35.540%; top: 93.990%; width: 3.498%">
+            <img src="assets/img/lavori/pieces/23.webp" alt="" width="684" height="700" loading="lazy" />
+          </div>
+        </div>
+        <!-- le 3 cornici dei servizi, una di fianco all'altra, centrate sulla parete -->
+        <div class="lavori__frames">
+          <a class="lavori__frame" href="tattoo.html" aria-label="Tattoo">
+            <img
+              src="assets/img/lavori/tattoo.webp"
+              alt="Tattoo"
+              width="1024"
+              height="1716"
+              loading="lazy"
+            />
+          </a>
+          <a class="lavori__frame" href="piercing.html" aria-label="Piercing">
+            <img
+              src="assets/img/lavori/piercing.webp"
+              alt="Piercing"
+              width="1024"
+              height="1716"
+              loading="lazy"
+            />
+          </a>
           <a
-            class="piece piece--central"
-            href="tattoo.html"
-            style="left: 26.39%; top: 30%; width: 15.2%"
-            aria-label="Tattoo"
-            ><img src="assets/img/parete/tattoo.png" alt="Tattoo"
-          /></a>
-          <a
-            class="piece piece--central"
-            href="piercing.html"
-            style="left: 42.4%; top: 30%; width: 15.2%"
-            aria-label="Piercing"
-            ><img src="assets/img/parete/piercing.png" alt="Piercing"
-          /></a>
-          <a
-            class="piece piece--central"
+            class="lavori__frame"
             href="dermopigmentation.html"
-            style="left: 58.41%; top: 30%; width: 15.2%"
-            aria-label="PMU"
-            ><img
-              src="assets/img/parete/pmu.png"
-              alt="PMU — Dermopigmentazione"
-          /></a>
+            aria-label="Dermopigmentazione"
+          >
+            <img
+              src="assets/img/lavori/pmu.webp"
+              alt="Dermopigmentazione"
+              width="1024"
+              height="1716"
+              loading="lazy"
+            />
+          </a>
         </div>
       </section>
     </main>
@@ -516,10 +594,11 @@
         if (!hm) return;
         hm.addEventListener("load", function () {
           for (const m of hm.model.materials) {
-            // deep polished graphite marble, lit by the soft directional studio environment map
-            m.pbrMetallicRoughness.setBaseColorFactor([0.055, 0.055, 0.065, 1]);
+            // polished charcoal stone: smooth normals + baked ambient occlusion (vertex colours) in the
+            // model, key/rim/pink-bounce lights in the HDR studio environment map
+            m.pbrMetallicRoughness.setBaseColorFactor([0.045, 0.043, 0.05, 1]);
             m.pbrMetallicRoughness.setMetallicFactor(0);
-            m.pbrMetallicRoughness.setRoughnessFactor(0.16);
+            m.pbrMetallicRoughness.setRoughnessFactor(0.24);
           }
         });
       })();
