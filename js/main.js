@@ -49,3 +49,46 @@
     { passive: true }
   );
 })();
+
+/* Mobile menu (all pages).
+   The hamburger (.menu-toggle) toggles `menu-open` on <html>; the CSS turns the nav into a
+   full-screen panel. Closes on a link click, on Escape, and when the window gets wide again. */
+(function () {
+  const toggle = document.querySelector(".menu-toggle");
+  const nav = document.getElementById("site-nav");
+  if (!toggle || !nav) return;
+
+  const root = document.documentElement;
+  const wide = window.matchMedia("(min-width: 861px)");
+
+  function setOpen(open) {
+    root.classList.toggle("menu-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Chiudi il menu" : "Apri il menu");
+    // freeze the smooth scroll behind the panel (the FAQ drawer manages its own lock)
+    if (window.__lenis) {
+      if (open) window.__lenis.stop();
+      else if (!root.classList.contains("faq-open")) window.__lenis.start();
+    }
+  }
+
+  toggle.addEventListener("click", function () {
+    setOpen(!root.classList.contains("menu-open"));
+  });
+
+  // any link or the FAQ button inside the panel closes it
+  document.querySelector("header").addEventListener("click", function (e) {
+    if (e.target.closest("#site-nav a, #site-nav .nav__faq, .btn-prenota")) setOpen(false);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && root.classList.contains("menu-open")) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+
+  wide.addEventListener("change", function (e) {
+    if (e.matches) setOpen(false);
+  });
+})();

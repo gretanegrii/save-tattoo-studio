@@ -3,6 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      /* Opening: the logo on fuchsia, then the hero (see .intro in css/home.css and the script at the end of
+         <body>). It plays when you open the site or reload it, not when you come back to the home from
+         another page of the site, and not with "reduce motion". */
+      (function () {
+        try {
+          var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+          var internal =
+            document.referrer &&
+            new URL(document.referrer).origin === location.origin &&
+            !(nav && nav.type === "reload");
+          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (!internal && !reduce) document.documentElement.classList.add("has-intro");
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="image" href="assets/img/logo/logo.png" />
 
     <!-- ===== Primary SEO ===== -->
     <title>
@@ -12,7 +29,7 @@
       name="description"
       content="Studio di tatuaggi, piercing e dermopigmentazione a Binasco (Milano). Ogni tatuaggio parte dalla tua idea, nessuno stile fisso. Prenota la tua richiesta."
     />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="noindex, nofollow" /> <!-- PREVIEW: change to "index, follow" when the site goes live -->
     <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
     <!-- TODO: replace with the real live domain -->
     <link rel="canonical" href="https://www.savetattoo.it/" />
@@ -34,7 +51,7 @@
     <meta property="og:url" content="https://www.savetattoo.it/" />
     <meta
       property="og:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Twitter card ===== -->
@@ -49,12 +66,12 @@
     />
     <meta
       name="twitter:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Favicon ===== -->
-    <!-- TODO: create favicon.svg (and a fallback .png) -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" href="favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
 
     <!-- ===== Fonts preload (above-the-fold performance) ===== -->
@@ -74,8 +91,8 @@
     />
 
     <!-- ===== Styles ===== -->
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/base.css?v=20261015k" />
+    <link rel="stylesheet" href="css/home.css?v=20261015k" />
 
     <!-- ===== Structured data: local business (schema.org) ===== -->
     <!-- TODO: fill address, phone, hours, social URLs, geo with Save's real data -->
@@ -131,6 +148,11 @@
   </head>
 
   <body>
+    <!-- opening screen: only shown when <html> has the class "has-intro" (set above) -->
+    <div class="intro" aria-hidden="true">
+      <img class="intro__logo" src="assets/img/logo/logo.png" alt="" width="978" height="188" />
+    </div>
+
     <header>
       <div class="brand">
         <a href="index.html" class="logo">
@@ -145,7 +167,7 @@
         </p>
       </div>
 
-      <nav aria-label="Principale">
+      <nav aria-label="Principale" id="site-nav">
         <ul class="nav__col">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">Su di me</a></li>
@@ -164,12 +186,61 @@
             </button>
           </li>
         </ul>
+
+        <a href="booking.html" class="menu__cta">
+          <span>Prenota</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="menu__info">
+          <div class="menu__group">
+            <p class="menu__title">Seguimi</p>
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/saveria.sforza.tattoo" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Instagram</a
+                >
+              </li>
+              <li>
+                <a href="https://www.tiktok.com/@save.tattoo2" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> TikTok</a
+                >
+              </li>
+              <li>
+                <a href="https://www.facebook.com/share/1EoNAi1h6D/?mibextid=wwXIfr" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Facebook</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">Contatti</p>
+            <ul>
+              <li><a href="mailto:savetattoo@icloud.com">savetattoo@icloud.com</a></li>
+              <li><a href="tel:+393396189130">339 618 9130</a></li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">SAVE Tattoo</p>
+            <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
+          </div>
+        </div>
       </nav>
 
       <a href="booking.html" class="btn-prenota">
         <span class="btn-prenota__label">Prenota</span>
         <span aria-hidden="true" class="btn-prenota__icon">↗</span>
       </a>
+      <button
+        type="button"
+        class="menu-toggle"
+        aria-label="Apri il menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <!-- soft light + shadow behind the hero medusa (moved by js/hero-model.js) -->
@@ -195,7 +266,6 @@
             environment-image="assets/img/env/studio.hdr"
             tone-mapping="aces"
             exposure="1.5"
-            ar="false"
             loading="eager"
             aria-hidden="true"
           ></model-viewer>
@@ -241,167 +311,672 @@
       <p class="hero-closer">Anarchica da sempre</p>
 
       <!-------------------------------------------WORKS SECTION------------------------------------------->
+      <!-------------------------------------------WORKS SECTION (new: three outlined boxes on the photo)------------------------------------------->
+      <section class="lavori lavori--new" id="lavori" aria-label="Lavori">
+        <div class="lavori__photo" aria-hidden="true"></div>
+        <div class="lavori__track">
+          <a href="tattoo.html" class="lavori__box" aria-label="Tattoo">
+            <span class="lavori__box-label">Tattoo</span>
+            <span class="lavori__box-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="piercing.html" class="lavori__box" aria-label="Piercing">
+            <span class="lavori__box-label">Piercing</span>
+            <span class="lavori__box-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="dermopigmentation.html" class="lavori__box" aria-label="Dermopigmentazione">
+            <span class="lavori__box-label">Dermopigmentazione</span>
+            <span class="lavori__box-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <div class="lavori__arrows">
+          <button type="button" class="lavori__arrow" data-dir="-1" aria-label="Precedente">
+            <svg viewBox="0 0 56 24" width="56" height="24" aria-hidden="true">
+              <path d="M54 12H3M12 3 3 12l9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button type="button" class="lavori__arrow" data-dir="1" aria-label="Successivo">
+            <svg viewBox="0 0 56 24" width="56" height="24" aria-hidden="true">
+              <path d="M2 12h51M44 3l9 9-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <!--
+        =================== PREVIOUS "LAVORI" SECTION (the gallery wall) — kept, commented out ===================
+        To bring it back: delete the new <section class="lavori lavori--new"> above, remove the comment
+        markers around this block and delete "lavori--new" from the class (the old CSS is still in css/home.css).
+        (The notes inside, written with [[ ]], were HTML comments: a comment cannot contain another one.)
+
       <section class="lavori" id="lavori" aria-label="Lavori">
-        <!-- piccoli quadri attorno (posizioni in % della parete 1440 × 1024) -->
+        [[piccoli quadri attorno (posizioni in % della parete 1440 × 1024)]]
         <div class="lavori__pieces">
-          <div class="lavori__piece" style="left: 0.694%; top: 0.977%; width: 9.866%">
-            <img src="assets/img/lavori/pieces/12.webp" alt="" width="537" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.694%; top: 0.977%; width: 9.866%"
+          >
+            <img
+              src="assets/img/lavori/pieces/12.webp"
+              alt=""
+              width="537"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 10.977%; top: 0.977%; width: 10.105%">
-            <img src="assets/img/lavori/pieces/27.webp" alt="" width="550" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 10.977%; top: 0.977%; width: 10.105%"
+          >
+            <img
+              src="assets/img/lavori/pieces/27.webp"
+              alt=""
+              width="550"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 21.499%; top: 0.977%; width: 10.013%">
-            <img src="assets/img/lavori/pieces/21.webp" alt="" width="545" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 21.499%; top: 0.977%; width: 10.013%"
+          >
+            <img
+              src="assets/img/lavori/pieces/21.webp"
+              alt=""
+              width="545"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 31.929%; top: 0.977%; width: 4.784%">
-            <img src="assets/img/lavori/pieces/14.webp" alt="" width="587" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 31.929%; top: 0.977%; width: 4.784%"
+          >
+            <img
+              src="assets/img/lavori/pieces/14.webp"
+              alt=""
+              width="587"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 37.130%; top: 0.977%; width: 17.083%">
-            <img src="assets/img/lavori/pieces/04.webp" alt="" width="700" height="527" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 37.13%; top: 0.977%; width: 17.083%"
+          >
+            <img
+              src="assets/img/lavori/pieces/04.webp"
+              alt=""
+              width="700"
+              height="527"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 54.629%; top: 0.977%; width: 10.344%">
-            <img src="assets/img/lavori/pieces/06.webp" alt="" width="563" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 54.629%; top: 0.977%; width: 10.344%"
+          >
+            <img
+              src="assets/img/lavori/pieces/06.webp"
+              alt=""
+              width="563"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 65.390%; top: 0.977%; width: 3.033%">
-            <img src="assets/img/lavori/pieces/17.webp" alt="" width="259" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 65.39%; top: 0.977%; width: 3.033%"
+          >
+            <img
+              src="assets/img/lavori/pieces/17.webp"
+              alt=""
+              width="259"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 68.840%; top: 0.977%; width: 9.756%">
-            <img src="assets/img/lavori/pieces/11.webp" alt="" width="531" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 68.84%; top: 0.977%; width: 9.756%"
+          >
+            <img
+              src="assets/img/lavori/pieces/11.webp"
+              alt=""
+              width="531"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 79.012%; top: 0.977%; width: 3.115%">
-            <img src="assets/img/lavori/pieces/02.webp" alt="" width="526" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 79.012%; top: 0.977%; width: 3.115%"
+          >
+            <img
+              src="assets/img/lavori/pieces/02.webp"
+              alt=""
+              width="526"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 82.544%; top: 0.977%; width: 5.058%">
-            <img src="assets/img/lavori/pieces/01.webp" alt="" width="569" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 82.544%; top: 0.977%; width: 5.058%"
+          >
+            <img
+              src="assets/img/lavori/pieces/01.webp"
+              alt=""
+              width="569"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.019%; top: 0.977%; width: 3.414%">
-            <img src="assets/img/lavori/pieces/02.webp" alt="" width="526" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.019%; top: 0.977%; width: 3.414%"
+          >
+            <img
+              src="assets/img/lavori/pieces/02.webp"
+              alt=""
+              width="526"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 91.849%; top: 0.977%; width: 2.318%">
-            <img src="assets/img/lavori/pieces/29.webp" alt="" width="533" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 91.849%; top: 0.977%; width: 2.318%"
+          >
+            <img
+              src="assets/img/lavori/pieces/29.webp"
+              alt=""
+              width="533"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 94.584%; top: 0.977%; width: 4.722%">
-            <img src="assets/img/lavori/pieces/08.webp" alt="" width="544" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 94.584%; top: 0.977%; width: 4.722%"
+          >
+            <img
+              src="assets/img/lavori/pieces/08.webp"
+              alt=""
+              width="544"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 91.849%; top: 5.844%; width: 2.318%">
-            <img src="assets/img/lavori/pieces/15.webp" alt="" width="597" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 91.849%; top: 5.844%; width: 2.318%"
+          >
+            <img
+              src="assets/img/lavori/pieces/15.webp"
+              alt=""
+              width="597"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 31.929%; top: 9.586%; width: 4.784%">
-            <img src="assets/img/lavori/pieces/10.webp" alt="" width="497" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 31.929%; top: 9.586%; width: 4.784%"
+          >
+            <img
+              src="assets/img/lavori/pieces/10.webp"
+              alt=""
+              width="497"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 79.012%; top: 7.393%; width: 3.115%">
-            <img src="assets/img/lavori/pieces/24.webp" alt="" width="562" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 79.012%; top: 7.393%; width: 3.115%"
+          >
+            <img
+              src="assets/img/lavori/pieces/24.webp"
+              alt=""
+              width="562"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 82.544%; top: 10.312%; width: 5.058%">
-            <img src="assets/img/lavori/pieces/03.webp" alt="" width="569" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 82.544%; top: 10.312%; width: 5.058%"
+          >
+            <img
+              src="assets/img/lavori/pieces/03.webp"
+              alt=""
+              width="569"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.019%; top: 7.951%; width: 3.414%">
-            <img src="assets/img/lavori/pieces/14.webp" alt="" width="587" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.019%; top: 7.951%; width: 3.414%"
+          >
+            <img
+              src="assets/img/lavori/pieces/14.webp"
+              alt=""
+              width="587"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 91.849%; top: 10.252%; width: 2.318%">
-            <img src="assets/img/lavori/pieces/17.webp" alt="" width="259" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 91.849%; top: 10.252%; width: 2.318%"
+          >
+            <img
+              src="assets/img/lavori/pieces/17.webp"
+              alt=""
+              width="259"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 94.584%; top: 10.107%; width: 4.722%">
-            <img src="assets/img/lavori/pieces/26.webp" alt="" width="519" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 94.584%; top: 10.107%; width: 4.722%"
+          >
+            <img
+              src="assets/img/lavori/pieces/26.webp"
+              alt=""
+              width="519"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 65.390%; top: 13.091%; width: 3.033%">
-            <img src="assets/img/lavori/pieces/09.webp" alt="" width="500" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 65.39%; top: 13.091%; width: 3.033%"
+          >
+            <img
+              src="assets/img/lavori/pieces/09.webp"
+              alt=""
+              width="500"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 79.012%; top: 13.435%; width: 3.115%">
-            <img src="assets/img/lavori/pieces/21.webp" alt="" width="545" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 79.012%; top: 13.435%; width: 3.115%"
+          >
+            <img
+              src="assets/img/lavori/pieces/21.webp"
+              alt=""
+              width="545"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.019%; top: 14.262%; width: 3.414%">
-            <img src="assets/img/lavori/pieces/28.webp" alt="" width="700" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.019%; top: 14.262%; width: 3.414%"
+          >
+            <img
+              src="assets/img/lavori/pieces/28.webp"
+              alt=""
+              width="700"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.765%; top: 19.648%; width: 10.536%">
-            <img src="assets/img/lavori/pieces/05.webp" alt="" width="592" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.765%; top: 19.648%; width: 10.536%"
+          >
+            <img
+              src="assets/img/lavori/pieces/05.webp"
+              alt=""
+              width="592"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.643%; top: 19.648%; width: 4.858%">
-            <img src="assets/img/lavori/pieces/09.webp" alt="" width="500" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.643%; top: 19.648%; width: 4.858%"
+          >
+            <img
+              src="assets/img/lavori/pieces/09.webp"
+              alt=""
+              width="500"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 93.918%; top: 19.648%; width: 5.373%">
-            <img src="assets/img/lavori/pieces/16.webp" alt="" width="553" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 93.918%; top: 19.648%; width: 5.373%"
+          >
+            <img
+              src="assets/img/lavori/pieces/16.webp"
+              alt=""
+              width="553"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.643%; top: 29.798%; width: 5.965%">
-            <img src="assets/img/lavori/pieces/07.webp" alt="" width="700" height="603" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.643%; top: 29.798%; width: 5.965%"
+          >
+            <img
+              src="assets/img/lavori/pieces/07.webp"
+              alt=""
+              width="700"
+              height="603"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 95.025%; top: 29.798%; width: 4.265%">
-            <img src="assets/img/lavori/pieces/20.webp" alt="" width="581" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 95.025%; top: 29.798%; width: 4.265%"
+          >
+            <img
+              src="assets/img/lavori/pieces/20.webp"
+              alt=""
+              width="581"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.762%; top: 37.753%; width: 6.798%">
-            <img src="assets/img/lavori/pieces/04.webp" alt="" width="700" height="527" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.762%; top: 37.753%; width: 6.798%"
+          >
+            <img
+              src="assets/img/lavori/pieces/04.webp"
+              alt=""
+              width="700"
+              height="527"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 7.977%; top: 37.753%; width: 3.327%">
-            <img src="assets/img/lavori/pieces/25.webp" alt="" width="455" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 7.977%; top: 37.753%; width: 3.327%"
+          >
+            <img
+              src="assets/img/lavori/pieces/25.webp"
+              alt=""
+              width="455"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.644%; top: 37.610%; width: 10.646%">
-            <img src="assets/img/lavori/pieces/15.webp" alt="" width="597" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.644%; top: 37.61%; width: 10.646%"
+          >
+            <img
+              src="assets/img/lavori/pieces/15.webp"
+              alt=""
+              width="597"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.765%; top: 45.536%; width: 10.536%">
-            <img src="assets/img/lavori/pieces/23.webp" alt="" width="684" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.765%; top: 45.536%; width: 10.536%"
+          >
+            <img
+              src="assets/img/lavori/pieces/23.webp"
+              alt=""
+              width="684"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.643%; top: 55.750%; width: 4.577%">
-            <img src="assets/img/lavori/pieces/25.webp" alt="" width="455" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.643%; top: 55.75%; width: 4.577%"
+          >
+            <img
+              src="assets/img/lavori/pieces/25.webp"
+              alt=""
+              width="455"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 93.637%; top: 55.750%; width: 5.653%">
-            <img src="assets/img/lavori/pieces/24.webp" alt="" width="562" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 93.637%; top: 55.75%; width: 5.653%"
+          >
+            <img
+              src="assets/img/lavori/pieces/24.webp"
+              alt=""
+              width="562"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.765%; top: 61.284%; width: 10.536%">
-            <img src="assets/img/lavori/pieces/20.webp" alt="" width="581" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.765%; top: 61.284%; width: 10.536%"
+          >
+            <img
+              src="assets/img/lavori/pieces/20.webp"
+              alt=""
+              width="581"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 88.644%; top: 66.238%; width: 10.646%">
-            <img src="assets/img/lavori/pieces/07.webp" alt="" width="700" height="603" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 88.644%; top: 66.238%; width: 10.646%"
+          >
+            <img
+              src="assets/img/lavori/pieces/07.webp"
+              alt=""
+              width="700"
+              height="603"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.694%; top: 79.721%; width: 5.161%">
-            <img src="assets/img/lavori/pieces/29.webp" alt="" width="533" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.694%; top: 79.721%; width: 5.161%"
+          >
+            <img
+              src="assets/img/lavori/pieces/29.webp"
+              alt=""
+              width="533"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 6.272%; top: 79.721%; width: 5.820%">
-            <img src="assets/img/lavori/pieces/08.webp" alt="" width="544" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 6.272%; top: 79.721%; width: 5.82%"
+          >
+            <img
+              src="assets/img/lavori/pieces/08.webp"
+              alt=""
+              width="544"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 12.509%; top: 79.721%; width: 11.040%">
-            <img src="assets/img/lavori/pieces/06.webp" alt="" width="563" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 12.509%; top: 79.721%; width: 11.04%"
+          >
+            <img
+              src="assets/img/lavori/pieces/06.webp"
+              alt=""
+              width="563"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 23.965%; top: 79.721%; width: 11.158%">
-            <img src="assets/img/lavori/pieces/03.webp" alt="" width="569" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 23.965%; top: 79.721%; width: 11.158%"
+          >
+            <img
+              src="assets/img/lavori/pieces/03.webp"
+              alt=""
+              width="569"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 35.540%; top: 79.721%; width: 3.498%">
-            <img src="assets/img/lavori/pieces/22.webp" alt="" width="515" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 35.54%; top: 79.721%; width: 3.498%"
+          >
+            <img
+              src="assets/img/lavori/pieces/22.webp"
+              alt=""
+              width="515"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 39.454%; top: 79.721%; width: 10.412%">
-            <img src="assets/img/lavori/pieces/11.webp" alt="" width="531" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 39.454%; top: 79.721%; width: 10.412%"
+          >
+            <img
+              src="assets/img/lavori/pieces/11.webp"
+              alt=""
+              width="531"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 50.283%; top: 79.721%; width: 10.785%">
-            <img src="assets/img/lavori/pieces/27.webp" alt="" width="550" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 50.283%; top: 79.721%; width: 10.785%"
+          >
+            <img
+              src="assets/img/lavori/pieces/27.webp"
+              alt=""
+              width="550"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 61.485%; top: 79.721%; width: 11.158%">
-            <img src="assets/img/lavori/pieces/01.webp" alt="" width="569" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 61.485%; top: 79.721%; width: 11.158%"
+          >
+            <img
+              src="assets/img/lavori/pieces/01.webp"
+              alt=""
+              width="569"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 73.059%; top: 79.721%; width: 10.177%">
-            <img src="assets/img/lavori/pieces/26.webp" alt="" width="519" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 73.059%; top: 79.721%; width: 10.177%"
+          >
+            <img
+              src="assets/img/lavori/pieces/26.webp"
+              alt=""
+              width="519"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 83.653%; top: 79.721%; width: 5.137%">
-            <img src="assets/img/lavori/pieces/05.webp" alt="" width="592" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 83.653%; top: 79.721%; width: 5.137%"
+          >
+            <img
+              src="assets/img/lavori/pieces/05.webp"
+              alt=""
+              width="592"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 89.207%; top: 79.721%; width: 10.099%">
-            <img src="assets/img/lavori/pieces/22.webp" alt="" width="515" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 89.207%; top: 79.721%; width: 10.099%"
+          >
+            <img
+              src="assets/img/lavori/pieces/22.webp"
+              alt=""
+              width="515"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 0.694%; top: 89.837%; width: 5.161%">
-            <img src="assets/img/lavori/pieces/16.webp" alt="" width="553" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 0.694%; top: 89.837%; width: 5.161%"
+          >
+            <img
+              src="assets/img/lavori/pieces/16.webp"
+              alt=""
+              width="553"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 35.540%; top: 86.992%; width: 3.498%">
-            <img src="assets/img/lavori/pieces/12.webp" alt="" width="537" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 35.54%; top: 86.992%; width: 3.498%"
+          >
+            <img
+              src="assets/img/lavori/pieces/12.webp"
+              alt=""
+              width="537"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 83.653%; top: 88.849%; width: 5.137%">
-            <img src="assets/img/lavori/pieces/10.webp" alt="" width="497" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 83.653%; top: 88.849%; width: 5.137%"
+          >
+            <img
+              src="assets/img/lavori/pieces/10.webp"
+              alt=""
+              width="497"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 6.272%; top: 90.839%; width: 5.820%">
-            <img src="assets/img/lavori/pieces/28.webp" alt="" width="700" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 6.272%; top: 90.839%; width: 5.82%"
+          >
+            <img
+              src="assets/img/lavori/pieces/28.webp"
+              alt=""
+              width="700"
+              height="700"
+              loading="lazy"
+            />
           </div>
-          <div class="lavori__piece" style="left: 35.540%; top: 93.990%; width: 3.498%">
-            <img src="assets/img/lavori/pieces/23.webp" alt="" width="684" height="700" loading="lazy" />
+          <div
+            class="lavori__piece"
+            style="left: 35.54%; top: 93.99%; width: 3.498%"
+          >
+            <img
+              src="assets/img/lavori/pieces/23.webp"
+              alt=""
+              width="684"
+              height="700"
+              loading="lazy"
+            />
           </div>
         </div>
-        <!-- le 3 cornici dei servizi, una di fianco all'altra, centrate sulla parete -->
+        [[le 3 cornici dei servizi, una di fianco all'altra, centrate sulla parete]]
         <div class="lavori__frames">
           <a class="lavori__frame" href="tattoo.html" aria-label="Tattoo">
             <img
@@ -436,6 +1011,8 @@
           </a>
         </div>
       </section>
+        ======================================================================================================
+      -->
     </main>
 
     <footer>
@@ -538,7 +1115,9 @@
           <!-------------------------------------------CONTACT------------------------------------------->
           <p class="footer__col-title">Contatti</p>
           <ul>
-            <li><a href="mailto:savetattoo@icloud.com">savetattoo@icloud.com</a></li>
+            <li>
+              <a href="mailto:savetattoo@icloud.com">savetattoo@icloud.com</a>
+            </li>
             <li><a href="tel:+393396189130">339 618 9130</a></li>
           </ul>
         </div>
@@ -581,8 +1160,8 @@
     </footer>
 
     <script src="js/vendor/lenis.min.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/faq.js" defer></script>
+    <script src="js/main.js?v=20261015k" defer></script>
+    <script src="js/faq.js?v=20261015k" defer></script>
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3/dist/model-viewer.min.js"
@@ -603,7 +1182,40 @@
         });
       })();
     </script>
-    <script src="js/hero.js" defer></script>
-    <script src="js/hero-model.js" defer></script>
+    <script src="js/hero.js?v=20261015k" defer></script>
+    <script src="js/lavori.js?v=20261015k" defer></script>
+    <script src="js/hero-text.js?v=20261015k" defer></script>
+    <script src="js/hero-model.js?v=20261015k" defer></script>
+    <script>
+      /* Opening controller: keeps the logo on screen for at least 2.2 s and until the medusa model has
+         loaded (or 7 s at most), then fades it out. */
+      (function () {
+        var html = document.documentElement;
+        if (!html.classList.contains("has-intro")) return;
+        var t0 = Date.now();
+        var MIN = 2200;
+        var MAX = 7000;
+        var done = false;
+        var modelReady = false;
+        function finish() {
+          if (done) return;
+          done = true;
+          html.classList.add("intro-done");
+          window.scrollTo(0, 0);
+        }
+        function check() {
+          var el = Date.now() - t0;
+          if (el >= MIN && (modelReady || el >= MAX)) finish();
+          else setTimeout(check, 100);
+        }
+        var m = document.querySelector(".hero__model");
+        if (m) {
+          if (m.loaded) modelReady = true;
+          m.addEventListener("load", function () { modelReady = true; });
+          m.addEventListener("error", function () { modelReady = true; });
+        } else modelReady = true;
+        check();
+      })();
+    </script>
   </body>
 </html>

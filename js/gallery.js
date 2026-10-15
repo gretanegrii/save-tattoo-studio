@@ -102,6 +102,34 @@
     }
   });
 
+  // touch: swipe sideways to browse, swipe down to close
+  let tx = 0;
+  let ty = 0;
+  let tracking = false;
+  box.addEventListener(
+    "touchstart",
+    function (e) {
+      if (e.touches.length !== 1) return;
+      tracking = true;
+      tx = e.touches[0].clientX;
+      ty = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+  box.addEventListener(
+    "touchend",
+    function (e) {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - tx;
+      const dy = t.clientY - ty;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+      else if (dy > 110 && Math.abs(dy) > Math.abs(dx) * 1.5) close();
+    },
+    { passive: true }
+  );
+
   box.addEventListener("mousemove", function (e) {
     bimg.style.cursor = e.clientX < window.innerWidth / 2 ? "w-resize" : "e-resize";
   });

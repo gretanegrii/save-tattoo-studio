@@ -10,11 +10,11 @@
       name="description"
       content="Piercing a Binasco (Milano): orecchie, naso, viso, microdermal e altri. Guarda le foto, i prezzi e come prendertene cura. Prenota la tua richiesta."
     />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="noindex, nofollow" /> <!-- PREVIEW: change to "index, follow" when the site goes live -->
     <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
     <!-- TODO: replace with the real live domain -->
     <link rel="canonical" href="https://www.savetattoo.it/piercing.html" />
-    <meta name="theme-color" content="#f33283" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     <!-- ===== Open Graph (social sharing) ===== -->
     <meta property="og:type" content="website" />
@@ -29,7 +29,7 @@
     <meta property="og:url" content="https://www.savetattoo.it/piercing.html" />
     <meta
       property="og:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Twitter card ===== -->
@@ -44,12 +44,12 @@
     />
     <meta
       name="twitter:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Favicon ===== -->
-    <!-- TODO: create favicon.svg (and a fallback .png) -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" href="favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
 
     <!-- ===== Fonts preload (above-the-fold performance) ===== -->
@@ -108,7 +108,7 @@
         </p>
       </div>
 
-      <nav aria-label="Principale">
+      <nav aria-label="Principale" id="site-nav">
         <ul class="nav__col">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">Su di me</a></li>
@@ -127,12 +127,62 @@
             </button>
           </li>
         </ul>
+
+        <a href="booking.html" class="menu__cta">
+          <span>Prenota</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="menu__info">
+          <div class="menu__group">
+            <p class="menu__title">Seguimi</p>
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/saveria.sforza.tattoo" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Instagram</a
+                >
+              </li>
+              <li>
+                <a href="https://www.tiktok.com/@save.tattoo2" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> TikTok</a
+                >
+              </li>
+              <li>
+                <a href="https://www.facebook.com/share/1EoNAi1h6D/?mibextid=wwXIfr" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Facebook</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">Contatti</p>
+            <ul>
+              <li><a href="mailto:savetattoo@icloud.com">savetattoo@icloud.com</a></li>
+              <li><a href="tel:+393396189130">339 618 9130</a></li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">SAVE Tattoo</p>
+            <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
+          </div>
+        </div>
       </nav>
 
       <a href="booking.html" class="btn-prenota">
         <span class="btn-prenota__label">Prenota</span>
         <span aria-hidden="true" class="btn-prenota__icon">↗</span>
       </a>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        aria-label="Apri il menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <main>
@@ -398,6 +448,14 @@
             </li>
           </ul>
         </a>
+        <div class="zone__arrows">
+          <button type="button" class="zone__arrow" data-dir="-1" aria-label="Foto precedenti">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="zone__arrow" data-dir="1" aria-label="Foto successive">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
         <div class="zone__info">
           <dl class="price-list">
             <div>
@@ -443,7 +501,7 @@
               target="_blank"
               rel="noopener"
             >
-              Prenditi cura del tuo piercing all'orecchio
+              Prenditi cura del tuo piercing <span class="aftercare__zone">all'orecchio</span>
               <span aria-hidden="true">↓</span>
             </a>
           </p>
@@ -825,6 +883,14 @@
             </li>
           </ul>
         </a>
+        <div class="zone__arrows">
+          <button type="button" class="zone__arrow" data-dir="-1" aria-label="Foto precedenti">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="zone__arrow" data-dir="1" aria-label="Foto successive">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
         <div class="zone__info">
           <dl class="price-list">
             <div>
@@ -846,7 +912,7 @@
               target="_blank"
               rel="noopener"
             >
-              Prenditi cura del tuo piercing al naso
+              Prenditi cura del tuo piercing <span class="aftercare__zone">al naso</span>
               <span aria-hidden="true">↓</span>
             </a>
           </p>
@@ -962,6 +1028,14 @@
             </li>
           </ul>
         </a>
+        <div class="zone__arrows">
+          <button type="button" class="zone__arrow" data-dir="-1" aria-label="Foto precedenti">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="zone__arrow" data-dir="1" aria-label="Foto successive">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
         <div class="zone__info">
           <dl class="price-list">
             <div>
@@ -987,7 +1061,7 @@
               target="_blank"
               rel="noopener"
             >
-              Prenditi cura del tuo piercing sul viso
+              Prenditi cura del tuo piercing <span class="aftercare__zone">sul viso</span>
               <span aria-hidden="true">↓</span>
             </a>
           </p>
@@ -1355,6 +1429,14 @@
             </li>
           </ul>
         </a>
+        <div class="zone__arrows">
+          <button type="button" class="zone__arrow" data-dir="-1" aria-label="Foto precedenti">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button type="button" class="zone__arrow" data-dir="1" aria-label="Foto successive">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
         <div class="zone__info">
           <dl class="price-list">
             <div>
@@ -1399,7 +1481,7 @@
               target="_blank"
               rel="noopener"
             >
-              Prenditi cura del tuo piercing (Ombelico/Capezzoli)
+              Prenditi cura del tuo piercing <span class="aftercare__zone">(Ombelico/Capezzoli)</span>
               <span aria-hidden="true">↓</span>
             </a>
           </p>
@@ -1559,6 +1641,7 @@
     <script src="js/vendor/lenis.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/faq.js" defer></script>
+    <script src="js/zone-strips.js" defer></script>
     <script src="js/gallery.js" defer></script>
   </body>
 </html>

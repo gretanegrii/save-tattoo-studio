@@ -307,6 +307,201 @@ header nav {
   color: var(--color-black);
 }
 
+/* Phones: the page width is fixed. Nothing can be dragged sideways (the page only moves up/down;
+   pinch-zoom still works), and anything that sticks out is clipped instead of widening the page. */
+@media (max-width: 860px) {
+  /* only on <html> (it applies to the whole screen): on <body> it would also cut off the full-bleed
+     sections that stick out of the 20px page margin (photo, Prenota band, footer) */
+  html {
+    overflow-x: clip; /* "clip", not "hidden": it does not break position:sticky */
+    overscroll-behavior-x: none;
+    touch-action: pan-y pinch-zoom;
+  }
+}
+
+/* -------------------------------------------NAVBAR — MOBILE (hamburger)------------------------------------------- */
+/* Hidden on desktop. Below 860px: logo + "Binasco" stay top-left, the nav and the Prenota
+   button move into a full-screen black panel opened by the hamburger on the right
+   (js/main.js toggles `menu-open` on <html>). */
+.menu-toggle,
+.menu__cta,
+.menu__info {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  header {
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 20px;
+  }
+
+  .brand,
+  .menu-toggle {
+    position: relative;
+    z-index: 2; /* above the full-screen panel */
+  }
+
+  /* hamburger: two lines, they cross into an X when open */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    width: 44px;
+    height: 44px;
+    margin-right: -10px; /* the lines line up with the 20px gutter */
+    padding: 0 10px;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(4.5px) rotate(45deg);
+  }
+  html.menu-open .menu-toggle span:nth-child(2) {
+    transform: translateY(-4.5px) rotate(-45deg);
+  }
+
+  /* the panel: black background + the nav and the Prenota button, both fading in */
+  header::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-black);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s;
+  }
+
+  header nav {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 6rem 20px 2.5rem;
+    overflow-y: auto;
+    color: var(--color-white);
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(2.2rem, 10.5vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.4s ease,
+      visibility 0.4s;
+  }
+  header nav .nav__col {
+    gap: 0.7rem;
+    color: var(--color-white); /* the panel is always black: paper pages (Flash, privacy…) set black links for the desktop header */
+  }
+  /* links rise in one after the other */
+  header nav li {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.5s ease,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.menu-open header nav li {
+    opacity: 1;
+    transform: none;
+  }
+  html.menu-open header nav > .nav__col:nth-of-type(1) li:nth-child(1) { transition-delay: 0.08s; }
+  html.menu-open header nav > .nav__col:nth-of-type(1) li:nth-child(2) { transition-delay: 0.13s; }
+  html.menu-open header nav > .nav__col:nth-of-type(2) li:nth-child(1) { transition-delay: 0.18s; }
+  html.menu-open header nav > .nav__col:nth-of-type(2) li:nth-child(2) { transition-delay: 0.23s; }
+  html.menu-open header nav > .nav__col:nth-of-type(2) li:nth-child(3) { transition-delay: 0.28s; }
+
+  /* the desktop Prenota button is replaced, in the panel, by the band inside the nav */
+  header .btn-prenota {
+    display: none;
+  }
+
+  /* "Prenota ↗" band with a line above and below, like the footer */
+  .menu__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1.2rem -20px 0;
+    padding: 1rem 20px;
+    border-top: 1px solid var(--color-fucsia);
+    border-bottom: 1px solid var(--color-fucsia);
+    color: var(--color-fucsia);
+    font-size: 1.6rem;
+    line-height: 1;
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+  .menu__cta:active {
+    background: var(--color-fucsia);
+    color: var(--color-black);
+  }
+
+  /* Seguimi / Contatti / address */
+  .menu__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    margin-top: 2rem;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+  }
+  .menu__title {
+    margin: 0 0 0.6rem;
+    font-weight: 700;
+  }
+  .menu__info ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .menu__info address {
+    font-style: normal;
+  }
+
+  /* open state */
+  html.menu-open {
+    overflow: hidden;
+  }
+  html.menu-open header {
+    transform: none; /* never slid away while the menu is open (also keeps the fixed panel correct) */
+    color: var(--color-white);
+    --dot-color: var(--color-fucsia);
+    --dot-halo: rgba(243, 50, 131, 0.5);
+  }
+  html.menu-open header::before,
+  html.menu-open header nav {
+    opacity: 1;
+    visibility: visible;
+  }
+  html.menu-open .logo__img {
+    filter: brightness(0) invert(1); /* white logo on the black panel, whichever logo the page uses */
+  }
+  html.menu-open .nav__col a:hover,
+  html.menu-open .nav__faq:hover {
+    color: var(--color-fucsia);
+  }
+}
+
 /* -------------------------------------------FOOTER------------------------------------------- */
 footer {
   /* Tema del footer: le pagine lo sovrascrivono (es. about/booking = fucsia,
@@ -627,17 +822,35 @@ footer a:hover {
     margin-top: 2rem;
   }
 
+  /* legal bar on phones, measured on Monolith's: a 12-column row; © takes the left, "Privacy / Cookie"
+     starts at column 10 (about 72% across) and runs almost to the screen edge; lines are left-aligned
+     and tight; the credit goes on its own line underneath */
   .footer__legal {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
-    gap: 0.75rem;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    justify-items: stretch;
+    text-align: left;
+    gap: 1.25rem 0;
+    line-height: 1.1;
+    font-size: 0.74rem; /* so "Privacy Policy" ends a few px from the edge, as on Monolith, not touching it */
   }
-  .footer__legal > :first-child,
-  .footer__legal > :nth-child(2),
+  .footer__legal > * {
+    gap: 0.05rem;
+  }
+  .footer__legal > :first-child {
+    grid-column: 1 / 9;
+    justify-self: start;
+    text-align: left;
+  }
+  .footer__legal > :nth-child(2) {
+    grid-column: 10 / 13;
+    justify-self: start;
+    text-align: left;
+    white-space: nowrap; /* "Privacy Policy" may run a little past the right gutter, never wrap */
+  }
   .footer__legal > :last-child {
-    justify-self: center;
-    text-align: center;
+    grid-column: 1 / -1;
+    justify-self: start;
+    text-align: left;
   }
 }
 
@@ -808,9 +1021,17 @@ html.faq-open body {
   }
 }
 
-/* stacco del pannello FAQ dallo sfondo (utile sulle pagine scure) */
+/* stacco del pannello FAQ dallo sfondo (utile sulle pagine scure).
+   L'ombra c'è solo a pannello aperto: da chiuso il pannello sta fuori schermo, ma la sua ombra
+   sbordava lo stesso nella pagina come una striscia scura sul bordo destro. */
 .faq__panel {
   border-left: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+  transition:
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.8s ease;
+}
+.faq.is-open .faq__panel {
   box-shadow: -24px 0 60px rgba(0, 0, 0, 0.45);
 }
 

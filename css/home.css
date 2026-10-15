@@ -1,3 +1,53 @@
+/* -------------------------------------------OPENING (logo, then the hero)------------------------------------------- */
+/* Only exists when <html> has "has-intro" (an inline script in <head> decides): a fuchsia screen with the
+   logo, which fades in, stays, and fades out once the medusa has loaded (script at the end of <body>).
+   Scrolling is locked while it is up. Without JS nothing of this shows. */
+.intro {
+  display: none;
+}
+html.has-intro .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200; /* above everything, the header and the menu included */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fucsia);
+  opacity: 1;
+  transition:
+    opacity 0.8s ease,
+    visibility 0s linear 0.8s;
+  /* safety net: if the script never answers, the screen still goes away */
+  animation: intro-fallback 0.8s ease 9s forwards;
+}
+html.has-intro.intro-done .intro {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+html.has-intro:not(.intro-done) {
+  overflow: hidden;
+}
+.intro__logo {
+  width: min(66vw, 320px);
+  height: auto;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: intro-logo 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+@keyframes intro-logo {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes intro-fallback {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 /* Header auto-hide (fixed + .nav-hidden) now lives in base.css for every page. */
 /* clear the fixed header so the hero starts just below it */
 main {
@@ -23,8 +73,20 @@ main {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(190, 20, 100, 0.28) 120%);
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    transparent 55%,
+    rgba(190, 20, 100, 0.28) 120%
+  );
 }
+/* Mobile: flat fuchsia background, no glow/shadow/vignette (the browser bars are plain #f33283,
+   so anything else on the page would show as visible bands above and below) */
+@media (max-width: 860px) {
+  .hero__glow {
+    display: none;
+  }
+}
+
 .hero__light,
 .hero__shadow {
   position: absolute;
@@ -43,7 +105,8 @@ main {
     rgba(255, 130, 185, 0.38) 38%,
     rgba(255, 110, 170, 0) 68%
   );
-  transform: translate(-50%, -50%) translate(var(--mx, 0px), var(--my, 0px)) scale(var(--ms, 1));
+  transform: translate(-50%, -50%) translate(var(--mx, 0px), var(--my, 0px))
+    scale(var(--ms, 1));
 }
 .hero__shadow {
   width: calc(var(--h) * 0.85);
@@ -56,7 +119,11 @@ main {
   );
   /* offset down-right of the medusa (light comes from up-left) */
   transform: translate(-50%, -50%) translate(var(--mx, 0px), var(--my, 0px))
-    translate(calc(var(--h) * 0.07 * var(--ms, 1)), calc(var(--h) * 0.11 * var(--ms, 1))) scale(var(--ms, 1));
+    translate(
+      calc(var(--h) * 0.07 * var(--ms, 1)),
+      calc(var(--h) * 0.11 * var(--ms, 1))
+    )
+    scale(var(--ms, 1));
 }
 
 /* Fixed full-viewport stage: clips the medusa to the screen so it can grow
@@ -89,8 +156,9 @@ main {
 
 /* model-viewer's built-in loading bar (the thin dark stripe above "SAVE" while the model downloads) */
 .hero__model::part(default-progress-bar),
-.hero__model::part(default-progress-mask) {
-  display: none;
+.hero__model::part(default-progress-mask),
+.hero__model::part(default-ar-button) {
+  display: none; /* also the round AR "cube" button that appears on phones */
 }
 
 .hero__title {
@@ -152,6 +220,18 @@ main {
   font-weight: 700;
 }
 
+/* Mobile hero: "SAVE" sized to fit the page width exactly (the word is ~2.87 × the font size wide,
+   so it fits when font-size = (page width − 20px gutters) / 2.9) and sits centred; the service
+   list (Tattoo / Piercing / Dermopigmentazione) is hidden. */
+@media (max-width: 860px) {
+  .hero__title {
+    font-size: calc((100vw - 40px) / 2.9);
+  }
+  .hero__services {
+    display: none;
+  }
+}
+
 /* Scroll indicator: stays in place; the % is updated by JS later. */
 .hero__scroll {
   position: fixed;
@@ -161,6 +241,15 @@ main {
   font-size: 0.72rem;
   letter-spacing: 0.04em;
   z-index: 5;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+}
+
+/* hidden once the dark sections (Lavori, footer) reach it: the counter ends with the fuchsia part */
+.hero__scroll.is-hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* -------------------------------------------SCATTERED PROFILE------------------------------------------- */
@@ -226,7 +315,8 @@ main {
   aspect-ratio: 1440 / 1024;
   margin-inline: -20px;
   overflow: hidden;
-  background: #1c1c1d url("../assets/img/lavori/sfondo.webp") center / cover no-repeat;
+  background: #1c1c1d url("../assets/img/lavori/sfondo.webp") center / cover
+    no-repeat;
 }
 
 .lavori__pieces,
@@ -283,58 +373,253 @@ main {
     drop-shadow(0 0 22px rgba(243, 50, 131, 0.7));
 }
 
+/* -------------------------------------------LAVORI — NEW (three outlined boxes on the photo)------------------------------------------- */
+/* Same section element (class .lavori keeps the z-index / full width), new look: the photo as
+   background (aspect ratio of the photo, so nothing is cropped) and three thin fuchsia boxes
+   (Tattoo / Piercing / Dermopigmentazione), each one a link. Positions are % of the section, so
+   the layout scales with the width. The old wall styles above stay for when the old section is restored. */
+.lavori--new {
+  aspect-ratio: 2000 / 1417;
+  background: #0b0b0c url("../assets/img/lavori/sfondo-medusa.webp") center / cover no-repeat;
+}
+
+/* The photo stays still while you scroll (like the portrait on About), on every device. It is a fixed
+   layer (the whole screen) shown only inside the section, which clips it: scrolling slides the section
+   over it like a window, and the boxes move across the still photo. */
+.lavori--new {
+  clip-path: inset(0); /* clips the fixed photo to the section */
+}
+.lavori__photo {
+  position: fixed;
+  inset: 0;
+  background: url("../assets/img/lavori/sfondo-medusa.webp") center 40% / cover no-repeat;
+  pointer-events: none;
+}
+
+.lavori__box {
+  position: absolute;
+  top: 25.19%;
+  width: 23.04%;
+  height: 38.68%;
+  display: block;
+  border: 1px solid var(--color-fucsia);
+  color: var(--color-fucsia);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+.lavori__box:nth-child(1) {
+  left: 6.46%;
+}
+.lavori__box:nth-child(2) {
+  left: 38.55%;
+}
+.lavori__box:nth-child(3) {
+  left: 70.64%;
+}
+
+.lavori__box-label {
+  position: absolute;
+  left: 4.6%;
+  bottom: 5.6%;
+  font-size: clamp(0.65rem, 1.05vw, 1.15rem);
+  line-height: 1;
+}
+
+.lavori__box-arrow {
+  position: absolute;
+  top: 4.5%;
+  right: 5.5%;
+  font-size: clamp(1rem, 1.55vw, 1.7rem);
+  line-height: 1;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* hover: the box fills with solid fuchsia and the text turns black; the arrow nudges up-right */
+.lavori__box:hover,
+.lavori__box:focus-visible {
+  background: var(--color-fucsia);
+  color: var(--color-black);
+}
+.lavori__box:hover .lavori__box-arrow,
+.lavori__box:focus-visible .lavori__box-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* Desktop: the track is just a wrapper without its own box (the boxes keep their % positions on the
+   section) and the arrows are not needed. */
+.lavori__track {
+  display: contents;
+}
+.lavori__arrows {
+  display: none;
+}
+
+/* Phones: ONE box at a time, big, full width; swipe it or use the two arrows below to go to the others
+   (js/lavori.js). The photo stays still behind, as everywhere. */
+@media (max-width: 860px) {
+  .lavori--new {
+    aspect-ratio: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 0;
+  }
+  .lavori__track {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 24px; /* wider than the 20px gutter: the next box is never visible while you look at one */
+    padding-inline: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y; /* the page itself cannot move sideways, this strip can */
+    scrollbar-width: none;
+  }
+  .lavori__track::-webkit-scrollbar {
+    display: none;
+  }
+  .lavori__box {
+    position: relative;
+    top: auto;
+    left: auto !important;
+    flex: 0 0 100%; /* the whole width between the 20px gutters */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 346 / 410;
+    scroll-snap-align: start;
+    background: rgba(0, 0, 0, 0.28);
+  }
+  .lavori__box:active {
+    background: var(--color-fucsia);
+    color: var(--color-black);
+  }
+  .lavori__box-label {
+    font-size: 0.85rem;
+  }
+  .lavori__box-arrow {
+    font-size: 1.5rem;
+  }
+
+  .lavori__arrows {
+    position: relative; /* above the fixed photo layer (positioned elements paint over static ones) */
+    z-index: 1;
+    display: flex;
+    gap: 22px;
+    margin-top: 1.6rem;
+    padding-inline: 20px;
+  }
+  .lavori__arrow {
+    padding: 8px 6px;
+    background: none;
+    border: 0;
+    color: var(--color-fucsia);
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  .lavori__arrow svg {
+    display: block;
+  }
+  .lavori__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
 /* il footer si attacca alla sezione, senza striscia */
 main:has(.lavori) + footer {
   margin-top: 0;
 }
 
-/* mobile: i quadretti sarebbero minuscoli → restano solo le 3 cornici, una sotto l'altra, grandi */
-@media (max-width: 800px) {
-  .lavori {
-    aspect-ratio: auto;
-    padding: 3rem 0;
-  }
-  .lavori__pieces {
-    display: none;
-  }
-  .lavori__frames {
-    position: static;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  .lavori__frame,
-  .lavori__frame:nth-child(n) {
-    position: static;
-    width: 62%;
-  }
+/* the scroll counter hides while the mobile menu is open */
+html.menu-open .hero__scroll {
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* -------------------------------------------MOBILE------------------------------------------- */
-@media (max-width: 700px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
+/* Phrases focus in word by word, like on the About page (js/hero-text.js adds .word / .is-visible).
+   The hidden state only exists under .hero-anim, so the text stays visible without JS. */
+.hero-anim .reveal-words .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  filter: blur(6px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
+  transition-delay: 0ms;
+}
 
-  .hero__services {
-    grid-column: 1;
-    grid-row: auto;
-    justify-self: start;
-    text-align: left;
-  }
+.hero-anim .reveal-words.is-visible .word {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: var(--d, 0ms); /* stagger only on the way in */
+}
 
+/* Phrases on phones — kept at the END of the file so these rules win over the desktop ones above. */
+@media (max-width: 860px) {
+  /* Phrases on phones: full width, left-aligned, ABOVE the medusa (which dims behind them,
+     see js/hero-model.js). They rise over her as you scroll, like the phones of Monolith. */
   .hero-block {
     max-width: none;
-    margin-block: 8rem;
+    margin-block: 165vh; /* long gaps: between two phrases the medusa is sharp and fully visible */
+    z-index: 3; /* above the medusa stage (z-index 2) */
   }
-
+  .hero-block:first-of-type {
+    margin-top: 95vh; /* the first screen stays clean; the first phrase comes in below it */
+  }
+  .hero-block:nth-of-type(odd),
   .hero-block:nth-of-type(even) {
     margin-left: 0;
+    margin-right: 0;
     text-align: left;
   }
+  .hero-block__text {
+    font-size: 1.4rem;
+    line-height: 1.25;
+  }
+  .hero-closer {
+    z-index: 3;
+    margin-top: 100vh;
+  }
 
-  .hero__scroll {
+  /* First screen on phones: "SAVE" and the phrase sit a bit higher and ABOVE the medusa, so she
+     never covers them; only one phrase is kept (the "Anarchica dal 1986…" one is hidden). */
+  main {
+    padding-top: 4.8rem;
+  }
+  .hero__title,
+  .hero__tagline {
+    position: relative;
+    z-index: 3;
+  }
+  .hero__tagline {
+    margin-top: 1.5rem;
+  }
+  .hero__statement {
     display: none;
+  }
+
+  /* Blurred zone over the medusa, behind the phrases: strongest in the lower part of the screen
+     (where the text comes in), softer towards the top. Only exists while the medusa is dimmed
+     (js/hero-model.js toggles .is-blurred and sets --blur). */
+  .hero__stage.is-blurred::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(var(--blur, 0px));
+    backdrop-filter: blur(var(--blur, 0px));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, #000 55%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, #000 55%);
   }
 }

@@ -52,7 +52,7 @@ main h1.h1--long {
   margin: clamp(2rem, 5vh, 3.5rem) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* minmax(0,…): columns may shrink, never overflow */
   gap: clamp(1.5rem, 3.5vh, 3rem) clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -101,6 +101,7 @@ main h1.h1--long {
 
 .flash-card__foot {
   display: flex;
+  flex-wrap: wrap; /* if the two buttons do not fit side by side, the second goes underneath */
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
@@ -176,12 +177,23 @@ main h1.h1--long {
 /* -------------------------------------------FLASH — responsive------------------------------------------- */
 @media (max-width: 1000px) {
   .flash-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 640px) {
   .flash-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  /* phones: each column is only ~160px wide, so the status and the "Lo voglio" button are stacked and
+     as wide as the picture (before, side by side they pushed the right column off the screen) */
+  .flash-card__foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+  .flash-card__status,
+  .flash-card__cta {
+    text-align: center;
   }
 }

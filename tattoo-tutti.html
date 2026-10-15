@@ -10,11 +10,11 @@
       name="description"
       content="Tutti i tatuaggi realizzati da SAVE Tattoo a Binasco (Milano): la galleria completa dei lavori. Prenota la tua richiesta."
     />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="noindex, nofollow" /> <!-- PREVIEW: change to "index, follow" when the site goes live -->
     <meta name="author" content="SAVE Tattoo — Saveria Sforza" />
     <!-- TODO: replace with the real live domain -->
     <link rel="canonical" href="https://www.savetattoo.it/tattoo-tutti.html" />
-    <meta name="theme-color" content="#f33283" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     <!-- ===== Open Graph (social sharing) ===== -->
     <meta property="og:type" content="website" />
@@ -29,7 +29,7 @@
     <meta property="og:url" content="https://www.savetattoo.it/tattoo-tutti.html" />
     <meta
       property="og:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Twitter card ===== -->
@@ -41,12 +41,12 @@
     />
     <meta
       name="twitter:image"
-      content="https://www.savetattoo.it/assets/img/og-image.jpg"
+      content="/assets/img/og-image.jpg"
     />
 
     <!-- ===== Favicon ===== -->
-    <!-- TODO: create favicon.svg (and a fallback .png) -->
-    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="48x48" />
+    <link rel="icon" href="favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
 
     <!-- ===== Fonts preload (above-the-fold performance) ===== -->
@@ -94,7 +94,7 @@
         <p class="brand__meta">Binasco, MI</p>
       </div>
 
-      <nav aria-label="Principale">
+      <nav aria-label="Principale" id="site-nav">
         <ul class="nav__col">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">Su di me</a></li>
@@ -113,12 +113,62 @@
             </button>
           </li>
         </ul>
+
+        <a href="booking.html" class="menu__cta">
+          <span>Prenota</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+        <div class="menu__info">
+          <div class="menu__group">
+            <p class="menu__title">Seguimi</p>
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/saveria.sforza.tattoo" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Instagram</a
+                >
+              </li>
+              <li>
+                <a href="https://www.tiktok.com/@save.tattoo2" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> TikTok</a
+                >
+              </li>
+              <li>
+                <a href="https://www.facebook.com/share/1EoNAi1h6D/?mibextid=wwXIfr" target="_blank" rel="noopener"
+                  ><span aria-hidden="true">↗</span> Facebook</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">Contatti</p>
+            <ul>
+              <li><a href="mailto:savetattoo@icloud.com">savetattoo@icloud.com</a></li>
+              <li><a href="tel:+393396189130">339 618 9130</a></li>
+            </ul>
+          </div>
+          <div class="menu__group">
+            <p class="menu__title">SAVE Tattoo</p>
+            <address>Via G. Matteotti, 24<br />20082 Binasco (MI)</address>
+          </div>
+        </div>
       </nav>
 
       <a href="booking.html" class="btn-prenota">
         <span class="btn-prenota__label">Prenota</span>
         <span aria-hidden="true" class="btn-prenota__icon">↗</span>
       </a>
+
+      <button
+        type="button"
+        class="menu-toggle"
+        aria-label="Apri il menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <span></span>
+        <span></span>
+      </button>
     </header>
 
     <main>

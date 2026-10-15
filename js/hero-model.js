@@ -67,8 +67,18 @@
   const scaleAt = makeCurve("s");
 
   // cur = what's drawn now, tgt = where it wants to be. We lerp cur -> tgt.
-  const cur = { x: 0, y: 0, s: 1, yaw: 0, o: 1 };
-  const tgt = { x: 0, y: 0, s: 1, yaw: 0, o: 1 };
+  // d = "dim": on phones the medusa fades back behind the phrases so they can be read
+  const cur = { x: 0, y: 0, s: 1, yaw: 0, o: 1, d: 1 };
+  const tgt = { x: 0, y: 0, s: 1, yaw: 0, o: 1, d: 1 };
+  const phone = window.matchMedia("(max-width: 860px)");
+  const DIM = 0.62; // medusa opacity behind the text on phones
+  const BLUR = 3; // px of blur over the medusa behind the text on phones (see .hero__stage.is-blurred)
+  const stage = model.closest(".hero__stage");
+  const DEBUG = /[?&]debug\b/.test(window.location.search);
+  const VERSION = "20261015k";
+  let dbg = null;
+  let dbgScanAt = 0;
+  let dbgWidth = "";
 
   let running = false;
   let lastScroll = performance.now();
@@ -108,6 +118,28 @@
     tgt.s = scaleAt(u);
     tgt.yaw = -yawAt(u); // model-viewer turns the other way: negative = face towards the viewer's right
 
+    // Phones: the phrases sit ON TOP of the medusa (full width, no room beside it), so it stays
+    // in the middle, a bit less zoomed, and dims only while a phrase is on screen.
+    tgt.d = 1;
+    if (phone.matches) {
+      tgt.x = 0;
+      tgt.s = 1 + (tgt.s - 1) * 0.55;
+      // The medusa dims ONLY while a phrase is on screen. For each phrase: how far it is from the
+      // "reading band" (the middle of the screen); inside the band the dim is full, and it fades
+      // in over the last 7% of the screen before the phrase gets there. Between phrases (and in
+      // the first screen) she is sharp and fully visible.
+      const band = [vh * 0.4, vh * 0.75]; // the part of the screen where a phrase actually covers the medusa
+      const lead = vh * 0.07;
+      let presence = 0;
+      blocks.forEach((blk) => {
+        const r = blk.getBoundingClientRect();
+        const gap = Math.max(r.top - band[1], band[0] - r.bottom, 0);
+        presence = Math.max(presence, 1 - clamp(gap / lead, 0, 1));
+      });
+      const t = presence * presence * (3 - 2 * presence);
+      tgt.d = 1 - (1 - DIM) * t;
+    }
+
     // Fade out as the Lavori section rises into view: the medusa and the closing phrase
     // ("Anarchica da sempre") fade away together (same value), fully gone before the
     // section covers them.
@@ -130,11 +162,18 @@
     cur.s += (tgt.s - cur.s) * k;
     cur.o += (tgt.o - cur.o) * 0.12;
     cur.yaw += (tgt.yaw - cur.yaw) * 0.07; // a little inertia on the turn too, so it unfolds slowly
+    cur.d += (tgt.d - cur.d) * (tgt.d < cur.d ? 0.14 : 0.25); // dims in softly, clears quickly
+    if (stage) {
+      // blur grows with the dimming (0 on desktop and in the first screen)
+      const kb = (1 - cur.d) / (1 - DIM);
+      stage.style.setProperty("--blur", (kb * BLUR).toFixed(1) + "px");
+      stage.classList.toggle("is-blurred", kb > 0.03);
+    }
 
     model.style.setProperty("--mx", cur.x.toFixed(1) + "px");
     model.style.setProperty("--my", cur.y.toFixed(1) + "px");
     model.style.setProperty("--ms", cur.s.toFixed(3));
-    model.style.setProperty("--mo", cur.o.toFixed(3));
+    model.style.setProperty("--mo", (cur.o * cur.d).toFixed(3)); // fade-out x phone dimming
     if (glow) {
       // the light/shadow behind the medusa follow it
       glow.style.setProperty("--mx", cur.x.toFixed(1) + "px");
@@ -143,6 +182,40 @@
       glow.style.setProperty("--mo", cur.o.toFixed(3));
     }
     if (closer) closer.style.opacity = cur.o.toFixed(3); // the phrase fades with the medusa
+
+    // Debug read-out (only with ?debug in the address): shows what the script is doing on a phone.
+    if (DEBUG) {
+      if (!dbg) {
+        dbg = document.createElement("div");
+        dbg.style.cssText =
+          "position:fixed;left:8px;top:96px;z-index:99;background:#000;color:#0f0;font:10px/1.3 monospace;padding:6px;pointer-events:none;max-width:85vw;white-space:pre-wrap";
+        document.body.appendChild(dbg);
+      }
+      // width diagnosis (scanned at most every 600 ms): who is wider than the screen?
+      const nowT = performance.now();
+      if (!dbgScanAt || nowT - dbgScanAt > 600) {
+        dbgScanAt = nowT;
+        const cw = document.documentElement.clientWidth;
+        const wide = [];
+        document.querySelectorAll("body *").forEach((el) => {
+          if (el.closest("#site-nav") || el.closest(".faq")) return;
+          const r = el.getBoundingClientRect();
+          if (r.width > 0 && r.right > cw + 1) {
+            wide.push(el.tagName.toLowerCase() + "." + String(el.className && el.className.baseVal !== undefined ? "" : el.className).split(" ")[0] + "=" + Math.round(r.right));
+          }
+        });
+        const vv = window.visualViewport;
+        dbgWidth =
+          "inner=" + window.innerWidth + " client=" + cw + " scrollW=" + document.documentElement.scrollWidth +
+          (vv ? " vv=" + Math.round(vv.width) + " scale=" + vv.scale.toFixed(2) + " offX=" + Math.round(vv.offsetLeft) : "") +
+          " wider:" + (wide.slice(0, 5).join(",") || "none");
+      }
+      dbg.textContent =
+        "JS v" + VERSION + " phone=" + phone.matches +
+        " d=" + cur.d.toFixed(2) + " mo=" + (cur.o * cur.d).toFixed(2) +
+        " blur=" + (stage ? stage.style.getPropertyValue("--blur") : "-") +
+        " s=" + cur.s.toFixed(2) + "\n" + dbgWidth;
+    }
 
     // Turn the model in 3D (keeps the baked framing via radius "auto").
     if ("cameraOrbit" in model) {
@@ -154,7 +227,8 @@
       Math.abs(tgt.x - cur.x) +
       Math.abs(tgt.yaw - cur.yaw) +
       Math.abs(tgt.s - cur.s) * 100 +
-      Math.abs(tgt.o - cur.o) * 100;
+      Math.abs(tgt.o - cur.o) * 100 +
+      Math.abs(tgt.d - cur.d) * 100;
     if (settling > 0.5 || performance.now() - lastScroll < 500) {
       requestAnimationFrame(frame);
     } else {

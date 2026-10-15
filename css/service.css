@@ -339,7 +339,52 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   margin: 0 -20px 0 0; /* reach the screen edge on the right */
   padding: 0;
   list-style: none;
-  overflow: hidden; /* clip → the last photo stays "tranciata" on the right */
+  /* scrolls sideways (arrows / trackpad / swipe, js/zone-strips.js); no visible scrollbar, so the last
+     photo still looks "tranciata" on the right until you scroll */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.zone__strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* the two round arrows: under the zone title, right-aligned against the photos (desktop only; on
+   phones you swipe). They sit outside the photo link (a button cannot live inside a link). */
+.zone__arrows {
+  grid-column: 1;
+  align-self: start;
+  justify-self: end;
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+.zone__arrows[hidden] {
+  display: none;
+}
+.zone__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: none;
+  border: 1px solid currentColor; /* white outline, transparent inside, like the lightbox arrows */
+  border-radius: 50%;
+  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    opacity 0.3s ease;
+}
+.zone__arrow:hover:not(:disabled) {
+  color: var(--color-fucsia);
+}
+.zone__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 .zone__thumb {
@@ -568,6 +613,40 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   }
 }
 
+/* Phones: (1) the aftercare links stay on ONE line: the zone name at the end ("all'orecchio", "al naso"...)
+   is dropped, the zone title above already says it; (2) each strip of photos can be swiped sideways. */
+@media (max-width: 700px) {
+  .service__aftercare {
+    font-size: 0.9rem;
+  }
+  .service__aftercare a {
+    white-space: nowrap;
+  }
+  .aftercare__zone {
+    display: none;
+  }
+  .zone__arrows {
+    display: none; /* on phones the strip is swiped */
+  }
+
+  .zone__strip {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x pan-y; /* the page itself cannot move sideways, this strip can */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-right: 20px; /* so the last photo can come fully into view */
+  }
+  .zone__strip::-webkit-scrollbar {
+    display: none;
+  }
+  .zone__thumb {
+    scroll-snap-align: start;
+  }
+}
+
 /* -------------------------------------------LIGHTBOX (click to zoom)------------------------------------------- */
 /* Full-screen viewer, Martina-style: click the left/right half to browse,
    Esc / × / click outside to close (built by js/gallery.js). */
@@ -688,9 +767,36 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   letter-spacing: 0.05em;
 }
 
+/* Phones: the photo takes (almost) the whole screen; the two arrows sit at the bottom corners with the
+   counter between them; you can also swipe sideways (js/gallery.js) or tap the halves of the photo */
 @media (max-width: 700px) {
+  .lightbox__img {
+    max-width: calc(100vw - 1.5rem);
+    max-height: calc(100vh - 9rem);
+    max-height: calc(100svh - 9rem);
+  }
+  .lightbox__close {
+    top: 0.9rem;
+    right: 1.1rem;
+  }
   .lightbox__arrow {
-    display: none; /* on mobile, tap the halves to browse */
+    top: auto;
+    bottom: 0.9rem;
+    transform: none;
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  .lightbox__arrow:hover {
+    transform: none;
+  }
+  .lightbox__arrow--left {
+    left: 1.25rem;
+  }
+  .lightbox__arrow--right {
+    right: 1.25rem;
+  }
+  .lightbox__counter {
+    bottom: 1.5rem;
   }
 }
 
@@ -796,15 +902,4 @@ main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
   .tattoo-gallery__grid--masonry {
     --cols: 2;
   }
-}
-
-/* contatore "635 lavori" a destra del link aftercare */
-.service__count {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--color-white);
-  opacity: 0.55;
 }

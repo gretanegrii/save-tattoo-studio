@@ -162,62 +162,85 @@ footer {
 }
 
 /* -------------------------------------------ABOUT — mobile------------------------------------------- */
+/* Phones: the portrait fills the whole screen and stays still; the title, the five fragments and the
+   closing phrase scroll over it one at a time (each focuses in as before, js/about.js), then the portrait
+   lets go and the footer comes up. Everything is one single-column grid so the sticky portrait lasts
+   exactly as long as the text. */
 @media (max-width: 800px) {
-  /* navbar back in normal flow on mobile */
-  header {
-    position: relative;
-    padding: 0.5rem 0 2rem;
-  }
-
-  header.nav-hidden {
-    transform: none;
-  }
-
   main {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     min-height: 0;
+    padding: 0;
   }
 
-  /* stacked order: title + tagline, then image, then the story */
-  .about__media {
-    order: -2;
-    padding-bottom: 0;
-  }
-
+  /* the portrait: its container spans all the text rows; inside, it sticks to the screen */
   .about__visual {
-    order: -1;
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    align-self: stretch; /* as tall as all the text rows, so the portrait can stay put through them */
     height: auto !important; /* ignore the JS-set desktop height */
+    margin: -20px -20px 0; /* full-bleed: over the page margin, up to the top edge of the screen */
+    z-index: 0;
   }
-
-  .about__narrative {
-    order: 0;
-    gap: clamp(2.5rem, 6vh, 4rem);
-    padding-top: clamp(2rem, 5vh, 3rem);
-    padding-right: 0;
-    padding-bottom: 0;
-  }
-
   .about__portrait {
-    position: static;
-    width: auto;
-    height: auto;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    /* the tallest the screen can get (browser bars retracted): when Safari's bars shrink while you
+       scroll, the photo still reaches the bottom of the visible screen instead of leaving a strip */
+    height: 100vh;
+    height: 100lvh;
+    min-height: 100svh;
     margin: 0;
   }
-
   .about__portrait img {
-    height: auto;
-    object-fit: fill;
+    height: 100%;
+    object-fit: cover;
+    object-position: 62% 30%; /* keeps her face in view on a tall, narrow screen */
   }
 
+  /* title and closing phrase become items of the same grid: title first, phrases after */
+  .about__media {
+    display: contents;
+  }
   .about__media h1 {
-    margin-top: 0;
-    margin-left: 0;
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    z-index: 2;
+    align-self: start;
+    margin: 58svh 0 0;
+    max-width: none;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+  .about__narrative {
+    grid-column: 1;
+    grid-row: 2;
+    gap: 55svh; /* one phrase at a time on screen, with a short stretch of only the portrait between them */
+    padding: 55svh 0;
+    padding-right: 0;
+  }
+  .about__statement {
+    grid-column: 1;
+    grid-row: 3;
+    position: relative;
+    z-index: 2;
+    align-self: start;
+    margin: 0 0 45svh !important;
+    max-width: none;
+    font-size: clamp(2.2rem, 11vw, 3.6rem);
   }
 
-  .about__statement {
-    position: static;
-    margin: 0.4rem 0 clamp(2rem, 5vh, 3rem) !important;
+  .about__frag {
     max-width: none;
+    padding-left: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.25;
+  }
+  .about__frag::before {
+    display: none; /* no bullet: the phrases float over the photo */
   }
 }
