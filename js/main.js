@@ -1,13 +1,14 @@
 /* Smooth scroll (Lenis) — slow, eased scrolling, like the portfolio.
-   Only on desktop pointers, and skipped for reduced-motion. */
+   On desktop and on touch screens (syncTouch), skipped for reduced-motion. */
 (function () {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  if (typeof Lenis === "undefined" || reduce || !finePointer) return;
+  if (typeof Lenis === "undefined" || reduce) return;
 
   const lenis = new Lenis({
     duration: 1.2, // bigger = longer glide
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    syncTouch: true, // phones too: the finger drags, then the page glides to a stop
+    syncTouchLerp: 0.08, // smaller = longer, softer glide after the finger lifts
   });
   function raf(time) {
     lenis.raf(time);

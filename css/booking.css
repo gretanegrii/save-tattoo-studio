@@ -73,7 +73,8 @@ main {
 }
 
 /* screens slide sideways (js/booking.js): the old one leaves while the new one comes in */
-body {
+/* on <html>, not <body>: on <body> it would also cut off the full-bleed footer line and legal text */
+html {
   overflow-x: clip; /* nothing sticks out while a screen is off to the side */
 }
 
