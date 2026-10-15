@@ -44,6 +44,16 @@ main {
   line-height: 0.8;
 }
 
+/* phones: the 4rem / 3rem minimums above are wider than the screen, so the arrow sticks out of the margin */
+@media (max-width: 700px) {
+  .booking-hero h1 {
+    font-size: 14vw;
+  }
+  .booking-hero__arrow {
+    font-size: 9vw;
+  }
+}
+
 .booking-hero__sub {
   max-width: 34ch;
   margin-top: 1.5rem;

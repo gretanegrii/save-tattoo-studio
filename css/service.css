@@ -36,7 +36,8 @@ main h1 {
 
 /* long single-word titles (e.g. Dermopigmentazione) scale down to fit on one line */
 main h1.h1--long {
-  font-size: clamp(1.6rem, 7.3vw, 5.4rem);
+  /* the word is about 13.4em wide, so a little margin is left: size it so it always fits the page width minus the 20px margins */
+  font-size: clamp(1rem, calc((100vw - 40px) / 13.8), 5.4rem);
 }
 
 .service__intro {
@@ -328,9 +329,12 @@ main h1.h1--long {
   color: var(--color-white);
 }
 
-/* hovering a section dims the OTHER section headings (text only, not the photos) */
-main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
-  opacity: 0.3;
+/* hovering a section dims the OTHER section headings (text only, not the photos).
+   Only with a real mouse: on touch screens a tap leaves :hover stuck, so the headings are all white. */
+@media (hover: hover) and (pointer: fine) {
+  main:has(.zone__top:hover) .zone__top:not(:hover) .zone__head {
+    opacity: 0.3;
+  }
 }
 
 .zone__strip {

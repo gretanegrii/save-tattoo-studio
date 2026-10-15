@@ -570,11 +570,11 @@ html.menu-open .hero__scroll {
      see js/hero-model.js). They rise over her as you scroll, like the phones of Monolith. */
   .hero-block {
     max-width: none;
-    margin-block: 165vh; /* long gaps: between two phrases the medusa is sharp and fully visible */
+    margin-block: 100vh; /* gaps: between two phrases the medusa is sharp and fully visible */
     z-index: 3; /* above the medusa stage (z-index 2) */
   }
   .hero-block:first-of-type {
-    margin-top: 95vh; /* the first screen stays clean; the first phrase comes in below it */
+    margin-top: 70vh; /* the first screen stays clean; the first phrase comes in below it */
   }
   .hero-block:nth-of-type(odd),
   .hero-block:nth-of-type(even) {
@@ -588,7 +588,7 @@ html.menu-open .hero__scroll {
   }
   .hero-closer {
     z-index: 3;
-    margin-top: 100vh;
+    margin-top: 75vh;
   }
 
   /* First screen on phones: "SAVE" and the phrase sit a bit higher and ABOVE the medusa, so she

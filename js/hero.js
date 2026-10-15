@@ -7,6 +7,7 @@
      The counter belongs to the fuchsia part of the page: 0% at the top and 100% exactly when the
      Lavori section starts to come up under it (then it is hidden, see below). */
   const works = document.querySelector(".lavori");
+  const phoneQuery = window.matchMedia("(max-width: 860px)");
   const MARGIN = 40; // px: the counter sits 20px from the bottom, plus a little room
   function updatePercent() {
     let max;
@@ -17,7 +18,8 @@
       max = document.documentElement.scrollHeight - window.innerHeight;
     }
     const pct = max > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / max) * 100))) : 0;
-    indicator.textContent = "scroll(" + pct + "%)";
+    // on phones just the number: no "scroll" word
+    indicator.textContent = phoneQuery.matches ? pct + "%" : "scroll(" + pct + "%)";
   }
   window.addEventListener("scroll", updatePercent, { passive: true });
   window.addEventListener("resize", updatePercent);

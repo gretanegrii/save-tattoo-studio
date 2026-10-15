@@ -16,6 +16,12 @@
   }
   requestAnimationFrame(raf);
 
+  // sideways scrollers (photo strips, Lavori slider): on touch Lenis must leave the finger to the
+  // browser, or a swipe that is not perfectly horizontal is eaten by the page scroll
+  document
+    .querySelectorAll(".zone__strip, .lavori__track, .gallery__row")
+    .forEach((el) => el.setAttribute("data-lenis-prevent-touch", ""));
+
   // esposto per far bloccare lo scroll di fondo quando si apre la FAQ (js/faq.js)
   window.__lenis = lenis;
 })();

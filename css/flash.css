@@ -26,7 +26,7 @@ main h1 {
 }
 
 main h1.h1--long {
-  font-size: clamp(1.6rem, 8vw, 6rem);
+  font-size: clamp(1rem, calc((100vw - 40px) / 13.8), 6rem);
 }
 
 .service__intro {
