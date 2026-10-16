@@ -94,6 +94,29 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Custom cursor: the little drawing replaces the arrow everywhere (links and buttons too), only with a
+   real mouse (phones have no cursor). Text fields keep the normal text cursor so typing stays clear,
+   disabled buttons keep "not allowed", and the gallery arrows keep their own left/right cursor.
+   The point that clicks is the top-left tip of the drawing (7px, 7px). !important: many rules in the
+   other stylesheets set cursor: pointer on their own. */
+@media (hover: hover) and (pointer: fine) {
+  *:not(input):not(textarea):not(:disabled):not([style*="cursor"]) {
+    cursor: url("../assets/img/cursor/cursor-pene.png") 7 7, auto !important;
+    cursor: -webkit-image-set(
+        url("../assets/img/cursor/cursor-pene.png") 1x,
+        url("../assets/img/cursor/cursor-pene@2x.png") 2x
+      )
+      7 7,
+      auto !important;
+    cursor: image-set(
+        url("../assets/img/cursor/cursor-pene.png") 1x,
+        url("../assets/img/cursor/cursor-pene@2x.png") 2x
+      )
+      7 7,
+      auto !important;
+  }
+}
+
 /* Lenis smooth scroll (js/main.js) */
 html.lenis,
 html.lenis body {

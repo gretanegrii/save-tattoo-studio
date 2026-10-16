@@ -256,14 +256,14 @@ main {
 .hero-block {
   max-width: 36ch;
   /* wide, sparse spacing so the page is long and the medusa has room to travel */
-  margin-block: clamp(36rem, 100vh, 78rem);
+  margin-block: clamp(30rem, 85vh, 66rem);
   position: relative;
   z-index: 1; /* text above the medusa where they ever meet */
 }
 
 /* push the first block well below the hero */
 .hero-block:first-of-type {
-  margin-top: clamp(34rem, 90vh, 70rem);
+  margin-top: clamp(30rem, 78vh, 60rem);
 }
 
 /* first block on the RIGHT: the medusa comes to the left for its single turn */
@@ -302,7 +302,7 @@ main {
   text-align: center;
   position: relative;
   z-index: 1;
-  margin-top: clamp(30rem, 80vh, 60rem);
+  margin-top: clamp(26rem, 70vh, 52rem);
 }
 
 /* -------------------------------------------LAVORI (parete + cornici + quadretti)------------------------------------------- */
