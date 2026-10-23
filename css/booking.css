@@ -31,7 +31,7 @@ main {
 .booking-hero h1 {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(4rem, 17vw, 13rem);
+  font-size: clamp(4rem, 16vw, 13rem); /* 16vw e non 17: a 720px titolo + freccia sforavano di 1px */
   line-height: 0.82;
   letter-spacing: -0.01em;
   text-transform: uppercase;
@@ -40,7 +40,7 @@ main {
 .booking-hero__arrow {
   flex: none;
   margin-top: 0.1em;
-  font-size: clamp(3rem, 11vw, 9rem);
+  font-size: clamp(3rem, 10vw, 9rem);
   line-height: 0.8;
 }
 

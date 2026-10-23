@@ -90,6 +90,9 @@ figure {
 
 html {
   font-family: var(--font-mono);
+  /* 16px fino a 1440px di larghezza, poi cresce piano: su monitor grandi tutto quello che è in rem
+     (testi piccoli, menu, spazi, bottoni) scala insieme invece di restare minuscolo */
+  font-size: clamp(1rem, 0.8vw + 0.28rem, 1.75rem);
   margin: 20px;
   scroll-behavior: smooth;
 }
@@ -815,10 +818,10 @@ footer a:hover {
     -0.6px 0 0 currentColor;
 }
 
-/* Footer — mobile */
-@media (max-width: 700px) {
+/* Footer — impilato fino a 860px (tra 700 e 860 le 4 colonne non stavano nello schermo e il footer veniva tagliato) */
+@media (max-width: 860px) {
   footer {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr); /* "1fr" da solo non scende sotto il contenuto più largo e a 320px allargava la pagina */
   }
 
   .footer__cta,
@@ -1082,5 +1085,26 @@ html.faq-open body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* -------------------------------------------TELEFONI MOLTO STRETTI------------------------------------------- */
+/* Fino a 370px di larghezza (iPhone SE di prima generazione, alcuni Android) il footer sforava lo schermo:
+   la fascia PRENOTA, la barra legale ("Privacy Policy" nowrap) e i link. Qui il testo si fa un po' più
+   piccolo; sopra i 370px non cambia niente. */
+@media (max-width: 370px) {
+  .footer__cta-label {
+    font-size: 2rem;
+  }
+  .footer__cta-icon {
+    font-size: 1.6rem;
+    padding-left: 1rem;
+  }
+  .footer__legal > :nth-child(2) {
+    grid-column: 7 / 13;
+  }
+  .footer__bottom {
+    grid-template-columns: minmax(0, 1fr); /* le due colonne (orari, social...) non ci stanno più */
+    gap: 1.5rem;
   }
 }

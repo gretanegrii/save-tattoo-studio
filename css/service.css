@@ -544,8 +544,8 @@ main h1.h1--long {
   white-space: nowrap;
 }
 
-.price-table__note {
-  white-space: normal;
+.price-table dd.price-table__note {
+  white-space: normal; /* "dd" nel selettore: serve più peso di ".price-table dd" (nowrap), altrimenti la nota non va mai a capo */
 }
 
 /* two groups side by side: "lavori miei" (title + sub-prices) | "lavori altrui".
@@ -583,6 +583,16 @@ main h1.h1--long {
 
 .price-groups .price-list {
   margin: 0;
+}
+
+/* tablet: la lista prezzi a colonne fisse (3 righe, tante colonne quanti sono i piercing) non stava nello
+   schermo; qui va a capo da sola, con tante colonne quante ne entrano */
+@media (max-width: 900px) {
+  .price-list {
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  }
 }
 
 @media (max-width: 700px) {
@@ -905,5 +915,16 @@ main h1.h1--long {
 @media (max-width: 560px) {
   .tattoo-gallery__grid--masonry {
     --cols: 2;
+  }
+}
+
+/* telefoni molto stretti: il link dell'aftercare può andare a capo invece di uscire dallo schermo */
+@media (max-width: 370px) {
+  .service__aftercare a {
+    white-space: normal;
+  }
+  /* "Coperture" e "Lentiggini" a 48px (il minimo di sopra) erano più larghi dello schermo */
+  main h1 {
+    font-size: clamp(2rem, 11.5vw, 9rem);
   }
 }
