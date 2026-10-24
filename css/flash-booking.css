@@ -150,6 +150,16 @@ main {
   color: var(--color-fucsia);
 }
 
+.chip--disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.chip--disabled:hover .chip__box {
+  border-color: var(--color-black);
+  color: inherit;
+}
+
 .chip input:checked + .chip__box {
   background: var(--color-black);
   color: var(--paper);

@@ -120,6 +120,59 @@ html {
   }
 }
 
+/* Click animation of the cursor (js/main.js): while it plays, the real cursor is hidden and the same
+   drawing, with the little splashes, follows the mouse in its place. */
+.pene-click {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 61.5px;
+  height: 77px;
+  background: url("../assets/img/cursor/pene-click.png") 0 0 / 500% 100% no-repeat; /* 5 frames side by side */
+  pointer-events: none;
+  z-index: 100000;
+  opacity: 0;
+  will-change: transform;
+}
+.pene-click.is-playing {
+  opacity: 1;
+  /* frames: a quick start, then each one stays longer, the last one holds; then it fades out */
+  animation:
+    pene-frames 1s step-end forwards,
+    pene-fade 1s linear forwards;
+}
+@keyframes pene-frames {
+  0% {
+    background-position: 0 0;
+  }
+  11% {
+    background-position: 25% 0;
+  }
+  24% {
+    background-position: 50% 0;
+  }
+  40% {
+    background-position: 75% 0;
+  }
+  59% {
+    background-position: 100% 0;
+  }
+}
+@keyframes pene-fade {
+  0%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  html.pene-playing *:not(input):not(textarea):not(:disabled):not([style*="cursor"]) {
+    cursor: none !important;
+  }
+}
+
 /* Lenis smooth scroll (js/main.js) */
 html.lenis,
 html.lenis body {

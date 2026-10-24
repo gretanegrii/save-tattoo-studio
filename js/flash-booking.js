@@ -3,15 +3,73 @@
 (function () {
   const n = (new URLSearchParams(location.search).get("flash") || "").padStart(2, "0");
 
+  let flashName = "Flash " + n;
+
   // ---- immagine + nome dal query ----
+  // the name is read from the card title in flash.html, so it is edited in one place only
+  function setName(value) {
+    flashName = value;
+    const name = document.getElementById("flash-name");
+    const img = document.getElementById("flash-image");
+    if (name) name.textContent = flashName;
+    if (img) img.alt = "Disegno flash " + flashName;
+  }
+
+  // data-prices on the card in flash.html, one text per size separated by "|":
+  // "small|medium|large|very large", e.g. "Non disponibile|250 €|da 350 €|Da concordare".
+  // data-taken on the card marks a flash as no longer bookable but keeps its prices visible.
+  function setPrices(list, takenFlag) {
+    const prices = (list || "").split("|").map(function (v) {
+      return v.trim();
+    });
+    // taken: flagged, or every size unavailable (e.g. Save's own pieces)
+    const taken =
+      takenFlag ||
+      (prices.length >= 4 &&
+        prices.slice(0, 4).every(function (v) {
+          return /^non disp/i.test(v);
+        }));
+    if (taken) {
+      const status = document.getElementById("flash-status");
+      if (status) status.textContent = "Non disponibile";
+    }
+    document.querySelectorAll(".chip").forEach(function (chip, i) {
+      const priceEl = chip.querySelector(".chip__price");
+      const input = chip.querySelector("input");
+      function disable() {
+        input.disabled = true;
+        chip.classList.add("chip--disabled");
+      }
+      if (taken) disable();
+      if (i >= 4) {
+        // "Non so ancora" has no price
+        if (priceEl) priceEl.textContent = "";
+        return;
+      }
+      if (!prices[i]) return;
+      if (priceEl) priceEl.textContent = prices[i];
+      if (/^non disp/i.test(prices[i])) disable();
+    });
+  }
+
   if (/^\d{2}$/.test(n)) {
     const img = document.getElementById("flash-image");
-    const name = document.getElementById("flash-name");
-    if (img) {
-      img.src = "assets/img/flash/" + n + ".webp";
-      img.alt = "Disegno flash " + n;
-    }
-    if (name) name.textContent = "Flash " + n;
+    if (img) img.src = "assets/img/flash/" + n + ".webp";
+    setName(flashName);
+
+    fetch("flash.html")
+      .then(function (r) {
+        return r.text();
+      })
+      .then(function (html) {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const link = doc.querySelector('.flash-card a[href$="flash=' + n + '"]');
+        const title = link && link.closest(".flash-card").querySelector(".flash-card__title");
+        if (title && title.textContent.trim()) setName(title.textContent.trim());
+        const card = link && link.closest(".flash-card");
+        if (card) setPrices(card.dataset.prices, card.hasAttribute("data-taken"));
+      })
+      .catch(function () {});
   }
 
   // ---- pannello inline ----
@@ -44,7 +102,7 @@
     // porta il flash scelto e la misura nei campi nascosti
     const fFlash = document.getElementById("form-flash");
     const fSize = document.getElementById("form-misura");
-    if (fFlash) fFlash.value = n;
+    if (fFlash) fFlash.value = n + " – " + flashName;
     const checked = document.querySelector('input[name="tattoo_dimensione"]:checked');
     if (fSize) fSize.value = checked ? checked.value : "";
 
@@ -104,7 +162,7 @@
       // assicura flash + misura aggiornati al momento dell'invio
       const fFlash = document.getElementById("form-flash");
       const fSize = document.getElementById("form-misura");
-      if (fFlash) fFlash.value = n;
+      if (fFlash) fFlash.value = n + " – " + flashName;
       const sizeNow = document.querySelector('input[name="tattoo_dimensione"]:checked');
       if (fSize) fSize.value = sizeNow ? sizeNow.value : "";
 

@@ -918,6 +918,212 @@ main h1.h1--long {
   }
 }
 
+/* -------------------------------------------ZONE STRIPS — label on the left, photos on the right------------------------------------------- */
+/* Piercing / Dermopigmentazione: each zone is a hairline, a "[ ZONE ]" title on the left with the Aftercare
+   link under it and "Vedi tutto" at the bottom, and a bigger photo strip on the right. This block is the
+   LAST in the file on purpose: it replaces the earlier big-title layout. */
+.zone {
+  position: relative;
+  padding-top: clamp(1.75rem, 4vh, 2.75rem);
+}
+.zone::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -20px;
+  right: -20px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.55) 14%, rgba(255, 255, 255, 0.55));
+}
+
+/* the first zone comes right after the page's own rule: one line is enough */
+.service__rule + .zone::before {
+  display: none;
+}
+.service__rule + .zone {
+  margin-top: 0;
+}
+
+.zone__head {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  display: block;
+  margin: 0;
+}
+.zone__title {
+  font-size: clamp(1.6rem, 2.9vw, 2.9rem);
+  font-weight: 500;
+  line-height: 1.15;
+  white-space: normal;
+}
+.zone__title::before {
+  content: "[ ";
+  content: "[ " / "";
+}
+.zone__title::after {
+  content: " ]";
+  content: " ]" / "";
+}
+.zone__strip {
+  grid-column: 2;
+  grid-row: 1 / 4; /* as tall as the left column: title, aftercare, "Vedi tutto" */
+  gap: clamp(1rem, 1.6vw, 1.75rem);
+}
+.zone__thumb {
+  width: clamp(9rem, 17vw, 17rem);
+}
+
+/* left column, top to bottom: the [ ZONE ] title, the Aftercare link right under it, and "Vedi tutto" at the
+   bottom, level with the bottom edge of the photos */
+.zone {
+  grid-template-rows: auto auto 1fr auto;
+}
+.zone__after {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+  margin: 1rem 0 0;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.zone__side {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.zone__link {
+  color: var(--color-white);
+  transition: color 0.4s ease;
+}
+.zone__link:hover {
+  color: var(--color-fucsia);
+}
+/* the Aftercare link is underlined so it reads as a link */
+.zone__after .zone__link {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+.zone__info {
+  grid-column: 2;
+  grid-row: 4;
+}
+
+@media (max-width: 700px) {
+  .zone {
+    grid-template-rows: none;
+    padding-top: 1.5rem;
+  }
+  .zone__head,
+  .zone__after,
+  .zone__strip,
+  .zone__side,
+  .zone__info {
+    grid-column: 1;
+  }
+  .zone__head {
+    grid-row: 1;
+  }
+  .zone__after {
+    grid-row: 2;
+    margin-top: 0.6rem;
+  }
+  .zone__strip {
+    grid-row: 3;
+    margin-top: 0.5rem;
+  }
+  .zone__side {
+    grid-row: 4;
+    align-self: start;
+    margin-top: 0.25rem;
+  }
+  .zone__info {
+    grid-row: 5;
+  }
+  .zone__title {
+    font-size: 1.7rem;
+  }
+}
+
+/* gallery pages: the pills that jump between zones, and the aftercare PDFs */
+.zone-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+.zone-pills a {
+  display: inline-flex;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  color: var(--color-white);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  transition:
+    color 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+.zone-pills a:hover {
+  color: var(--color-fucsia);
+  border-color: var(--color-fucsia);
+}
+.zone-pills a[aria-current="page"] {
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.gallery-aftercare {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 2.5rem;
+  margin: clamp(1.5rem, 4vh, 2.5rem) 0 clamp(2rem, 5vh, 3.5rem);
+  scroll-margin-top: 7rem; /* the fixed header must not cover it when the link jumps here */
+}
+.gallery-aftercare__title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+}
+.gallery-aftercare__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gallery-aftercare__list a {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-fucsia);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  transition: color 0.7s ease;
+}
+.gallery-aftercare__list a:hover {
+  color: var(--color-white);
+}
+/* on the gallery pages the zone name stays visible even on phones ("(Ombelico/Capezzoli)" tells the two PDFs apart) */
+.gallery-aftercare .aftercare__zone {
+  display: inline;
+}
+
 /* telefoni molto stretti: il link dell'aftercare può andare a capo invece di uscire dallo schermo */
 @media (max-width: 370px) {
   .service__aftercare a {
