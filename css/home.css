@@ -55,6 +55,19 @@ main {
 }
 
 /* -------------------------------------------HERO------------------------------------------- */
+/* Height of the medusa box. The word "SAVE" shrinks with the page width but a box of 88vh does not, so on
+   narrow, tall windows (tablets) the medusa slid down below the word. Capping it at 55vw keeps the same
+   proportions as on desktop (the head overlaps the word) at any width down to 600px; below that
+   (phones) the medusa stays large, under the word, as designed. */
+:root {
+  --hero-h: min(88vh, 900px, 55vw);
+}
+@media (max-width: 600px) {
+  :root {
+    --hero-h: min(88vh, 900px);
+  }
+}
+
 .hero {
   position: relative;
   display: grid;
@@ -67,7 +80,7 @@ main {
    Fixed, behind all content: a pale-pink glow behind the head, a rose shadow low and to the right,
    and slightly deeper pink corners. */
 .hero__glow {
-  --h: min(88vh, 900px); /* same height as the medusa box */
+  --h: var(--hero-h); /* same height as the medusa box */
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -142,7 +155,7 @@ main {
   top: 7rem; /* sits just below the header, where it rested before it went fixed */
   left: 50%;
   width: min(100vw, 900px);
-  height: min(88vh, 900px);
+  height: var(--hero-h);
   /* --mx/--my translate it, --ms scales it, --mo fades it: all driven by JS */
   transform: translateX(-50%) translate(var(--mx, 0px), var(--my, 0px))
     scale(var(--ms, 1));

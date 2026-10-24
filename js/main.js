@@ -66,7 +66,7 @@
   if (!toggle || !nav) return;
 
   const root = document.documentElement;
-  const wide = window.matchMedia("(min-width: 861px)");
+  const wide = window.matchMedia("(min-width: 921px)");
 
   function setOpen(open) {
     root.classList.toggle("menu-open", open);

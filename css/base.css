@@ -399,7 +399,7 @@ header nav {
 }
 
 /* -------------------------------------------NAVBAR — MOBILE (hamburger)------------------------------------------- */
-/* Hidden on desktop. Below 860px: logo + "Binasco" stay top-left, the nav and the Prenota
+/* Hidden on desktop. Up to 920px (below that the links no longer fit on one line): logo + "Binasco" stay top-left, the nav and the Prenota
    button move into a full-screen black panel opened by the hamburger on the right
    (js/main.js toggles `menu-open` on <html>). */
 .menu-toggle,
@@ -408,7 +408,7 @@ header nav {
   display: none;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 920px) {
   header {
     align-items: center;
     justify-content: space-between;
