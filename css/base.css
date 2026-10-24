@@ -105,13 +105,15 @@ html {
 @media (hover: hover) and (pointer: fine) {
   *:not(input):not(textarea):not(:disabled):not([style*="cursor"]) {
     cursor: url("../assets/img/cursor/cursor-pene.png") 7 7, auto !important;
-    cursor: -webkit-image-set(
+    cursor: image-set(
         url("../assets/img/cursor/cursor-pene.png") 1x,
         url("../assets/img/cursor/cursor-pene@2x.png") 2x
       )
       7 7,
       auto !important;
-    cursor: image-set(
+    /* the prefixed form goes LAST on purpose: Safari has been unreliable with the unprefixed image-set()
+       in cursor, and the last valid declaration wins, so the one Safari reliably draws must come last */
+    cursor: -webkit-image-set(
         url("../assets/img/cursor/cursor-pene.png") 1x,
         url("../assets/img/cursor/cursor-pene@2x.png") 2x
       )
