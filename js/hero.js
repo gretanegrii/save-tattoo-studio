@@ -36,9 +36,11 @@
   const THEME_PINK = themeMeta ? themeMeta.getAttribute("content") : "";
   const THEME_DARK = "#0b0b0c";
   let themeIsDark = null;
+  // le barre del browser esistono solo sul telefono: su desktop lo sfondo resta fucsia fino a che Lavori lo copre
+  const phone = window.matchMedia("(max-width: 860px)");
   function updateTheme() {
     if (!works) return;
-    const dark = works.getBoundingClientRect().top <= window.innerHeight * 0.5;
+    const dark = phone.matches && works.getBoundingClientRect().top <= window.innerHeight * 0.5;
     if (dark === themeIsDark) return;
     themeIsDark = dark;
     if (themeMeta) themeMeta.setAttribute("content", dark ? THEME_DARK : THEME_PINK);

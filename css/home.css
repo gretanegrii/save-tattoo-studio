@@ -318,6 +318,14 @@ main {
   margin-top: clamp(26rem, 70vh, 52rem);
 }
 
+/* desktop: spazio sotto la frase, così Lavori arriva più tardi e la frase resta in vista più a lungo
+   (senza, spariva appena entrava, perché Lavori la raggiungeva subito) */
+@media (min-width: 861px) {
+  .hero-closer {
+    margin-bottom: clamp(8rem, 30vh, 24rem);
+  }
+}
+
 /* -------------------------------------------LAVORI (parete + cornici + quadretti)------------------------------------------- */
 /* La parete è una scatola 1440 × 1024 (larghezza piena, altezza in proporzione: a 1440px di larghezza
    = 1024px). Tutto ciò che sta sopra è posizionato in % della parete, quindi resta allineato a ogni larghezza.
