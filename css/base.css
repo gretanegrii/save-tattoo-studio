@@ -523,8 +523,9 @@ header nav {
     border-top: 1px solid var(--color-fucsia);
     border-bottom: 1px solid var(--color-fucsia);
     color: var(--color-fucsia);
-    font-size: 1.6rem;
+    font-size: clamp(2.2rem, 10.5vw, 3.4rem); /* stessa misura delle altre voci del pannello */
     line-height: 1;
+    letter-spacing: -0.01em;
     transition:
       background-color 0.4s ease,
       color 0.4s ease;
