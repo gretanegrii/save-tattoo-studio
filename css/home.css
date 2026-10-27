@@ -322,7 +322,7 @@ main {
    (senza, spariva appena entrava, perché Lavori la raggiungeva subito) */
 @media (min-width: 861px) {
   .hero-closer {
-    margin-bottom: clamp(8rem, 30vh, 24rem);
+    margin-bottom: clamp(5rem, 18vh, 15rem);
   }
 }
 
