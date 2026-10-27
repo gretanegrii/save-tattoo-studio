@@ -55,7 +55,7 @@
 
   // la schermata nuova scorre dentro da destra verso sinistra, quella vecchia esce verso sinistra
   // (tornando indietro: al contrario)
-  function show(step) {
+  function show(step, silent) {
     if (!step) return;
     const out = steps.find((s) => s.classList.contains("is-active"));
     if (out === step) return;
@@ -93,7 +93,7 @@
       );
     }
     if (notice) notice.hidden = step !== step1; // avviso solo nella schermata 1
-    scrollTop();
+    if (!silent) scrollTop(); // all'apertura della pagina non scorre: si vede subito logo e titolo
   }
 
   // schermate con UNA sola domanda: scegli e si va avanti da sole (niente tasto Avanti).
@@ -315,5 +315,5 @@
   });
 
   // init
-  show(step1);
+  show(step1, true);
 })();
