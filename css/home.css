@@ -417,20 +417,19 @@ main {
   pointer-events: none;
 }
 
+/* Each box is now a gilded baroque frame (transparent PNG-style webp, the photo shows through the
+   opening) with its label under it. The box keeps its % area on the section; the frame is fitted
+   inside it (object-fit: contain), so frames of different proportions all sit on the same baseline. */
 .lavori__box {
   position: absolute;
-  top: 25.19%;
+  top: 15%;
   width: 23.04%;
-  height: 38.68%;
+  height: 54%;
   display: block;
-  border: 1px solid var(--color-fucsia);
   color: var(--color-fucsia);
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  transition:
-    background-color 0.5s ease,
-    color 0.5s ease;
 }
 .lavori__box:nth-child(1) {
   left: 6.46%;
@@ -442,32 +441,43 @@ main {
   left: 70.64%;
 }
 
+.lavori__box-frame {
+  position: absolute;
+  inset: 0 0 12% 0;
+  width: 100%;
+  height: 88%;
+  object-fit: contain;
+  object-position: center center;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease;
+}
+
 .lavori__box-label {
   position: absolute;
-  left: 4.6%;
-  bottom: 5.6%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
   font-size: clamp(0.65rem, 1.05vw, 1.15rem);
   line-height: 1;
+  transition: color 0.5s ease;
 }
 
-.lavori__box-arrow {
-  position: absolute;
-  top: 4.5%;
-  right: 5.5%;
-  font-size: clamp(1rem, 1.55vw, 1.7rem);
-  line-height: 1;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* hover: the frame lifts a little and glows fuchsia; the label turns white */
+.lavori__box:hover .lavori__box-frame,
+.lavori__box:focus-visible .lavori__box-frame {
+  transform: translateY(-8px);
+  filter: drop-shadow(0 0 14px rgba(243, 50, 131, 0.75)) drop-shadow(0 14px 22px rgba(0, 0, 0, 0.6));
 }
-
-/* hover: the box fills with solid fuchsia and the text turns black; the arrow nudges up-right */
-.lavori__box:hover,
+.lavori__box:hover .lavori__box-label,
+.lavori__box:focus-visible .lavori__box-label {
+  color: #fff;
+}
 .lavori__box:focus-visible {
-  background: var(--color-fucsia);
-  color: var(--color-black);
-}
-.lavori__box:hover .lavori__box-arrow,
-.lavori__box:focus-visible .lavori__box-arrow {
-  transform: translate(3px, -3px);
+  outline: 1px solid var(--color-fucsia);
+  outline-offset: 4px;
 }
 
 /* Desktop: the track is just a wrapper without its own box (the boxes keep their % positions on the
@@ -515,17 +525,6 @@ main {
     height: auto;
     aspect-ratio: 346 / 410;
     scroll-snap-align: start;
-    background: rgba(0, 0, 0, 0.28);
-  }
-  .lavori__box:active {
-    background: var(--color-fucsia);
-    color: var(--color-black);
-  }
-  .lavori__box-label {
-    font-size: 0.85rem;
-  }
-  .lavori__box-arrow {
-    font-size: 1.5rem;
   }
 
   .lavori__arrows {
