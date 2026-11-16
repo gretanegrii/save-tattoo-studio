@@ -1,12 +1,14 @@
-/* Flash booking — riempie la pagina da ?flash=NN e apre il form in linea
-   (sotto al bottone "Prenota questo flash", scorrendo, niente modale). */
+/* Flash booking — fills the page from ?flash=<id> and opens the form inline
+   (under the "Prenota questo flash" button, scrolling, no modal). The flash
+   (name, picture, prices, availability) is read from Sanity. */
 (function () {
-  const n = (new URLSearchParams(location.search).get("flash") || "").padStart(2, "0");
+  const flashId = window.SaveFlash ? window.SaveFlash.idFromParam(new URLSearchParams(location.search).get("flash")) : "";
+  // short reference for the request email: "07" for the old flashes, nothing for new ones
+  const shortRef = /^flash-\d{2}$/.test(flashId) ? flashId.slice(6) : "";
 
-  let flashName = "Flash " + n;
+  let flashName = "Flash";
 
   // ---- immagine + nome dal query ----
-  // the name is read from the card title in flash.html, so it is edited in one place only
   function setName(value) {
     flashName = value;
     const name = document.getElementById("flash-name");
@@ -15,9 +17,9 @@
     if (img) img.alt = "Disegno flash " + flashName;
   }
 
-  // data-prices on the card in flash.html, one text per size separated by "|":
+  // list = the prices of the flash, one text per size separated by "|":
   // "small|medium|large|very large", e.g. "Non disponibile|250 €|da 350 €|Da concordare".
-  // data-taken on the card marks a flash as no longer bookable but keeps its prices visible.
+  // takenFlag = the flash is no longer bookable (its prices stay visible).
   function setPrices(list, takenFlag) {
     const prices = (list || "").split("|").map(function (v) {
       return v.trim();
@@ -52,22 +54,14 @@
     });
   }
 
-  if (/^\d{2}$/.test(n)) {
-    const img = document.getElementById("flash-image");
-    if (img) img.src = "assets/img/flash/" + n + ".webp";
-    setName(flashName);
-
-    fetch("flash.html")
-      .then(function (r) {
-        return r.text();
-      })
-      .then(function (html) {
-        const doc = new DOMParser().parseFromString(html, "text/html");
-        const link = doc.querySelector('.flash-card a[href$="flash=' + n + '"]');
-        const title = link && link.closest(".flash-card").querySelector(".flash-card__title");
-        if (title && title.textContent.trim()) setName(title.textContent.trim());
-        const card = link && link.closest(".flash-card");
-        if (card) setPrices(card.dataset.prices, card.hasAttribute("data-taken"));
+  if (flashId && window.SaveFlash) {
+    window.SaveFlash.get(flashId)
+      .then(function (flash) {
+        if (!flash) return;
+        const img = document.getElementById("flash-image");
+        if (img) img.src = window.SaveFlash.sized(flash.image, 1200);
+        setName(flash.title || flashName);
+        setPrices(window.SaveFlash.priceList(flash), window.SaveFlash.isTaken(flash));
       })
       .catch(function () {});
   }
@@ -102,7 +96,7 @@
     // porta il flash scelto e la misura nei campi nascosti
     const fFlash = document.getElementById("form-flash");
     const fSize = document.getElementById("form-misura");
-    if (fFlash) fFlash.value = n + " – " + flashName;
+    if (fFlash) fFlash.value = (shortRef ? shortRef + " – " : "") + flashName;
     const checked = document.querySelector('input[name="tattoo_dimensione"]:checked');
     if (fSize) fSize.value = checked ? checked.value : "";
 
@@ -162,7 +156,7 @@
       // assicura flash + misura aggiornati al momento dell'invio
       const fFlash = document.getElementById("form-flash");
       const fSize = document.getElementById("form-misura");
-      if (fFlash) fFlash.value = n + " – " + flashName;
+      if (fFlash) fFlash.value = (shortRef ? shortRef + " – " : "") + flashName;
       const sizeNow = document.querySelector('input[name="tattoo_dimensione"]:checked');
       if (fSize) fSize.value = sizeNow ? sizeNow.value : "";
 
