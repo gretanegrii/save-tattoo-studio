@@ -8,10 +8,12 @@
   if (!grid) return;
 
   const count = document.getElementById("tattoo-count");
-  if (count) {
+  function updateCount() {
+    if (!count) return;
     const total = grid.querySelectorAll(".tattoo-gallery__item").length;
     count.textContent = total + " lavori";
   }
+  updateCount();
 
   let colHeights = [];
   let placed = 0; // how many visible items are already positioned
@@ -67,6 +69,12 @@
   layout(true);
 
   grid.addEventListener("gallery:update", () => layout(false));
+
+  // photos were added at the start (from Sanity): count again and place everything from scratch
+  grid.addEventListener("gallery:relayout", function () {
+    updateCount();
+    layout(true);
+  });
 
   let t;
   window.addEventListener("resize", function () {

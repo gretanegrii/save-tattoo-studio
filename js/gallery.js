@@ -82,12 +82,14 @@
 
   // each gallery opens the lightbox with ITS own images
   galleries.forEach(function (g) {
-    const imgs = [...g.querySelectorAll("img")];
-    const list = imgs.map((i) => i.getAttribute("src"));
-    const altList = imgs.map((i) => i.getAttribute("alt") || "");
     g.addEventListener("click", function (e) {
       const img = e.target.closest("img");
-      if (img && g.contains(img)) open(list, altList, imgs.indexOf(img));
+      if (!img || !g.contains(img)) return;
+      // the list is read now (not at load), so photos added later from Sanity are included
+      const imgs = [...g.querySelectorAll("img")];
+      const list = imgs.map((i) => i.getAttribute("src"));
+      const altList = imgs.map((i) => i.getAttribute("alt") || "");
+      open(list, altList, imgs.indexOf(img));
     });
   });
 
